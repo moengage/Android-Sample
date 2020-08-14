@@ -1,5 +1,5 @@
 object Versions{
-  val moengage = "10.2.00"
+  val moengage = "10.2.02"
   val timber = "4.7.1"
   val appCompat = "1.0.2"
   val material = "1.0.0"
