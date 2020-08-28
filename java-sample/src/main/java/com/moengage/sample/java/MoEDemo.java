@@ -6,14 +6,14 @@ import com.moe.pushlibrary.MoEHelper;
 import com.moengage.core.Logger;
 import com.moengage.core.MoEngage;
 import com.moengage.core.model.AppStatus;
+import com.moengage.firebase.MoEFireBaseHelper;
 import com.moengage.geofence.MoEGeofenceHelper;
 import com.moengage.inapp.MoEInAppHelper;
-import com.moengage.push.PushManager;
 import com.moengage.pushbase.MoEPushHelper;
 import com.moengage.sample.java.callbacks.ApplicationBackgroundListener;
 import com.moengage.sample.java.callbacks.GeoFenceHitListener;
 import com.moengage.sample.java.callbacks.inapp.InAppCallback;
-import com.moengage.sample.java.callbacks.push.TokenReceivedListener;
+import com.moengage.sample.java.callbacks.push.FcmEventListener;
 
 /**
  * @author Umang Chamaria
@@ -43,7 +43,7 @@ public class MoEDemo extends Application {
     trackInstallOrUpdate();
 
     // register for token observer
-    PushManager.getInstance().setTokenObserver(new TokenReceivedListener());
+    MoEFireBaseHelper.Companion.getInstance().setEventListener(new FcmEventListener());
 
     // Setting CustomPushMessageListener for notification customisation
     MoEPushHelper.getInstance().setMessageListener(new CustomPushMessageListener());

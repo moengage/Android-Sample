@@ -5,13 +5,13 @@ import com.moe.pushlibrary.MoEHelper
 import com.moengage.core.Logger
 import com.moengage.core.MoEngage
 import com.moengage.core.model.AppStatus
+import com.moengage.firebase.MoEFireBaseHelper
 import com.moengage.geofence.MoEGeofenceHelper
 import com.moengage.inapp.MoEInAppHelper
-import com.moengage.push.PushManager
 import com.moengage.pushbase.MoEPushHelper
 import com.moengage.sample.kotlin.callbacks.ApplicationBackgroundListener
 import com.moengage.sample.kotlin.callbacks.inapp.InAppCallback
-import com.moengage.sample.kotlin.callbacks.push.TokenReceivedListener
+import com.moengage.sample.kotlin.callbacks.push.FcmEventListener
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
@@ -48,8 +48,7 @@ class MoEDemo : Application() {
     MoEPushHelper.getInstance().messageListener = CustomPushMessageListener()
 
     //register for token push token observer
-    PushManager.getInstance().setTokenObserver(
-        TokenReceivedListener())
+    MoEFireBaseHelper.getInstance().setEventListener(FcmEventListener())
 
     //register for app background listener
     MoEHelper.getInstance(applicationContext).registerAppBackgroundListener(
