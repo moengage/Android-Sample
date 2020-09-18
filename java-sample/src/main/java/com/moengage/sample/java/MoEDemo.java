@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import com.moe.pushlibrary.MoEHelper;
 import com.moengage.core.Logger;
+import com.moengage.core.MoECallbacks;
 import com.moengage.core.MoEngage;
 import com.moengage.core.model.AppStatus;
 import com.moengage.firebase.MoEFireBaseHelper;
@@ -42,15 +43,14 @@ public class MoEDemo extends Application {
     // install update differentiation
     trackInstallOrUpdate();
 
-    // register for token observer
+    // FCM event listener
     MoEFireBaseHelper.Companion.getInstance().setEventListener(new FcmEventListener());
 
     // Setting CustomPushMessageListener for notification customisation
     MoEPushHelper.getInstance().setMessageListener(new CustomPushMessageListener());
 
     //register for app background listener
-    MoEHelper.getInstance(getApplicationContext())
-        .registerAppBackgroundListener(new ApplicationBackgroundListener());
+    MoECallbacks.getInstance().addAppBackgroundListener(new ApplicationBackgroundListener());
 
     // register geo-fence hit callback
     MoEGeofenceHelper.getInstance().registerGeofenceHitListener(new GeoFenceHitListener());

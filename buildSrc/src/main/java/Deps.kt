@@ -1,5 +1,5 @@
 object Versions{
-  val moengage = "10.3.00"
+  val moengage = "10.4.00"
   val timber = "4.7.1"
   val appCompat = "1.0.2"
   val material = "1.0.0"
@@ -7,12 +7,15 @@ object Versions{
   val location = "17.0.0"
   const val kotlin = "1.3.70"
   const val glide = "4.9.0"
+  const val lifecycleVersion = "2.2.0"
 }
 
 object Deps{
   // support
   val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
   val material = "com.google.android.material:material:${Versions.material}"
+  const val processLifecycleOwner =
+    "androidx.lifecycle:lifecycle-process:${Versions.lifecycleVersion}"
   // firebase
   val fcm = "com.google.firebase:firebase-messaging:${Versions.fcm}"
   // location library
@@ -26,4 +29,5 @@ object Deps{
   const val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
   // kotlin libs
   val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
+
 }

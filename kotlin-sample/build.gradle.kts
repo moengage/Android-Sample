@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
-
 plugins{
   id("com.android.application")
   kotlin("android")
@@ -31,6 +29,7 @@ dependencies {
   implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
   testImplementation("junit:junit:4.12")
   // support library
+  implementation(Deps.processLifecycleOwner)
   implementation(Deps.appCompat)
   implementation(Deps.material)
   // kotlin stdlib

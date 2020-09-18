@@ -3,6 +3,7 @@ package com.moengage.sample.kotlin
 import android.app.Application
 import com.moe.pushlibrary.MoEHelper
 import com.moengage.core.Logger
+import com.moengage.core.MoECallbacks
 import com.moengage.core.MoEngage
 import com.moengage.core.model.AppStatus
 import com.moengage.firebase.MoEFireBaseHelper
@@ -47,12 +48,11 @@ class MoEDemo : Application() {
     // Setting CustomPushMessageListener for notification customisation
     MoEPushHelper.getInstance().messageListener = CustomPushMessageListener()
 
-    //register for token push token observer
+    //FCM Event Listener.
     MoEFireBaseHelper.getInstance().setEventListener(FcmEventListener())
 
     //register for app background listener
-    MoEHelper.getInstance(applicationContext).registerAppBackgroundListener(
-        ApplicationBackgroundListener())
+    MoECallbacks.getInstance().addAppBackgroundListener(ApplicationBackgroundListener())
 
     // register geo-fence hit callback
     MoEGeofenceHelper.getInstance().registerGeofenceHitListener(GeoFenceHitListener())

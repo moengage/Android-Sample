@@ -28,7 +28,7 @@ dependencies {
   implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
   testImplementation("junit:junit:4.12")
   // support library
-
+  implementation(Deps.processLifecycleOwner)
   implementation(Deps.appCompat)
   implementation(Deps.material)
   // moengage dependency
