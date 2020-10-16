@@ -7,10 +7,10 @@ import timber.log.Timber
  * @author Umang Chamaria
  * Date: 2019-05-31
  */
-class ApplicationBackgroundListener: OnAppBackgroundListener {
+class ApplicationBackgroundListener : OnAppBackgroundListener {
 
-  override fun goingToBackground() {
-    Timber.v(" goingToBackground(): Application going to background callback received.")
-    // application going to background, add your logic here.
-  }
+    override fun goingToBackground() {
+        Timber.v(" goingToBackground(): Application going to background callback received.")
+        // application going to background, add your logic here.
+    }
 }

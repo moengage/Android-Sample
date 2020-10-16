@@ -2,13 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" package="com.moengage.sample.kotlin">
 
-  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-  <uses-permission android:name="android.permission.WAKE_LOCK"/>
-  <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-  <uses-permission android:name="com.google.android.c2dm.permission.SEND"/>
   <uses-permission android:name="android.permission.INTERNET"/>
-  <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+  <uses-permission android:name="android.permission.VIBRATE" />
+
+  <permission
+      android:name="${applicationId}.permission.MIPUSH_RECEIVE"
+
+      android:protectionLevel="signature" />
+
+  <uses-permission android:name="${applicationId}.permission.MIPUSH_RECEIVE" />
 
   <application
       android:name="com.moengage.sample.kotlin.MoEDemo"
@@ -42,16 +50,74 @@
 
     <activity
         android:name="com.moe.pushlibrary.activities.MoEActivity"
-        android:label="[ACTIVITY_NAME]"
-        android:parentActivityName="com.moengage.sample.kotlin.MainActivity" >
-      <!-- Parent activity meta-data to support 4.0 and lower -->
-      <meta-data
-          android:name="android.support.PARENT_ACTIVITY"
-          android:value="com.moengage.sample.kotlin.MainActivity" />
-      <meta-data
-          android:name="showInApp"
-          android:value="false" />
-    </activity>
+        android:label="Rich Landing"
+        android:parentActivityName="com.moengage.sample.kotlin.MainActivity" />
+
+    <!-- HMS Push Kit Listener-->
+    <service
+        android:name="com.moengage.hms.pushkit.MoEPushKitMessageService"
+        android:exported="false">
+      <intent-filter>
+        <action android:name="com.huawei.push.action.MESSAGING_EVENT" />
+      </intent-filter>
+    </service>
+
+    <!-- Xiaomi Push Configuration -->
+
+    <service
+        android:name="com.xiaomi.push.service.XMPushService"
+        android:enabled="true"
+        android:process=":pushservice" />
+
+    <service
+        android:name="com.xiaomi.push.service.XMJobService"
+        android:enabled="true"
+        android:exported="false"
+        android:permission="android.permission.BIND_JOB_SERVICE"
+        android:process=":pushservice" />
+
+    <service
+        android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
+        android:enabled="true"
+        android:exported="true" />
+
+    <service
+        android:name="com.xiaomi.mipush.sdk.MessageHandleService"
+        android:enabled="true" />
+
+    <receiver
+        android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
+        android:exported="true">
+      <intent-filter>
+        <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+    </receiver>
+
+    <receiver
+        android:name="com.xiaomi.push.service.receivers.PingReceiver"
+        android:exported="false"
+        android:process=":pushservice">
+      <intent-filter>
+        <action android:name="com.xiaomi.push.PING_TIMER" />
+      </intent-filter>
+    </receiver>
+
+    <!-- Xiaomi Push Receiver -->
+
+    <receiver
+        android:name="com.moengage.mi.MoEMiPushReceiver"
+        android:exported="true">
+      <intent-filter>
+        <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="com.xiaomi.mipush.ERROR" />
+      </intent-filter>
+    </receiver>
 
   </application>
 

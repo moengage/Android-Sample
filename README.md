@@ -1,12 +1,10 @@
 ![Logo](/.github/assets/logo.png)
 
-## MoEngage Android SDK Integration
+## MoEngage Android SDK Integration Sample
 
 ![Download](https://api.bintray.com/packages/moengage/android-sdk/moe-android-sdk/images/download.svg)
 
 To get up and running with MoEngage on Android, there a couple of steps we will walk you through.
-
-To enable its full functionality (like Push Notifications, InApp Messaging), there are still a couple of steps that you have to take care of in your Android app.
 
 #### Adding MoEngage Dependency:
 
@@ -47,7 +45,12 @@ Once you have installed the SDK follow the below documentation to integrate the 
  **Note:** This sample application uses Timber for logging purposes. MoEngage SDK is not 
  dependent on this library. You need not add this library while integrating the SDK.
  
- Please replace the dummy `google-services.json` file with your actual file.
+## Sample App Usage
+ 
+* Add your APP-ID in the Application class
+* Replace the dummy `google-services.json` file with your actual file.
+* Add the `agconnect-services.json` to the project for using HMS Push Kit.
+* Add the `App-id` and `App-Key` from Mi Console to use Xiaomi Push.
 
  ## Variations
 

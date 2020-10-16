@@ -8,7 +8,7 @@ import timber.log.Timber
  * @author Umang Chamaria
  * Date: 2020/08/28
  */
-class FcmEventListener: FirebaseEventListener(){
+class FcmEventListener : FirebaseEventListener() {
     override fun onNonMoEngageMessageReceived(remoteMessage: RemoteMessage) {
         Timber.v("onNonMoEngageMessageReceived(): $remoteMessage")
         // payload received, add your processing logic here

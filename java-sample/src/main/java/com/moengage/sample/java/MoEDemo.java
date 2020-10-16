@@ -36,6 +36,9 @@ public class MoEDemo extends Application {
             .setNotificationLargeIcon(R.drawable.ic_launcher)
             .enableLocationServices()//enabled To track location and run geo-fence campaigns
             .enableMultipleNotificationInDrawer()// shows multiple notifications in drawer at one go
+            .enablePushKitTokenRegistration() // push kit token registration handled by the SDK
+            .configureMiPush("xxxx", "yyyy", true) // replace xxxx and yyyy with the app-key and
+            // app-id from Mi Console.
             .build();
     // initialize MoEngage SDK
     MoEngage.initialise(moEngage);

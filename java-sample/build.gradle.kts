@@ -1,46 +1,62 @@
 plugins {
-  id("com.android.application")
-  id("com.google.gms.google-services")
+    id("com.android.application")
+    id("com.google.gms.google-services")
+    id("com.huawei.agconnect")
 }
 
 android {
-  compileSdkVersion(28)
+    compileSdkVersion(28)
 
-  defaultConfig {
-    applicationId = "com.moengage.sample.java"
-    minSdkVersion(16)
-    targetSdkVersion(28)
-    versionCode = 1
-    versionName = "1.0"
+    defaultConfig {
+        applicationId = "com.moengage.sample.java"
+        minSdkVersion(16)
+        targetSdkVersion(28)
+        versionCode = 1
+        versionName = "1.0"
 
-    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-  }
-
-  buildTypes {
-    named("release"){
-      isMinifyEnabled = false
-      setProguardFiles(listOf(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"))
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-  }
+
+    buildTypes {
+        named("release") {
+            isMinifyEnabled = false
+            setProguardFiles(
+              listOf(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+              )
+            )
+        }
+    }
 }
 
 dependencies {
-  implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-  testImplementation("junit:junit:4.12")
-  // support library
-  implementation(Deps.processLifecycleOwner)
-  implementation(Deps.appCompat)
-  implementation(Deps.material)
-  // moengage dependency
-  implementation(Deps.moengage)
-  // firebase dependency for push notification
-  implementation(Deps.fcm)
-  // location dependency for geo-fences
-  implementation(Deps.locationLib)
-  // dependency for using gifs
-  implementation(Deps.glideCore)
-  annotationProcessor(Deps.glideCompiler)
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    testImplementation("junit:junit:4.12")
+    // support library
+    implementation(Deps.processLifecycleOwner)
+    implementation(Deps.appCompat)
+    implementation(Deps.material)
+    // moengage dependency
+    implementation(Deps.moengage)
+    // Push templates
+    implementation(Deps.pushTemplates)
+    // cards
+    implementation(Deps.cards)
+    // push amp plus
+    implementation(Deps.pushAmpPlus)
+    // Push Kit
+    implementation(Deps.pushKit)
+    // Huawei dependency for Push Kit
+    implementation(Deps.hmsPushKit)
+    // firebase dependency for push notification
+    implementation(Deps.fcm)
+    // location dependency for geo-fences
+    implementation(Deps.locationLib)
+    // dependency for using gifs
+    implementation(Deps.glideCore)
+    annotationProcessor(Deps.glideCompiler)
 
-  // logging library used in the sample app, not required by the SDK
-  implementation(Deps.timber)
+    // logging library used in the sample app, not required by the SDK
+    implementation(Deps.timber)
 }
