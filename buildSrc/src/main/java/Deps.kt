@@ -5,7 +5,7 @@ object Versions {
     val material = "1.0.0"
     val fcm = "20.0.0"
     val location = "17.0.0"
-    const val kotlin = "1.3.70"
+    const val kotlin = "1.4.10"
     const val glide = "4.9.0"
     const val lifecycleVersion = "2.2.0"
     const val pushTemplates = "1.2.00"
