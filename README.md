@@ -33,7 +33,9 @@ Once you have installed the SDK follow the below documentation to integrate the 
  
 * [In-App messaging](http://docs.moengage.com/docs/configuring-in-app-nativ)
  
-* [Notification Center](http://docs.moengage.com/docs/notification-center)
+* [Notification Center Android](https://docs.moengage.com/docs/android-notification-center)
+
+* [Notification Center iOS](https://docs.moengage.com/docs/ios-notification-center)
  
 * [Advanced Configuration](https://docs.moengage.com/docs/advanced-integration)
  
