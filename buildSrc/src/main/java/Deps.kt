@@ -1,5 +1,5 @@
 object Versions {
-    const val moengage = "10.4.02"
+    const val moengage = "10.6.00"
     val timber = "4.7.1"
     val appCompat = "1.0.2"
     val material = "1.0.0"
@@ -9,9 +9,9 @@ object Versions {
     const val glide = "4.9.0"
     const val lifecycleVersion = "2.2.0"
     const val pushTemplates = "1.2.00"
-    const val cards = "1.1.00"
-    const val pushAmpPlus = "2.1.00"
-    const val pushKit = "1.1.00"
+    const val cards = "1.2.00"
+    const val pushAmpPlus = "2.2.00"
+    const val pushKit = "1.2.00"
     const val hmsPushKit = "4.0.4.301"
 }
 

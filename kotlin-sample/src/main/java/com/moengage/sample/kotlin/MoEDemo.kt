@@ -8,11 +8,13 @@ import com.moengage.core.MoEngage
 import com.moengage.core.model.AppStatus
 import com.moengage.firebase.MoEFireBaseHelper
 import com.moengage.geofence.MoEGeofenceHelper
+import com.moengage.hms.pushkit.MoEPushKitHelper
 import com.moengage.inapp.MoEInAppHelper
 import com.moengage.pushbase.MoEPushHelper
 import com.moengage.sample.kotlin.callbacks.ApplicationBackgroundListener
 import com.moengage.sample.kotlin.callbacks.inapp.InAppCallback
 import com.moengage.sample.kotlin.callbacks.push.FcmEventListener
+import com.moengage.sample.kotlin.callbacks.push.PushKitListener
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
@@ -48,6 +50,9 @@ class MoEDemo : Application() {
 
         // install update differentiation
         trackInstallOrUpdate()
+
+        // PushKit Event listener
+        MoEPushKitHelper.getInstance().addEventListener(PushKitListener())
 
         // Setting CustomPushMessageListener for notification customisation
         MoEPushHelper.getInstance().messageListener = CustomPushMessageListener()

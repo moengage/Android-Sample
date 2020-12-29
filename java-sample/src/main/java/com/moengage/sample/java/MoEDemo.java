@@ -9,12 +9,14 @@ import com.moengage.core.MoEngage;
 import com.moengage.core.model.AppStatus;
 import com.moengage.firebase.MoEFireBaseHelper;
 import com.moengage.geofence.MoEGeofenceHelper;
+import com.moengage.hms.pushkit.MoEPushKitHelper;
 import com.moengage.inapp.MoEInAppHelper;
 import com.moengage.pushbase.MoEPushHelper;
 import com.moengage.sample.java.callbacks.ApplicationBackgroundListener;
 import com.moengage.sample.java.callbacks.GeoFenceHitListener;
 import com.moengage.sample.java.callbacks.inapp.InAppCallback;
 import com.moengage.sample.java.callbacks.push.FcmEventListener;
+import com.moengage.sample.java.callbacks.push.PushKitListener;
 
 /**
  * @author Umang Chamaria
@@ -47,7 +49,9 @@ public class MoEDemo extends Application {
     trackInstallOrUpdate();
 
     // FCM event listener
-    MoEFireBaseHelper.Companion.getInstance().setEventListener(new FcmEventListener());
+    MoEFireBaseHelper.getInstance().addEventListener(new FcmEventListener());
+    // PushKit Event listener
+    MoEPushKitHelper.getInstance().addEventListener(new PushKitListener());
 
     // Setting CustomPushMessageListener for notification customisation
     MoEPushHelper.getInstance().setMessageListener(new CustomPushMessageListener());
