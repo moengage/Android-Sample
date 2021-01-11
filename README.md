@@ -17,29 +17,29 @@ Along with the segment dependency add the below dependency in your build.gradle 
 
 Once you have installed the SDK follow the below documentation to integrate the SDK
 
-* [Initialise the SDK](https://docs.moengage.com/docs/sdk-initialization#section-sdk-configuration)
+* [Initialise the SDK](https://docs.moengage.com/docs/android-sdk-initialization)
 
-* [Install and Update Differentiation](https://docs.moengage.com/docs/sdk-initialization#section-installupdate-differentiation)
+* [Install and Update Differentiation](https://docs.moengage.com/docs/android-install-update)
 
 * [User Attribute Tracking](https://docs.moengage.com/docs/identifying-user)
 
-* [Event Tracking](https://docs.moengage.com/docs/track-event)
+* [Event Tracking](https://docs.moengage.com/docs/android-track-event)
 
 * [Push Configuration](https://docs.moengage.com/docs/push-configuration)
 
-* [Geo-fence Configuration](https://docs.moengage.com/docs/push-configuration#section-geofence-push)
+* [Geo-fence Configuration](https://docs.moengage.com/docs/android-geofence)
 
 * [Rich Landing](https://docs.moengage.com/docs/adding-rich-landing)
  
-* [In-App messaging](http://docs.moengage.com/docs/configuring-in-app-nativ)
+* [In-App messaging](https://docs.moengage.com/docs/android-in-app-nativ)
  
-* [Notification Center](http://docs.moengage.com/docs/notification-center)
+* [Notification Center](https://docs.moengage.com/docs/android-notification-center)
  
-* [Advanced Configuration](https://docs.moengage.com/docs/advanced-integration)
+* [Advanced Configuration](https://docs.moengage.com/docs/android-advanced-integration)
  
 * [API Reference](https://moengage.github.io/MoEngage-Android-SDK/)
  
-* [GDPR Compliance](https://docs.moengage.com/docs/gdpr-compliance)
+* [GDPR Compliance](https://docs.moengage.com/docs/android-compliance)
  
  
  **Note:** This sample application uses Timber for logging purposes. MoEngage SDK is not 
