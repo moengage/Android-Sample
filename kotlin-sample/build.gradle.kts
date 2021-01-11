@@ -45,6 +45,8 @@ dependencies {
     implementation(Deps.pushAmpPlus)
     // Push Kit
     implementation(Deps.pushKit)
+    // geofence
+    implementation(Deps.geofence)
     // Huawei dependency for Push Kit
     implementation(Deps.hmsPushKit)
     // firebase dependency for push notification

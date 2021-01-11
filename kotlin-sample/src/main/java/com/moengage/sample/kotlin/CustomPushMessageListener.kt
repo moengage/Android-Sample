@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import androidx.core.app.NotificationCompat.Builder
-import com.moengage.core.ConfigurationProvider
+import com.moengage.pushbase.internal.model.NotificationPayload
 import com.moengage.pushbase.push.PushMessageListener
 
 /**
@@ -32,11 +32,11 @@ class CustomPushMessageListener : PushMessageListener() {
 
     // customise the notification builder object as required
     override fun onCreateNotification(
-      context: Context, payload: Bundle,
-      provider: ConfigurationProvider
+        context: Context,
+        notificationPayload: NotificationPayload
     ): Builder {
         // get the object constructed by MoEngage SDK
-        val builder = super.onCreateNotification(context, payload, provider)
+        val builder = super.onCreateNotification(context, notificationPayload)
         // customise as required.
         // below customisation is only for illustration purpose. You can chose to have other
         // customisations as required by the application.

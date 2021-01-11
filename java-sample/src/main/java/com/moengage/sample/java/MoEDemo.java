@@ -3,9 +3,12 @@ package com.moengage.sample.java;
 import android.app.Application;
 import android.content.SharedPreferences;
 import com.moe.pushlibrary.MoEHelper;
-import com.moengage.core.Logger;
+import com.moengage.core.LogLevel;
 import com.moengage.core.MoECallbacks;
 import com.moengage.core.MoEngage;
+import com.moengage.core.config.GeofenceConfig;
+import com.moengage.core.config.LogConfig;
+import com.moengage.core.config.MiPushConfig;
 import com.moengage.core.model.AppStatus;
 import com.moengage.firebase.MoEFireBaseHelper;
 import com.moengage.geofence.MoEGeofenceHelper;
@@ -29,18 +32,17 @@ public class MoEDemo extends Application {
     // configure MoEngage initializer
     MoEngage moEngage =
         new MoEngage.Builder(this, "XXXXXXXX")//enter your own app id
-            .setLogLevel(Logger.VERBOSE)//enabling Logs for debugging
-            .enableLogsForSignedBuild() //Make sure this is removed before apps are pushed to
+            .configureLogs(new LogConfig(LogLevel.VERBOSE, false))
             // production
             .setNotificationSmallIcon(
                 R.drawable.icon)//small icon should be flat, pictured face on, and must be white
             // on a transparent background.
             .setNotificationLargeIcon(R.drawable.ic_launcher)
-            .enableLocationServices()//enabled To track location and run geo-fence campaigns
             .enableMultipleNotificationInDrawer()// shows multiple notifications in drawer at one go
             .enablePushKitTokenRegistration() // push kit token registration handled by the SDK
-            .configureMiPush("xxxx", "yyyy", true) // replace xxxx and yyyy with the app-key and
-            // app-id from Mi Console.
+            .configureMiPush(new MiPushConfig("xxxx", "yyyy", true)) // replace xxxx and yyyy
+            // with the app-key and app-id from Mi Console.
+            .configureGeofence(new GeofenceConfig(true, true))
             .build();
     // initialize MoEngage SDK
     MoEngage.initialise(moEngage);
@@ -60,7 +62,7 @@ public class MoEDemo extends Application {
     MoECallbacks.getInstance().addAppBackgroundListener(new ApplicationBackgroundListener());
 
     // register geo-fence hit callback
-    MoEGeofenceHelper.getInstance().registerGeofenceHitListener(new GeoFenceHitListener());
+    MoEGeofenceHelper.getInstance().addListener(new GeoFenceHitListener());
     // register in-app listener
     MoEInAppHelper.getInstance().registerListener(new InAppCallback());
   }

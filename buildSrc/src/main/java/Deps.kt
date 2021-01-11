@@ -1,5 +1,5 @@
 object Versions {
-    const val moengage = "10.6.00"
+    const val moengage = "11.0.00"
     val timber = "4.7.1"
     val appCompat = "1.0.2"
     val material = "1.0.0"
@@ -8,10 +8,10 @@ object Versions {
     const val kotlin = "1.4.10"
     const val glide = "4.9.0"
     const val lifecycleVersion = "2.2.0"
-    const val pushTemplates = "1.2.00"
-    const val cards = "1.2.00"
-    const val pushAmpPlus = "2.2.00"
-    const val pushKit = "1.2.00"
+    const val pushTemplates = "2.0.00"
+    const val cards = "2.0.00"
+    const val pushAmpPlus = "3.0.00"
+    const val pushKit = "2.0.00"
     const val hmsPushKit = "4.0.4.301"
 }
 
@@ -34,6 +34,7 @@ object Deps {
     const val cards = "com.moengage:cards:${Versions.cards}"
     const val pushAmpPlus = "com.moengage:push-amp-plus:${Versions.pushAmpPlus}"
     const val pushKit = "com.moengage:hms-pushkit:${Versions.pushKit}"
+    const val geofence = "com.moengage:geofence:1.0.00"
 
     const val hmsPushKit = "com.huawei.hms:push:${Versions.hmsPushKit}"
 

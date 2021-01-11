@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationCompat.Builder;
-import com.moengage.core.ConfigurationProvider;
+import com.moengage.pushbase.internal.model.NotificationPayload;
 import com.moengage.pushbase.push.PushMessageListener;
 
 public class CustomPushMessageListener extends PushMessageListener {
@@ -28,10 +28,9 @@ public class CustomPushMessageListener extends PushMessageListener {
   }
 
   // customise the notification builder object as required
-  @Override public Builder onCreateNotification(Context context, Bundle payload,
-      ConfigurationProvider provider) {
+  @Override public Builder onCreateNotification(Context context, NotificationPayload payload) {
     // get the object constructed by MoEngage SDK
-    NotificationCompat.Builder builder = super.onCreateNotification(context, payload, provider);
+    NotificationCompat.Builder builder = super.onCreateNotification(context, payload);
     // customise as required.
     // below customisation is only for illustration purpose. You can chose to have other
     // customisations as required by the application.

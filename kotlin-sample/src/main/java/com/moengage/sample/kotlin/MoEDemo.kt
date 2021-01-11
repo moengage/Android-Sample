@@ -2,9 +2,10 @@ package com.moengage.sample.kotlin
 
 import android.app.Application
 import com.moe.pushlibrary.MoEHelper
-import com.moengage.core.Logger
+import com.moengage.core.LogLevel
 import com.moengage.core.MoECallbacks
 import com.moengage.core.MoEngage
+import com.moengage.core.config.*
 import com.moengage.core.model.AppStatus
 import com.moengage.firebase.MoEFireBaseHelper
 import com.moengage.geofence.MoEGeofenceHelper
@@ -30,20 +31,26 @@ class MoEDemo : Application() {
             Timber.plant(DebugTree())
         }
         // configure MoEngage initializer
-        val moEngage = MoEngage.Builder(this, "XXXXXXXX")//enter your own app id
-            .setLogLevel(Logger.VERBOSE)//enabling Logs for debugging
-            .enableLogsForSignedBuild() //Make sure this is removed before apps are pushed to
-            // production
-            .setNotificationSmallIcon(
-                R.drawable.icon
-            )//small icon should be flat, pictured face on, and must be white
-            // on a transparent background.
-            .setNotificationLargeIcon(R.drawable.ic_launcher)
-            .enableLocationServices()//enabled To track location and run geo-fence campaigns
-            .enableMultipleNotificationInDrawer()// shows multiple notifications in drawer at one go
-            .enablePushKitTokenRegistration() // push kit token registration handled by the SDK
-            .configureMiPush("xxxx", "yyyy", true) // replace xxxx and yyyy with the app-key and
-            // app-id from Mi Console.
+        val moEngage = MoEngage.Builder(this, "XXXXXXX")//enter your own app id
+            .configureLogs(LogConfig(LogLevel.VERBOSE, false))
+            .configureNotificationMetaData(
+                NotificationConfig(
+                    R.drawable.icon,
+                    R.drawable.ic_launcher,
+                    R.color.colorPrimary,
+                    null,
+                    isMultipleNotificationInDrawerEnabled = true,
+                    isBuildingBackStackEnabled = true,
+                    isLargeIconDisplayEnabled = true
+                )
+            )
+            .configurePushKit(PushKitConfig(true))
+            .configureMiPush(MiPushConfig("xxxx", "yyyy", true)) // replace xxxx and yyyy with
+            // the app-key and app-id from Mi Console.
+            .configureGeofence(GeofenceConfig (
+                isGeofenceEnabled = true,
+                isBackgroundSyncEnabled = true
+            ))
             .build()
         // initialize MoEngage SDK
         MoEngage.initialise(moEngage)
@@ -58,13 +65,13 @@ class MoEDemo : Application() {
         MoEPushHelper.getInstance().messageListener = CustomPushMessageListener()
 
         //FCM Event Listener.
-        MoEFireBaseHelper.getInstance().setEventListener(FcmEventListener())
+        MoEFireBaseHelper.getInstance().addEventListener(FcmEventListener())
 
         //register for app background listener
         MoECallbacks.getInstance().addAppBackgroundListener(ApplicationBackgroundListener())
 
         // register geo-fence hit callback
-        MoEGeofenceHelper.getInstance().registerGeofenceHitListener(GeoFenceHitListener())
+        MoEGeofenceHelper.getInstance().addListener(GeoFenceHitListener())
         // register in-app listener
         MoEInAppHelper.getInstance().registerListener(InAppCallback())
     }
