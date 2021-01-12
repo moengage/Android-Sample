@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         //this id should be the one the app uses to identify user in your system
         //should be set only after log-in
         // The value used here is only for illustration purposes.
-        MoEHelper.getInstance(applicationContext).setUniqueId(1)
+        MoEHelper.getInstance(applicationContext).setUniqueId("androidsample")
 
         //tracking user attributes samples
         MoEHelper.getInstance(applicationContext).setFullName("Michael Jordan")

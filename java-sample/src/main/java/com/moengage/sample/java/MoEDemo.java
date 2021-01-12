@@ -9,6 +9,8 @@ import com.moengage.core.MoEngage;
 import com.moengage.core.config.GeofenceConfig;
 import com.moengage.core.config.LogConfig;
 import com.moengage.core.config.MiPushConfig;
+import com.moengage.core.config.NotificationConfig;
+import com.moengage.core.config.PushKitConfig;
 import com.moengage.core.model.AppStatus;
 import com.moengage.firebase.MoEFireBaseHelper;
 import com.moengage.geofence.MoEGeofenceHelper;
@@ -34,12 +36,11 @@ public class MoEDemo extends Application {
         new MoEngage.Builder(this, "XXXXXXXX")//enter your own app id
             .configureLogs(new LogConfig(LogLevel.VERBOSE, false))
             // production
-            .setNotificationSmallIcon(
-                R.drawable.icon)//small icon should be flat, pictured face on, and must be white
-            // on a transparent background.
-            .setNotificationLargeIcon(R.drawable.ic_launcher)
-            .enableMultipleNotificationInDrawer()// shows multiple notifications in drawer at one go
-            .enablePushKitTokenRegistration() // push kit token registration handled by the SDK
+            .configureNotificationMetaData(
+                new NotificationConfig(R.drawable.icon, R.drawable.ic_launcher, R.color.colorAccent,
+                    null, true, false, true))
+            .configurePushKit(new PushKitConfig(true)) // push kit token registration handled by the
+            // SDK
             .configureMiPush(new MiPushConfig("xxxx", "yyyy", true)) // replace xxxx and yyyy
             // with the app-key and app-id from Mi Console.
             .configureGeofence(new GeofenceConfig(true, true))

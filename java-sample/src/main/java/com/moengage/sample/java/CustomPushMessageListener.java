@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationCompat.Builder;
-import com.moengage.pushbase.internal.model.NotificationPayload;
+import com.moengage.pushbase.model.NotificationPayload;
 import com.moengage.pushbase.push.PushMessageListener;
 
 public class CustomPushMessageListener extends PushMessageListener {
