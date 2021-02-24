@@ -1,5 +1,5 @@
 object Versions {
-    const val moengage = "11.0.01"
+    const val moengage = "11.0.04"
     val timber = "4.7.1"
     val appCompat = "1.0.2"
     val material = "1.0.0"
@@ -8,12 +8,13 @@ object Versions {
     const val kotlin = "1.4.20"
     const val glide = "4.9.0"
     const val lifecycleVersion = "2.2.0"
-    const val pushTemplates = "2.0.01"
-    const val cards = "2.0.00"
-    const val pushAmpPlus = "3.0.00"
-    const val pushKit = "2.0.00"
+    const val pushTemplates = "2.0.03"
+    const val cards = "2.0.02"
+    const val pushAmpPlus = "3.0.02"
+    const val pushKit = "2.0.02"
     const val hmsPushKit = "4.0.4.301"
-    const val geofence = "1.0.00"
+    const val geofence = "1.0.02"
+    const val annotation = "1.1.0"
 }
 
 object Deps {
@@ -48,5 +49,6 @@ object Deps {
 
     // kotlin libs
     const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
+    const val annotation = "androidx.annotation:annotation:${Versions.annotation}"
 
 }

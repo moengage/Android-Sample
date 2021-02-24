@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.moe.pushlibrary.MoEHelper
 import com.moengage.core.Properties
+import com.moengage.sampleapp.R
 import java.util.*
 
 

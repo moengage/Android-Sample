@@ -2,7 +2,7 @@
 
 ## MoEngage Android SDK Integration Sample
 
-![Download](https://api.bintray.com/packages/moengage/android-sdk/moe-android-sdk/images/download.svg)
+![MavenBadge](http://maven-badges.herokuapp.com/maven-central/com.moengage/moe-android-sdk/badge.svg)
 
 To get up and running with MoEngage on Android, there a couple of steps we will walk you through.
 
