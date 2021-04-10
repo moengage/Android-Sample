@@ -1,5 +1,5 @@
 object Versions {
-    const val moengage = "11.0.04"
+    const val moengage = "11.0.05"
     val timber = "4.7.1"
     val appCompat = "1.0.2"
     val material = "1.0.0"
