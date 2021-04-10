@@ -37,32 +37,16 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     testImplementation("junit:junit:4.12")
-    // support library
-    implementation(Deps.processLifecycleOwner)
-    implementation(Deps.appCompat)
-    implementation(Deps.material)
+    // androidx library
+    implementation(libs.bundles.androidxBundle)
     // moengage dependency
-    implementation(Deps.moengage)
-    // Push templates
-    implementation(Deps.pushTemplates)
-    // cards
-    implementation(Deps.cards)
-    // push amp plus
-    implementation(Deps.pushAmpPlus)
-    // Push Kit
-    implementation(Deps.pushKit)
-    //geofence
-    implementation(Deps.geofence)
+    implementation(libs.bundles.moengageBundle)
+    // 3rd party library
+    implementation(libs.bundles.thirdPartyBundle)
+    // google services
+    implementation(libs.bundles.googleBundle)
     // Huawei dependency for Push Kit
-    implementation(Deps.hmsPushKit)
-    // firebase dependency for push notification
-    implementation(Deps.fcm)
-    // location dependency for geo-fences
-    implementation(Deps.locationLib)
-    // dependency for using gifs
-    implementation(Deps.glideCore)
-    annotationProcessor(Deps.glideCompiler)
-
-    // logging library used in the sample app, not required by the SDK
-    implementation(Deps.timber)
+    implementation(libs.pushKit)
+    // Annotation processor for Glide used for gifs
+    annotationProcessor(libs.glideCompiler)
 }
