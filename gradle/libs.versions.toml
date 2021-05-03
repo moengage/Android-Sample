@@ -5,12 +5,12 @@ glide = "4.9.0"
 
 [libraries]
 # moengage sdks
-moengage = { module = "com.moengage:moe-android-sdk", version = "11.0.05" }
-pushTemplates = { module = "com.moengage:rich-notification", version = "2.0.03" }
+moengage = { module = "com.moengage:moe-android-sdk", version = "11.1.00" }
+pushTemplates = { module = "com.moengage:rich-notification", version = "2.1.00" }
 geofence = { module = "com.moengage:geofence", version = "1.0.02" }
 cards = { module = "com.moengage:cards", version = "2.0.02" }
-pushAmpPlus = { module = "com.moengage:push-amp-plus", version = "3.0.02" }
-pushKit = { module = "com.moengage:hms-pushkit", version = "2.0.02" }
+pushAmpPlus = { module = "com.moengage:push-amp-plus", version = "3.1.00" }
+pushKit = { module = "com.moengage:hms-pushkit", version = "2.1.00" }
 # androidx libraries
 lifecycleProcess = { module = "androidx.lifecycle:lifecycle-process", version = "2.2.0" }
 material = { module = "com.google.android.material:material", version = "1.0.0" }
@@ -23,7 +23,7 @@ timber = { module = "com.jakewharton.timber:timber", version = "4.7.1" }
 fcm = { module = "com.google.firebase:firebase-messaging", version = "20.0.0" }
 location = { module = "com.google.android.gms:play-services-location", version = "17.0.0" }
 # HMS services
-pushKit = { module = "com.huawei.hms:push", version = "4.0.4.301" }
+hmsPushKit = { module = "com.huawei.hms:push", version = "4.0.4.301" }
 
 [bundles]
 moengageBundle = ["moengage", "pushTemplates", "geofence", "cards", "pushAmpPlus", "pushKit"]

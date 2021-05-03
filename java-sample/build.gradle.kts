@@ -46,7 +46,7 @@ dependencies {
     // google services
     implementation(libs.bundles.googleBundle)
     // Huawei dependency for Push Kit
-    implementation(libs.pushKit)
+    implementation(libs.hmsPushKit)
     // Annotation processor for Glide used for gifs
     annotationProcessor(libs.glideCompiler)
 }

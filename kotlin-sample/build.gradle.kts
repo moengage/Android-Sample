@@ -46,7 +46,7 @@ dependencies {
     // kotlin stdlib
     implementation(Deps.kotlinStdLib)
     // Huawei dependency for Push Kit
-    implementation(libs.pushKit)
+    implementation(libs.hmsPushKit)
     // Annotation processor for Glide used for gifs
     kapt(libs.glideCompiler)
 }

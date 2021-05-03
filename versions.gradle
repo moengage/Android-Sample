@@ -1,7 +1,0 @@
-ext.deps = [:]
-def versions = [:]
-versions.app_compat = "1.0.2"
-versions.material = "1.0.0"
-versions.moengage = "9.6.01"
-versions.firebase_messaging = "20.0.0"
-versions.location_services = "17.0.0"
