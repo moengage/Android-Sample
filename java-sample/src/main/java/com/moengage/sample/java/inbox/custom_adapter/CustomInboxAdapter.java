@@ -6,7 +6,7 @@ import com.moengage.inbox.core.model.InboxMessage;
 import com.moengage.inbox.ui.adapter.InboxAdapter;
 import com.moengage.inbox.ui.adapter.InboxListAdapter;
 import com.moengage.inbox.ui.adapter.ViewHolder;
-import com.moengage.sample.java.R;
+import com.moengage.sample.java.databinding.CustomInboxItemViewBinding;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -30,9 +30,7 @@ public class CustomInboxAdapter extends InboxAdapter {
 
   @NotNull @Override public ViewHolder onCreateViewHolder(@NotNull ViewGroup viewGroup, int i) {
     return new CustomInboxViewHolder(
-        LayoutInflater.from(viewGroup.getContext()).inflate(
-            R.layout.custom_inbox_item_view, viewGroup, false
-        )
-    );
+        CustomInboxItemViewBinding.inflate(LayoutInflater.from(viewGroup.getContext()), viewGroup,
+            false));
   }
 }

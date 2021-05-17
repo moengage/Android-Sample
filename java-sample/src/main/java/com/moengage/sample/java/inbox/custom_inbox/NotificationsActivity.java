@@ -14,6 +14,7 @@ import com.moengage.inbox.core.listener.OnMessagesAvailableListener;
 import com.moengage.inbox.core.listener.UnClickedCountListener;
 import com.moengage.inbox.core.model.InboxMessage;
 import com.moengage.sample.java.R;
+import com.moengage.sample.java.databinding.ActivityNotificationsBinding;
 import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,11 +25,13 @@ public class NotificationsActivity extends AppCompatActivity
   private RecyclerView recyclerView;
   private TextView emptyNotificationCenter;
   private Long unreadCount;
+  private ActivityNotificationsBinding binding;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_notifications);
+    binding = ActivityNotificationsBinding.inflate(getLayoutInflater());
+    setContentView(binding.getRoot());
 
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);

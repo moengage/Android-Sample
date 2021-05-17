@@ -6,7 +6,7 @@ import com.moengage.inbox.core.model.InboxMessage
 import com.moengage.inbox.ui.adapter.InboxAdapter
 import com.moengage.inbox.ui.adapter.ViewHolder
 import com.moengage.inbox.ui.adapter.InboxListAdapter
-import com.moengage.sample.kotlin.R
+import com.moengage.sample.kotlin.databinding.CustomInboxItemViewBinding
 
 /**
  * To use your own custom InboxAdapter, extend [InboxAdapter]and bind
@@ -20,8 +20,10 @@ class CustomInboxAdapter : InboxAdapter() {
      */
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         return CustomInboxViewHolder(
-            LayoutInflater.from(viewGroup.context).inflate(
-                R.layout.custom_inbox_item_view, viewGroup, false
+            CustomInboxItemViewBinding.inflate(
+                LayoutInflater.from(viewGroup.context),
+                viewGroup,
+                false
             )
         )
     }

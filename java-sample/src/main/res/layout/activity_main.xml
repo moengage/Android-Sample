@@ -28,7 +28,14 @@
       app:layout_behavior="@string/appbar_scrolling_view_behavior"
       android:layout_margin="@dimen/margin_8">
 
-  <include layout="@layout/content_main" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/categoryList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="0.5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
   </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
