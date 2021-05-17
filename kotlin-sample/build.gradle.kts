@@ -15,6 +15,7 @@ android {
         targetSdkVersion(29)
         versionCode = 1
         versionName = "1.0"
+        multiDexEnabled = true
     }
     buildTypes {
         getByName("release") {
@@ -29,11 +30,16 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation("androidx.appcompat:appcompat:1.2.0")
     testImplementation("junit:junit:4.12")
     // androidx library
     implementation(libs.bundles.androidxBundle)
@@ -49,5 +55,6 @@ dependencies {
     implementation(libs.hmsPushKit)
     // Annotation processor for Glide used for gifs
     kapt(libs.glideCompiler)
+    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
 }
 

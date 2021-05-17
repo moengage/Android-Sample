@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/activity_horizontal_margin">
+
+  <TextView
+      android:id="@+id/inboxTitle"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:ellipsize="end"
+      android:maxLines="1"
+      android:textStyle="bold"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toStartOf="@+id/inboxDelete"
+      app:layout_constraintTop_toTopOf="parent"/>
+
+  <TextView
+      android:id="@+id/inboxMessage"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="4dp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/inboxTitle"/>
+
+  <Button
+      android:id="@+id/couponCode"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/inboxDelete"
+      app:layout_constraintEnd_toEndOf="@id/inboxMessage"
+      app:layout_constraintTop_toBottomOf="@id/inboxMessage"
+      android:visibility="gone"/>
+
+  <ImageButton
+      android:id="@+id/inboxDelete"
+      android:layout_width="24dp"
+      android:layout_height="24dp"
+      android:background="@null"
+      android:src="@drawable/ic_delete"
+      app:layout_constraintStart_toEndOf="@id/inboxTitle"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:layout_below="@id/couponCode"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/couponCode"
+      android:background="@color/colorPrimary"
+      />
+</androidx.constraintlayout.widget.ConstraintLayout>
