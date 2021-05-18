@@ -10,7 +10,7 @@ plugins {
 android {
     compileSdkVersion(29)
     defaultConfig {
-        applicationId = "com.moengage.sampleapp"
+        applicationId = "com.moengage.sample.kotlin"
         minSdkVersion(17)
         targetSdkVersion(29)
         versionCode = 1
