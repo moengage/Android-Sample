@@ -15,6 +15,7 @@ android {
         targetSdkVersion(29)
         versionCode = 1
         versionName = "1.0"
+        multiDexEnabled = true
     }
     buildTypes {
         getByName("release") {
@@ -28,6 +29,10 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 }
 

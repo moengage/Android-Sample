@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/margin_8"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingEnd="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_horizontal_margin">
+
+  <TextView
+      android:id="@+id/notificationTitle"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:text="Title"
+      android:textSize="@dimen/title_text_size"
+      android:textStyle="bold"
+      app:layout_constraintEnd_toStartOf="@id/notifDelete"
+      app:layout_constraintStart_toEndOf="@+id/unClickedIndicator"
+      app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView
+      android:id="@+id/notificationMessage"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:maxLines="3"
+      android:text="Message"
+      android:textSize="@dimen/message_text_size"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="@id/notificationTitle"
+      app:layout_constraintTop_toBottomOf="@+id/notificationTitle" />
+
+  <Button
+      android:id="@+id/notifCouponCode"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="@color/colorAccent"
+      android:text="100%OFF"
+      android:textColor="@color/white"
+      android:textSize="@dimen/message_text_size"
+      android:textStyle="bold"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/notificationMessage" />
+
+  <ImageButton
+      android:id="@+id/notifDelete"
+      android:layout_width="24dp"
+      android:layout_height="24dp"
+      android:background="@null"
+      android:src="@drawable/ic_delete"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="@id/notificationTitle" />
+
+
+  <View
+      android:id="@+id/unClickedIndicator"
+      android:layout_width="10dp"
+      android:layout_height="10dp"
+      android:layout_marginEnd="@dimen/margin_8"
+      android:background="@drawable/unclicked_indicator"
+      app:layout_constraintBottom_toBottomOf="@id/notificationTitle"
+      app:layout_constraintEnd_toStartOf="@id/notificationTitle"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="@id/notificationTitle" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
