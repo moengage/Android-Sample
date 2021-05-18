@@ -49,7 +49,7 @@ dependencies {
     // google services
     implementation(libs.bundles.googleBundle)
     // kotlin stdlib
-    implementation(Deps.kotlinStdLib)
+    implementation(libs.kotlin)
     // Huawei dependency for Push Kit
     implementation(libs.hmsPushKit)
     // Annotation processor for Glide used for gifs
