@@ -43,6 +43,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationItem> 
     if (MoEInboxHelper.getInstance().hasCouponCode(inboxMessage)) {
       holder.notifCouponCode.setText(MoEInboxHelper.getInstance().getCouponCode(inboxMessage));
       holder.notifCouponCode.setVisibility(View.VISIBLE);
+    } else {
+      holder.notifCouponCode.setVisibility(View.GONE);
     }
 
     holder.unClickedIndicator.setVisibility(

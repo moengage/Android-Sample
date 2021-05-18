@@ -45,6 +45,8 @@ class NotificationAdapter :
             holder.itemViewBinding.notifCouponCode.text =
                 MoEInboxHelper.getInstance().getCouponCode(inboxMessage)
             holder.itemViewBinding.notifCouponCode.visibility = View.VISIBLE
+        } else {
+            holder.itemViewBinding.notifCouponCode.visibility = View.GONE
         }
 
         holder.itemViewBinding.unClickedIndicator.visibility =
