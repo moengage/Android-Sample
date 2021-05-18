@@ -1,4 +1,4 @@
-package com.moengage.sample.java.inbox.custom_inbox;
+package com.moengage.sample.java.inbox.custominbox;
 
 import android.os.Bundle;
 import android.view.Menu;

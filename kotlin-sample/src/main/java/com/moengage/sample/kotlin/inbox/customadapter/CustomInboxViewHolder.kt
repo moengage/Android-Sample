@@ -1,15 +1,11 @@
-package com.moengage.sample.kotlin.inbox.custom_adapter
+package com.moengage.sample.kotlin.inbox.customadapter
 
 import android.view.View
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.TextView
 import com.moengage.core.internal.logger.Logger
 import com.moengage.inbox.core.MoEInboxHelper
 import com.moengage.inbox.core.model.InboxMessage
 import com.moengage.inbox.ui.adapter.ViewHolder
 import com.moengage.inbox.ui.adapter.InboxListAdapter
-import com.moengage.sample.kotlin.R
 import com.moengage.sample.kotlin.databinding.CustomInboxItemViewBinding
 import java.lang.Exception
 

@@ -1,4 +1,4 @@
-package com.moengage.sample.kotlin.inbox.custom_inbox
+package com.moengage.sample.kotlin.inbox.custominbox
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.moengage.inbox.core.MoEInboxHelper
 import com.moengage.inbox.core.model.InboxMessage
 import com.moengage.sample.kotlin.databinding.NotificationItemBinding
-import java.util.*
 import kotlin.collections.ArrayList
 
 /**

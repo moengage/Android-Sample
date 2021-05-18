@@ -1,4 +1,4 @@
-package com.moengage.sample.java.inbox.custom_adapter;
+package com.moengage.sample.java.inbox.customadapter;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

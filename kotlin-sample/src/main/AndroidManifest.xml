@@ -103,7 +103,7 @@
         android:parentActivityName=".MainActivity" />
 
     <activity
-        android:name=".inbox.custom_inbox.NotificationsActivity"
+        android:name=".inbox.custominbox.NotificationsActivity"
         android:label="Notifications"/>
   </application>
 

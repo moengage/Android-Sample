@@ -11,8 +11,8 @@ import com.moengage.inbox.ui.MoEInboxUiHelper;
 import com.moengage.inbox.ui.view.InboxActivity;
 import com.moengage.sample.java.HomeListAdapter.OnHomeCategorySelected;
 import com.moengage.sample.java.databinding.ActivityMainBinding;
-import com.moengage.sample.java.inbox.custom_adapter.CustomInboxAdapter;
-import com.moengage.sample.java.inbox.custom_inbox.NotificationsActivity;
+import com.moengage.sample.java.inbox.customadapter.CustomInboxAdapter;
+import com.moengage.sample.java.inbox.custominbox.NotificationsActivity;
 import java.util.ArrayList;
 import java.util.Date;
 

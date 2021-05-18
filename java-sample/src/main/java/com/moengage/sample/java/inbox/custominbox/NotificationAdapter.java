@@ -1,4 +1,4 @@
-package com.moengage.sample.java.inbox.custom_inbox;
+package com.moengage.sample.java.inbox.custominbox;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.moengage.inbox.core.MoEInboxHelper;
 import com.moengage.inbox.core.model.InboxMessage;
 import com.moengage.sample.java.R;
-import com.moengage.sample.java.inbox.custom_inbox.NotificationAdapter.NotificationItem;
+import com.moengage.sample.java.inbox.custominbox.NotificationAdapter.NotificationItem;
 import java.util.ArrayList;
 import java.util.List;
 

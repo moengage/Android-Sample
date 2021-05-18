@@ -1,4 +1,4 @@
-package com.moengage.sample.kotlin.inbox.custom_adapter
+package com.moengage.sample.kotlin.inbox.customadapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

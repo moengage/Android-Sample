@@ -12,8 +12,8 @@ import com.moengage.inbox.ui.MoEInboxUiHelper
 import com.moengage.inbox.ui.listener.OnMessageClickListener
 import com.moengage.inbox.ui.view.InboxActivity
 import com.moengage.sample.kotlin.databinding.ActivityMainBinding
-import com.moengage.sample.kotlin.inbox.custom_adapter.CustomInboxAdapter
-import com.moengage.sample.kotlin.inbox.custom_inbox.NotificationsActivity
+import com.moengage.sample.kotlin.inbox.customadapter.CustomInboxAdapter
+import com.moengage.sample.kotlin.inbox.custominbox.NotificationsActivity
 import timber.log.Timber
 import java.util.*
 

@@ -1,4 +1,4 @@
-package com.moengage.sample.kotlin.inbox.custom_inbox
+package com.moengage.sample.kotlin.inbox.custominbox
 
 import android.os.Bundle
 import android.view.Menu
