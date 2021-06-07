@@ -37,7 +37,7 @@ Once you have installed the SDK follow the below documentation to integrate the 
  
 * [Advanced Configuration](https://docs.moengage.com/docs/android-advanced-integration)
  
-* [API Reference](https://moengage.github.io/MoEngage-Android-SDK/)
+* [API Reference](https://moengage.github.io/android-api-reference/index.html)
  
 * [GDPR Compliance](https://docs.moengage.com/docs/android-compliance)
  
