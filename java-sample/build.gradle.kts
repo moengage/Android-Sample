@@ -44,8 +44,6 @@ dependencies {
     testImplementation("junit:junit:4.12")
     // androidx library
     implementation(libs.bundles.androidxBundle)
-    // moengage dependency
-    implementation(libs.bundles.moengageBundle)
     // 3rd party library
     implementation(libs.bundles.thirdPartyBundle)
     // google services
@@ -54,4 +52,12 @@ dependencies {
     implementation(libs.hmsPushKit)
     // Annotation processor for Glide used for gifs
     annotationProcessor(libs.glideCompiler)
+    // moengage dependency
+    implementation(moengage.core)
+    implementation(moengage.cards)
+    implementation(moengage.geofence)
+    implementation(moengage.pushKit)
+    implementation(moengage.inboxUi)
+    implementation(moengage.pushAmpPlus)
+    implementation(moengage.richNotification)
 }
