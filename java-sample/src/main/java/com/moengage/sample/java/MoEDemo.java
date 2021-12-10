@@ -22,6 +22,7 @@ import com.moengage.sample.java.callbacks.GeoFenceHitListener;
 import com.moengage.sample.java.callbacks.inapp.InAppCallback;
 import com.moengage.sample.java.callbacks.push.FcmEventListener;
 import com.moengage.sample.java.callbacks.push.PushKitListener;
+import timber.log.Timber;
 
 /**
  * @author Umang Chamaria
@@ -66,6 +67,11 @@ public class MoEDemo extends Application {
     MoEGeofenceHelper.getInstance().addListener(new GeoFenceHitListener());
     // register in-app listener
     MoEInAppHelper.getInstance().registerListener(new InAppCallback());
+
+    // logout complete listener
+    MoECallbacks.getInstance().addLogoutCompleteListener(() -> {
+      Timber.v("logoutComplete(): Logout Complete.");
+    });
   }
 
   /**

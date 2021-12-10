@@ -6,6 +6,7 @@ import com.moengage.core.LogLevel
 import com.moengage.core.MoECallbacks
 import com.moengage.core.MoEngage
 import com.moengage.core.config.*
+import com.moengage.core.listeners.OnLogoutCompleteListener
 import com.moengage.core.model.AppStatus
 import com.moengage.firebase.MoEFireBaseHelper
 import com.moengage.geofence.MoEGeofenceHelper
@@ -74,6 +75,13 @@ class MoEDemo : Application() {
         MoEGeofenceHelper.getInstance().addListener(GeoFenceHitListener())
         // register in-app listener
         MoEInAppHelper.getInstance().registerListener(InAppCallback())
+
+        // Logout complete callback
+        MoECallbacks.getInstance().addLogoutCompleteListener( object : OnLogoutCompleteListener {
+            override fun logoutComplete() {
+                Timber.v(" logoutComplete(): Logout Complete.")
+            }
+        })
     }
 
     /**

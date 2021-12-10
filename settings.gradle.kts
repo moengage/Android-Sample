@@ -5,7 +5,7 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         create("moengage") {
-            from("com.moengage:android-dependency-catalog:1.0.0")
+            from("com.moengage:android-dependency-catalog:1.0.4")
         }
     }
 }
