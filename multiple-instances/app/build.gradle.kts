@@ -4,10 +4,10 @@ plugins {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = 32
 
     defaultConfig {
-        applicationId = "com.moengage.example"
+        applicationId = "com.moengage.mutliple_instances"
         minSdk = 21
         targetSdk = 31
         versionCode = 1
@@ -34,17 +34,7 @@ android {
 }
 
 dependencies {
-    
-    implementation(moengage.core)
-    implementation(moengage.inapp)
 
-    implementation(moengage.pushAmpPlus)
-    implementation(moengage.pushKit)
-    implementation(moengage.pushAmp)
-
-    implementation(moengage.geofence)
-
-    implementation(moengage.inboxCore)
     // logging library used only for demonstration, not required by the SDK.
     implementation("com.squareup.logcat:logcat:0.1")
 
