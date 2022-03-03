@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "multiple-instances"
 include(":app")
+include(":micro-app")

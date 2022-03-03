@@ -3,12 +3,16 @@
     package="com.moengage.mutliple_instances">
 
   <application
+      android:name=".MoEngageDemoApplication"
       android:allowBackup="true"
       android:icon="@mipmap/ic_launcher"
       android:label="@string/app_name"
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
-      android:theme="@style/Theme.Mutlipleinstances">
+      android:theme="@style/Theme.Mutlipleinstances"
+      android:fullBackupContent="@xml/com_moengage_backup_descriptor"
+      android:dataExtractionRules="@xml/com_moengage_data_extraction_rules"
+      >
     <activity
         android:name=".MainActivity"
         android:exported="true">
