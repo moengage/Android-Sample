@@ -1,6 +1,0 @@
-<resources>
-  <string name="app_name">MoEngageDemo</string>
-  <string name="action_settings">Settings</string>
-  <dimen name="empty_message_size">20sp</dimen>
-  <string name="empty_notification_center">No notifications to show.</string>
-</resources>
