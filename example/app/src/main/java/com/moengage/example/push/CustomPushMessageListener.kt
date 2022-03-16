@@ -22,8 +22,8 @@ class CustomPushMessageListener: PushMessageListener() {
         logcat { " onNotificationCleared() Notification Cleared $payload" }
     }
 
-    override fun onHandleRedirection(activity: Activity, payload: Bundle) {
-        super.onHandleRedirection(activity, payload)
+    override fun onNotificationClick(activity: Activity, payload: Bundle) {
+        super.onNotificationClick(activity, payload)
         logcat { " onHandleRedirection() Notification clicked $payload" }
     }
 

@@ -29,7 +29,7 @@ class MoEngageDemoApplication: Application() {
         MoEngage.initialiseDefaultInstance(
             MoEngageBuilderKtx(
                 application = this,
-                appId = "",
+                appId = "YOUR_APP_ID",
                 notificationConfig = NotificationConfig(
                     smallIcon = R.drawable.small_icon,
                     largeIcon = R.drawable.large_icon,
@@ -39,7 +39,7 @@ class MoEngageDemoApplication: Application() {
                     isLargeIconDisplayEnabled = true
                 ),
                 fcmConfig = FcmConfig(true),
-                miConfig = MiPushConfig("", "", true),
+                miConfig = MiPushConfig("Your Mi App-id", "Your Mi App Key", true),
                 pushKitConfig = PushKitConfig(true),
                 geofenceConfig = GeofenceConfig(true)
             ).build()

@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         // user attribute tracking
         MoEAnalyticsHelper.setFirstName(applicationContext, "First Name")
-        MoEAnalyticsHelper.setLastName(applicationContext, "")
+        MoEAnalyticsHelper.setLastName(applicationContext, "Last Name")
         MoEAnalyticsHelper.setBirthDate(applicationContext, Date())
     }
 
