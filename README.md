@@ -4,7 +4,7 @@
 
 ![MavenBadge](https://maven-badges.herokuapp.com/maven-central/com.moengage/moe-android-sdk/badge.svg)
 
-This repository contains integration reference for MoEngage SDK. The `example` folder contains sample project o
+This repository contains integration reference for MoEngage SDK. The `example` folder contains sample project for MoEngage SDK integration.
  
 ## Sample App Usage
  
