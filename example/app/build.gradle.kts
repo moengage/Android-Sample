@@ -42,7 +42,7 @@ dependencies {
     implementation(moengage.pushKit)
     implementation(moengage.pushAmp)
 
-    implementation(moengage.geofence)
+    implementation(moengage.geofenceAndroid12)
 
     implementation(moengage.inboxCore)
     // logging library used only for demonstration, not required by the SDK.
