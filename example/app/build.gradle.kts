@@ -31,10 +31,16 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    repositories {
+        flatDir {
+            dirs("libs")
+        }
+    }
 }
 
 dependencies {
-    
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
+
     implementation(moengage.core)
     implementation(moengage.inapp)
 
@@ -52,6 +58,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.4.1")
     implementation("com.google.android.material:material:1.5.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.2")
+    implementation("androidx.lifecycle:lifecycle-process:2.5.1")
     testImplementation("junit:junit:4.+")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")

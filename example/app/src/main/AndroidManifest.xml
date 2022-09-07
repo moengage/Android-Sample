@@ -5,14 +5,13 @@
   <application
       android:name=".MoEngageDemoApplication"
       android:allowBackup="true"
+      android:dataExtractionRules="@xml/com_moengage_data_extraction_rules"
+      android:fullBackupContent="@xml/com_moengage_backup_descriptor"
       android:icon="@mipmap/ic_launcher"
       android:label="@string/app_name"
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
-      android:theme="@style/Theme.Example"
-      android:fullBackupContent="@xml/com_moengage_backup_descriptor"
-      android:dataExtractionRules="@xml/com_moengage_data_extraction_rules"
-      >
+      android:theme="@style/Theme.Example">
     <activity
         android:name=".inbox.CustomInboxActivity"
         android:exported="false" />
@@ -25,6 +24,21 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+
+    <receiver
+        android:name="com.moengage.push.amp.plus.MiPushReceiver"
+        android:exported="true">
+      <intent-filter>
+        <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="com.xiaomi.mipush.ERROR" />
+      </intent-filter>
+    </receiver>
+
   </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.moengage.example
 
 import android.app.Application
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.moengage.core.MoECoreHelper
 import com.moengage.core.MoEngage
 import com.moengage.core.config.*
@@ -39,7 +40,6 @@ class MoEngageDemoApplication: Application() {
                     isLargeIconDisplayEnabled = true
                 ),
                 fcmConfig = FcmConfig(true),
-                miConfig = MiPushConfig("Your Mi App-id", "Your Mi App Key", true),
                 pushKitConfig = PushKitConfig(true),
                 geofenceConfig = GeofenceConfig(true)
             ).build()
@@ -50,6 +50,11 @@ class MoEngageDemoApplication: Application() {
         MoECoreHelper.addLogoutCompleteListener(LogoutCompleteListener())
         setupPushCallbacks()
         setupInAppCallbacks()
+        ProcessLifecycleOwner.get().lifecycle.addObserver(
+            ApplicationLifecycleObserver(
+                applicationContext
+            )
+        )
     }
 
     private fun setupPushCallbacks() {
