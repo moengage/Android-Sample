@@ -2,9 +2,13 @@ package com.moengage.example
 
 import android.app.Application
 import androidx.lifecycle.ProcessLifecycleOwner
+import com.example.mpay.MPay
 import com.moengage.core.MoECoreHelper
 import com.moengage.core.MoEngage
-import com.moengage.core.config.*
+import com.moengage.core.config.FcmConfig
+import com.moengage.core.config.GeofenceConfig
+import com.moengage.core.config.NotificationConfig
+import com.moengage.core.config.PushKitConfig
 import com.moengage.core.ktx.MoEngageBuilderKtx
 import com.moengage.example.callbacks.ApplicationBackgroundListener
 import com.moengage.example.callbacks.LogoutCompleteListener
@@ -55,6 +59,18 @@ class MoEngageDemoApplication: Application() {
                 applicationContext
             )
         )
+        initializeMPay()
+    }
+
+
+    /**
+     * This is for Demo Purposes for integrating MoE SDK within Another SDK
+     * Here for UseCase let us consider MPay is Payment Gateway SDK and Mpay SDK needs to integrate will MoE SDK.
+     * The Main app integrating MPay SDK might or might not integrated MoE SDK.
+     * So for MPay we always needs to initialized as Secondary SDK instance
+     * */
+    private fun initializeMPay() {
+        MPay.initialize(this)
     }
 
     private fun setupPushCallbacks() {

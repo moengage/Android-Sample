@@ -1,15 +1,16 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
+    id("kotlin-kapt")
 }
 
 android {
-    compileSdk = 31
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.moengage.example"
         minSdk = 21
-        targetSdk = 31
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -48,18 +49,28 @@ dependencies {
     implementation(moengage.pushKit)
     implementation(moengage.pushAmp)
 
-    implementation(moengage.geofenceAndroid12)
+    implementation(moengage.geofence)
 
     implementation(moengage.inboxCore)
+    implementation(moengage.cardsUi)
+    implementation(moengage.cardsCore)
     // logging library used only for demonstration, not required by the SDK.
     implementation("com.squareup.logcat:logcat:0.1")
+    implementation("com.google.firebase:firebase-messaging:23.1.2")
 
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.appcompat:appcompat:1.4.1")
     implementation("com.google.android.material:material:1.5.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.2")
     implementation("androidx.lifecycle:lifecycle-process:2.5.1")
+    kapt("com.github.bumptech.glide:compiler:4.15.1")
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+
+
+    implementation(project(":m-pay"))
     testImplementation("junit:junit:4.+")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 }
+
+//apply(plugin = "com.google.gms.google-services")

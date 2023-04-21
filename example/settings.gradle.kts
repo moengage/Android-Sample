@@ -1,5 +1,4 @@
-import org.gradle.kotlin.dsl.execution.ProgramText.Companion.from
-
+include(":m-pay")
 enableFeaturePreview("VERSION_CATALOGS")
 pluginManagement {
     repositories {
@@ -18,7 +17,7 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         create("moengage"){
-            from("com.moengage:android-dependency-catalog:2.4.7")
+            from("com.moengage:android-dependency-catalog:2.9.1")
         }
     }
 }
