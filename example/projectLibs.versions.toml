@@ -1,0 +1,16 @@
+[versions]
+glide = "4.15.1"
+
+[libraries]
+androidCoreKtx = { module = "androidx.core:core-ktx", version = "1.10.0" }
+appCompat = { module = "androidx.appcompat:appcompat", version = "1.6.1" }
+material = { module = "com.google.android.material:material", version = "1.5.0" }
+constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version = "2.1.4" }
+lifecycleOwner = { module = "androidx.lifecycle:lifecycle-process", version = "2.5.1" }
+
+logcat = { module = "com.squareup.logcat:logcat", version = "0.1" }
+fcm = { module = "com.google.firebase:firebase-messaging", version = "23.1.2" }
+glideCore = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+glideCompiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
+expresso = { module = "androidx.test.espresso:espresso-core", version = "3.4.0" }
+junit = { module = "androidx.test.ext:junit", version = "1.1.5" }
