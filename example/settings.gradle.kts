@@ -1,5 +1,4 @@
-import org.gradle.kotlin.dsl.execution.ProgramText.Companion.from
-
+include(":moengage-sample-payment-sdk")
 enableFeaturePreview("VERSION_CATALOGS")
 pluginManagement {
     repositories {
@@ -17,8 +16,11 @@ dependencyResolutionManagement {
         mavenCentral()
     }
     versionCatalogs {
-        create("moengage"){
-            from("com.moengage:android-dependency-catalog:2.4.7")
+        create("moengage") {
+            from("com.moengage:android-dependency-catalog:2.9.1")
+        }
+        create("projectLibs") {
+            from(files("projectLibs.versions.toml"))
         }
     }
 }

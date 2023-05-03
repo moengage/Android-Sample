@@ -1,3 +1,5 @@
 <resources>
-  <string name="app_name">example</string>
+    <string name="app_name">example</string>
+    <string name="checkout_payment">Checkout Payment</string>
+    <string name="hello_world">Hello World</string>
 </resources>
