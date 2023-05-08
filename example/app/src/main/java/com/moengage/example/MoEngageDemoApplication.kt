@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.moengage.core.MoECoreHelper
 import com.moengage.core.MoEngage
+import com.moengage.core.config.CardConfig
 import com.moengage.core.config.FcmConfig
-import com.moengage.core.config.GeofenceConfig
 import com.moengage.core.config.NotificationConfig
 import com.moengage.core.config.PushKitConfig
 import com.moengage.core.ktx.MoEngageBuilderKtx
@@ -31,6 +31,7 @@ class MoEngageDemoApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
+        // App Module MoEngage SDK integration
         MoEngage.initialiseDefaultInstance(
             MoEngageBuilderKtx(
                 application = this,
@@ -45,7 +46,7 @@ class MoEngageDemoApplication: Application() {
                 ),
                 fcmConfig = FcmConfig(true),
                 pushKitConfig = PushKitConfig(true),
-                geofenceConfig = GeofenceConfig(true)
+                cardConfig = CardConfig.defaultConfig()
             ).build()
         )
         // register for application background listener
@@ -59,18 +60,18 @@ class MoEngageDemoApplication: Application() {
                 applicationContext
             )
         )
+
+        //Initialize Payment SDK
         initializePaymentSDK()
     }
 
 
     /**
-     * This is for Demo Purposes for integrating MoE SDK within Another SDK
-     * Here for UseCase let us consider Payment Gateway SDK and Mpay SDK needs to integrate will MoE SDK.
-     * The Main app integrating Payment SDK might or might not integrated MoE SDK.
-     * So for Payment SDK, MoEngage SDK always needs to initialized as Secondary SDK instance
+     * This is for Demo Purposes for integrating MoE SDK within Another SDK, Ex: Payment Gateway SDK
+     * For Payment SDK, MoEngage SDK always needs to initialized as Secondary SDK instance
      * */
     private fun initializePaymentSDK() {
-        PaymentSDK.initialize(this, "")
+        PaymentSDK.initialize(this)
     }
 
     private fun setupPushCallbacks() {

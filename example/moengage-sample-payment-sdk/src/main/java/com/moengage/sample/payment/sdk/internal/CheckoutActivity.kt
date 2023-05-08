@@ -1,18 +1,17 @@
-package com.moengage.sample.payment.sdk
+package com.moengage.sample.payment.sdk.internal
 
-import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.moengage.sample.payment.sdk.PaymentSDK.MOE_APP_ID
-import com.moengage.cards.ui.CardActivity
+import com.google.android.material.snackbar.Snackbar
 import com.moengage.core.Properties
 import com.moengage.core.analytics.MoEAnalyticsHelper
-import com.moengage.inapp.MoEInAppHelper
+import com.moengage.sample.payment.sdk.PaymentSDK.MOE_APP_ID
 import com.moengage.sample.payment.sdk.databinding.ActivityPaymentCheckoutBinding
+import com.moengage.sample.payment.sdk.databinding.LayoutTableRowItemBinding
+import com.moengage.sample.payment.sdk.model.PaymentData
+import com.moengage.sample.payment.sdk.model.UserData
 
 internal class CheckoutActivity : AppCompatActivity() {
 
@@ -32,11 +31,9 @@ internal class CheckoutActivity : AppCompatActivity() {
         userData = intent.getSerializable(INTENT_KEY_USER_DATA, UserData::class.java)
         paymentData = intent.getSerializable(INTENT_KEY_PAYMENT_DATA, PaymentData::class.java)
 
+        showUserData()
         setUserAttribute(userData)
         trackCheckoutLandEvent(paymentData)
-
-
-        binding.nudge.initialiseNudgeView(this, MOE_APP_ID)
 
         /**
          * This is For Demo purposes for event tracking.
@@ -46,9 +43,30 @@ internal class CheckoutActivity : AppCompatActivity() {
         }
     }
 
+    private fun showUserData() {
+        binding.userContainer.addView(getDetailRow("Name", userData.name))
+        binding.userContainer.addView(getDetailRow("Phone Number", userData.phoneNumber))
+        binding.userContainer.addView(getDetailRow("Email", userData.emailId))
+        binding.userContainer.addView(getDetailRow("Age", userData.age.toString()))
+        binding.paymentContainer.addView(getDetailRow("Amount", paymentData.amount.toString()))
+        binding.paymentContainer.addView(getDetailRow("Currency", paymentData.currency))
+    }
+
+    private fun getDetailRow(title: String, value: String): View {
+        val binding = LayoutTableRowItemBinding.inflate(layoutInflater)
+        binding.titleEt.text = title
+        binding.valueEt.text = value
+        return binding.root
+    }
+
     private fun submitPayment() {
         Log.d(TAG, "submitPayment(): ")
         trackPaymentEvent(paymentData)
+        Snackbar.make(binding.root, "Payment Successful", Snackbar.LENGTH_LONG)
+            .setAction("Okay") {
+                finish()
+            }
+            .show()
     }
 
     private fun trackPaymentEvent(paymentData: PaymentData) {
@@ -66,32 +84,10 @@ internal class CheckoutActivity : AppCompatActivity() {
         MoEAnalyticsHelper.trackEvent(this, "checkout", properties, MOE_APP_ID)
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        MoEInAppHelper.getInstance().onConfigurationChanged()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.checkout_menu, menu);
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.notifications) {
-            /**
-             * Here we are navigating to default cards UI implementation
-             * */
-            val intent = Intent(this, CardActivity::class.java)
-            intent.putExtra(INTENT_KEY_APPID, MOE_APP_ID)
-            startActivity(intent)
-        }
-        return true
-    }
-
     private fun setUserAttribute(userData: UserData) {
         val userAttributes = hashMapOf<String, Any>(
             "name" to userData.name,
-            "age" to 30
+            "age" to userData.age
         )
 
         MoEAnalyticsHelper.setUserAttribute(this, userAttributes, appId = MOE_APP_ID)
@@ -103,6 +99,6 @@ internal class CheckoutActivity : AppCompatActivity() {
          * This Attribute Is can be  used as unique identifier for the APP to segment users.
          * So campaigns can be launched for the users with Attribute PaymentSDK App Id = <APP_ID>
          * */
-        MoEAnalyticsHelper.setUserAttribute(this, "paymentSDKAppId", PaymentSDK.paymentSDKAppId)
+        MoEAnalyticsHelper.setUserAttribute(this, "paymentSDKAppId", "")
     }
 }

@@ -2,32 +2,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:theme="@style/Base.Theme.Example"
-    tools:context="com.moengage.sample.payment.sdk.CheckoutActivity">
+    tools:context="com.moengage.sample.payment.sdk.internal.CheckoutActivity">
 
-
-    <com.moengage.widgets.NudgeView
-        android:id="@+id/nudge"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp" />
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="@string/user_data"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <LinearLayout
+        android:id="@+id/user_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical" />
 
-        <Button
-            android:id="@+id/make_payment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="30dp"
-            android:text="@string/make_payment_demo" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="@string/payment_data"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
-    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/payment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+    <Button
+        android:id="@+id/make_payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/make_payment_demo" />
 
 </LinearLayout>

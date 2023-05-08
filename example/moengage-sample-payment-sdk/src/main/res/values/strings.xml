@@ -1,4 +1,7 @@
 <resources>
     <string name="title_checkout_activity">Payment SDK Checkout Activity</string>
     <string name="make_payment_demo">Make Payment Demo</string>
+    <string name="name">Name</string>
+    <string name="payment_data">Payment Data</string>
+    <string name="user_data">User Data</string>
 </resources>

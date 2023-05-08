@@ -1,5 +1,13 @@
 <resources>
-    <string name="app_name">example</string>
+    <string name="app_name">MoEngage Example</string>
     <string name="checkout_payment">Checkout Payment</string>
-    <string name="hello_world">Hello World</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="enter_email_id">Enter Email Id</string>
+    <string name="age">Age</string>
+    <string name="currency">Currency</string>
+    <string name="checkout_now">Checkout Now</string>
+    <string name="notifications">Notifications</string>
 </resources>

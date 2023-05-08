@@ -1,4 +1,4 @@
-package com.moengage.sample.payment.sdk
+package com.moengage.sample.payment.sdk.internal
 
 import android.content.Intent
 import android.os.Build

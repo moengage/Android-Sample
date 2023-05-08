@@ -44,18 +44,6 @@ dependencies {
     implementation(projectLibs.constraintLayout)
 
     compileOnly(moengage.core)
-    compileOnly(moengage.inapp)
-
-    compileOnly(moengage.pushAmpPlus)
-    compileOnly(moengage.pushKit)
-    compileOnly(moengage.pushAmp)
-
-    compileOnly(moengage.geofence)
-
-    compileOnly(moengage.inboxCore)
-    compileOnly(moengage.cardsUi)
-    compileOnly(moengage.cardsCore)
-
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation(projectLibs.junit)
     androidTestImplementation(projectLibs.expresso)

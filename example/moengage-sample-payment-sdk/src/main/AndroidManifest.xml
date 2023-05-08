@@ -3,7 +3,7 @@
 
     <application>
         <activity
-            android:name="com.moengage.sample.payment.sdk.CheckoutActivity"
+            android:name="com.moengage.sample.payment.sdk.internal.CheckoutActivity"
             android:configChanges="orientation|screenSize"
             android:exported="false"
             android:label="@string/title_checkout_activity"

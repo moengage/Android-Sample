@@ -1,4 +1,4 @@
-package com.moengage.sample.payment.sdk
+package com.moengage.sample.payment.sdk.model
 
 import java.io.Serializable
 
