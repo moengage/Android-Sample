@@ -7,6 +7,7 @@ import com.moengage.core.MoEngage
 import com.moengage.core.config.*
 import com.moengage.core.ktx.MoEngageBuilderKtx
 import com.moengage.example.callbacks.ApplicationBackgroundListener
+import com.moengage.example.callbacks.CustomPreProcessingListener
 import com.moengage.example.callbacks.LogoutCompleteListener
 import com.moengage.example.inapp.ClickActionCallback
 import com.moengage.example.inapp.InAppLifecycleCallbacks
@@ -55,6 +56,9 @@ class MoEngageDemoApplication: Application() {
                 applicationContext
             )
         )
+
+        // Register the pre-processing listener, triggered when SDK tries to process intent before initialisation
+        MoECoreHelper.registerPreProcessingListener("YOUR_APP_ID", CustomPreProcessingListener())
     }
 
     private fun setupPushCallbacks() {
