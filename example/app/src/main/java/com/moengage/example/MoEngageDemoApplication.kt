@@ -28,55 +28,24 @@ class MoEngageDemoApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
-        MoEngage.initialiseDefaultInstance(
-            MoEngageBuilderKtx(
-                application = this,
-                appId = "YOUR_APP_ID",
-                notificationConfig = NotificationConfig(
-                    smallIcon = R.drawable.small_icon,
-                    largeIcon = R.drawable.large_icon,
-                    notificationColor = R.color.notification_color,
-                    isMultipleNotificationInDrawerEnabled = true,
-                    isBuildingBackStackEnabled = true,
-                    isLargeIconDisplayEnabled = true
-                ),
-                fcmConfig = FcmConfig(true),
-                pushKitConfig = PushKitConfig(true),
-                geofenceConfig = GeofenceConfig(true)
-            ).build()
-        )
-        // register for application background listener
-        MoECoreHelper.addAppBackgroundListener(ApplicationBackgroundListener())
-        // register for logout complete listener
-        MoECoreHelper.addLogoutCompleteListener(LogoutCompleteListener())
-        setupPushCallbacks()
-        setupInAppCallbacks()
+        application = this
+        // Register the pre-processing listener, triggered when SDK tries to process intent before initialisation
+        // Have this in onCreate() only
+        MoECoreHelper.registerPreProcessingListener("YOUR_APP_ID", CustomPreProcessingListener())
+        MoEngageHandler().initialise(this)
         ProcessLifecycleOwner.get().lifecycle.addObserver(
             ApplicationLifecycleObserver(
                 applicationContext
             )
         )
-
-        // Register the pre-processing listener, triggered when SDK tries to process intent before initialisation
-        MoECoreHelper.registerPreProcessingListener("YOUR_APP_ID", CustomPreProcessingListener())
     }
 
-    private fun setupPushCallbacks() {
-        // callback for notification events and notification customisation point.
-        MoEPushHelper.getInstance().registerMessageListener(CustomPushMessageListener())
-        // Callback for Firebase Token
-        MoEFireBaseHelper.getInstance().addTokenListener { token ->
-            logcat { " fcm token: ${token.pushToken}" }
+    companion object {
+
+        private lateinit var application: Application
+        fun getApplication(): Application {
+            return application
         }
-    }
-
-    private fun setupInAppCallbacks() {
-        // callback for in-app campaign click
-        MoEInAppHelper.getInstance().setClickActionListener(ClickActionCallback())
-        // callback for in-app lifecycle - campaign shown/dismissed.
-        MoEInAppHelper.getInstance().addInAppLifeCycleListener(InAppLifecycleCallbacks())
-        // callback for self handled campaigns that are triggered based on events.
-        MoEInAppHelper.getInstance().setSelfHandledListener(SelfHandledCallback())
     }
 
 }
