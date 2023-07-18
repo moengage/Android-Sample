@@ -43,7 +43,6 @@ dependencies {
 
     implementation(moengage.core)
     implementation(moengage.inapp)
-
     implementation(moengage.pushAmpPlus)
     implementation(moengage.pushKit)
     implementation(moengage.pushAmp)
@@ -52,10 +51,10 @@ dependencies {
     // logging library used only for demonstration, not required by the SDK.
     implementation("com.squareup.logcat:logcat:0.1")
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.1")
-    implementation("com.google.android.material:material:1.5.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.2")
+    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.appcompat:appcompat:1.4.2")
+    implementation("com.google.android.material:material:1.6.1")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.lifecycle:lifecycle-process:2.5.1")
     implementation("com.google.firebase:firebase-messaging:23.1.2")
     testImplementation("junit:junit:4.+")
