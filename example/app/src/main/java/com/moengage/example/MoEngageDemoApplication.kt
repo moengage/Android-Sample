@@ -1,7 +1,6 @@
 package com.moengage.example
 
 import android.app.Application
-import androidx.lifecycle.ProcessLifecycleOwner
 import com.moengage.core.MoECoreHelper
 import com.moengage.core.MoEngage
 import com.moengage.core.config.*
@@ -12,7 +11,9 @@ import com.moengage.example.inapp.ClickActionCallback
 import com.moengage.example.inapp.InAppLifecycleCallbacks
 import com.moengage.example.inapp.SelfHandledCallback
 import com.moengage.example.push.CustomPushMessageListener
+import com.moengage.example.push.GeofenceHitListener
 import com.moengage.firebase.MoEFireBaseHelper
+import com.moengage.geofence.MoEGeofenceHelper
 import com.moengage.inapp.MoEInAppHelper
 import com.moengage.pushbase.MoEPushHelper
 import logcat.logcat
@@ -40,8 +41,7 @@ class MoEngageDemoApplication: Application() {
                     isLargeIconDisplayEnabled = true
                 ),
                 fcmConfig = FcmConfig(true),
-                pushKitConfig = PushKitConfig(true),
-                geofenceConfig = GeofenceConfig(true)
+                pushKitConfig = PushKitConfig(true)
             ).build()
         )
         // register for application background listener
@@ -50,11 +50,12 @@ class MoEngageDemoApplication: Application() {
         MoECoreHelper.addLogoutCompleteListener(LogoutCompleteListener())
         setupPushCallbacks()
         setupInAppCallbacks()
-        ProcessLifecycleOwner.get().lifecycle.addObserver(
-            ApplicationLifecycleObserver(
-                applicationContext
-            )
-        )
+
+        // Register Geofence Hit Listener
+        MoEGeofenceHelper.getInstance().addListener(GeofenceHitListener())
+
+        // Enables geofence monitoring, required Only for Location-Triggered campaigns
+        MoEGeofenceHelper.getInstance().startGeofenceMonitoring(this)
     }
 
     private fun setupPushCallbacks() {

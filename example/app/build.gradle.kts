@@ -4,12 +4,13 @@ plugins {
 }
 
 android {
-    compileSdk = 33
+    compileSdk = 34
+    namespace = "com.moengage.example"
 
     defaultConfig {
         applicationId = "com.moengage.example"
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -30,11 +31,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
-    }
-    repositories {
-        flatDir {
-            dirs("libs")
-        }
+        buildConfig = true
     }
 }
 
@@ -43,7 +40,6 @@ dependencies {
 
     implementation(moengage.core)
     implementation(moengage.inapp)
-    implementation(moengage.pushAmpPlus)
     implementation(moengage.pushKit)
     implementation(moengage.pushAmp)
     implementation(moengage.geofence)
@@ -51,12 +47,18 @@ dependencies {
     // logging library used only for demonstration, not required by the SDK.
     implementation("com.squareup.logcat:logcat:0.1")
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.4.2")
-    implementation("com.google.android.material:material:1.6.1")
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.lifecycle:lifecycle-process:2.5.1")
-    testImplementation("junit:junit:4.+")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    implementation("androidx.lifecycle:lifecycle-process:2.7.0")
+    implementation("com.google.firebase:firebase-messaging:23.4.1")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
+
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
+
+apply(plugin = "com.google.gms.google-services")
