@@ -11,4 +11,3 @@ This repository contains integration reference for MoEngage SDK. The `example` f
 * Add your APP-ID in the Application class
 * Replace the dummy `google-services.json` file with your actual file.
 * Add the `agconnect-services.json` to the project for using HMS Push Kit.
-* Add the `App-id` and `App-Key` from Mi Console to use Xiaomi Push.
