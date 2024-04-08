@@ -1,6 +1,7 @@
 package com.moengage.example
 
 import android.app.Application
+import com.moengage.core.DataCenter
 import com.moengage.core.MoECoreHelper
 import com.moengage.core.MoEngage
 import com.moengage.core.config.*
@@ -32,6 +33,7 @@ class MoEngageDemoApplication: Application() {
             MoEngageBuilderKtx(
                 application = this,
                 appId = "YOUR_APP_ID",
+                dataCenter = DataCenter.DATA_CENTER_1,
                 notificationConfig = NotificationConfig(
                     smallIcon = R.drawable.small_icon,
                     largeIcon = R.drawable.large_icon,
