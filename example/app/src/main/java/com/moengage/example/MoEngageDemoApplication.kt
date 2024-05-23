@@ -5,7 +5,6 @@ import com.moengage.core.DataCenter
 import com.moengage.core.MoECoreHelper
 import com.moengage.core.MoEngage
 import com.moengage.core.config.*
-import com.moengage.core.ktx.MoEngageBuilderKtx
 import com.moengage.example.callbacks.ApplicationBackgroundListener
 import com.moengage.example.callbacks.LogoutCompleteListener
 import com.moengage.example.inapp.ClickActionCallback
@@ -23,29 +22,28 @@ import logcat.logcat
  * @author Umang Chamaria
  * Date: 2022/02/03
  */
-class MoEngageDemoApplication: Application() {
+class MoEngageDemoApplication : Application() {
 
     private val tag = "MoEngageDemoApplication"
 
     override fun onCreate() {
         super.onCreate()
-        MoEngage.initialiseDefaultInstance(
-            MoEngageBuilderKtx(
-                application = this,
-                appId = "YOUR_APP_ID",
-                dataCenter = DataCenter.DATA_CENTER_1,
-                notificationConfig = NotificationConfig(
-                    smallIcon = R.drawable.small_icon,
-                    largeIcon = R.drawable.large_icon,
-                    notificationColor = R.color.notification_color,
-                    isMultipleNotificationInDrawerEnabled = true,
-                    isBuildingBackStackEnabled = true,
-                    isLargeIconDisplayEnabled = true
-                ),
-                fcmConfig = FcmConfig(true),
-                pushKitConfig = PushKitConfig(true)
-            ).build()
-        )
+        val moEngage =
+            MoEngage.Builder(this, "YOUR_APP_ID", DataCenter.DATA_CENTER_1)
+                .configureNotificationMetaData(
+                    NotificationConfig(
+                        smallIcon = R.drawable.small_icon,
+                        largeIcon = R.drawable.large_icon,
+                        notificationColor = R.color.notification_color,
+                        isMultipleNotificationInDrawerEnabled = true,
+                        isBuildingBackStackEnabled = true,
+                        isLargeIconDisplayEnabled = true
+                    )
+                )
+                .configureFcm(FcmConfig(true))
+                .configurePushKit(PushKitConfig(true))
+                .build()
+        MoEngage.initialiseDefaultInstance(moEngage = moEngage)
         // register for application background listener
         MoECoreHelper.addAppBackgroundListener(ApplicationBackgroundListener())
         // register for logout complete listener
