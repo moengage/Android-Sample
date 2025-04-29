@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SettingViewModel @Inject constructor(
+class ProfileViewModel @Inject constructor(
     private val application: Application,
     private val repository: Repository
 ) : AndroidViewModel(application) {

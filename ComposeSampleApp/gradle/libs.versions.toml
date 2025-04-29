@@ -3,7 +3,10 @@ accompanistPermissions = "0.37.2"
 agp = "8.8.2"
 coilComposeVersion = "2.4.0"
 coreSplashscreen = "1.0.1"
+credentialsPlayServicesAuthVersion = "1.5.0"
 datastorePreferences = "1.1.4"
+firebaseBom = "33.13.0"
+googleid = "1.1.1"
 hiltNavigationFragment = "1.2.0"
 kotlin = "2.1.0"
 coreKtx = "1.16.0"
@@ -47,26 +50,30 @@ androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 coil-kt-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilComposeVersion" }
+credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentialsPlayServicesAuthVersion" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktorClientAndroid" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktorClientLogging" }
 ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktorClientSerialization" }
-timber = {group = "com.jakewharton.timber", name = "timber", version.ref = "timber"}
-hilt-android = { group = "com.google.dagger", name = "hilt-android" , version.ref = "hiltVersion"}
-hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler" , version.ref = "hiltVersion"}
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hiltVersion" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "uiTooling" }
 cloudMessaging = { module = "com.google.firebase:firebase-messaging", version = "24.1.1" }
 playLocation = { module = "com.google.android.gms:play-services-location", version = "21.3.0" }
-adIdentifier = { module = "com.google.android.gms:play-services-ads-identifier", version = "18.2.0"}
+adIdentifier = { module = "com.google.android.gms:play-services-ads-identifier", version = "18.2.0" }
 glideCore = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-ksp = { id = "com.google.devtools.ksp", version.ref ="kspVersion" }
-hilt = { id = "com.google.dagger.hilt.android", version.ref ="hiltVersion" }
-ktlint = {id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
-kotlin-serialization = {id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 plugin-google-play-service = { id = "com.google.gms.google-services", version = "4.4.2" }
 

@@ -1,143 +1,53 @@
 package com.moengage.sampleapp.screens.setting
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import android.widget.Toast
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.Text
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.rememberImagePainter
-import com.moengage.sampleapp.R
-import com.moengage.sampleapp.screens.common.EditableField
-import com.moengage.sampleapp.screens.common.ToggleField
+import com.moengage.sampleapp.state.UiState
 import com.moengage.sampleapp.ui.theme.MoEngageSampleAppTheme
-import com.moengage.sampleapp.util.openDeeplink
-import com.moengage.sampleapp.viewmodel.SettingViewModel
+import com.moengage.sampleapp.viewmodel.GoogleSigningViewModel
+
 
 @Composable
 fun SettingScreen(
     modifier: Modifier = Modifier,
-    viewModel: SettingViewModel = hiltViewModel()
+    signingViewModel: GoogleSigningViewModel = hiltViewModel()
 ) {
-    val userId = viewModel.getUserId().collectAsState(null)
-    val firstName = viewModel.getFirstName().collectAsState(null)
-    val lastName = viewModel.getLastName().collectAsState(null)
-    val email = viewModel.getEmail().collectAsState(null)
-
-    val isUserIdEditable = remember {
-        derivedStateOf { userId.value.isNullOrBlank() }
-    }
-
-    val context = LocalContext.current
-
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Card(
-            shape = CircleShape,
-            modifier = Modifier.padding(8.dp)
-        ) {
-            Image(
-                painter = rememberImagePainter(R.drawable.icon_profile),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(64.dp)
-                    .padding(8.dp),
-                contentScale = ContentScale.Crop
-            )
+    when (signingViewModel.loginState.value) {
+        is UiState.Loading -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(32.dp)
+                )
+            }
         }
 
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(32.dp)
-        )
-
-        EditableField(
-            label = "User Id",
-            initialValue = userId.value,
-            isEditable = isUserIdEditable.value
-        ) {
-            viewModel.updateUserId(it)
+        is UiState.Failure -> {
+            Toast.makeText(LocalContext.current, "Failed Signing, Try Again", Toast.LENGTH_SHORT)
+                .show()
+            GoogleSigningScreen()
         }
 
-        EditableField(
-            label = "First Name",
-            initialValue = firstName.value
-        ) {
-            viewModel.saveFirstName(it)
+        is UiState.Success -> {
+            ProfileScreen(modifier)
         }
 
-        EditableField(
-            label = "Last Name",
-            initialValue = lastName.value
-        ) {
-            viewModel.saveLastName(it)
+        else -> {
+            GoogleSigningScreen()
         }
-
-        EditableField(
-            label = "Email",
-            initialValue = email.value
-        ) {
-            viewModel.saveEmail(it)
-        }
-
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(32.dp)
-        )
-
-        ToggleField(
-            label = "GAID Tracking",
-            initialCheckStatus = viewModel.getGaidStatus().collectAsState(false).value
-        ) {
-            viewModel.saveGaidStatus(it)
-        }
-
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(12.dp)
-        )
-
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable(
-                    true,
-                    onClick = {
-                        context.openDeeplink("https://www.moengage.com/")
-                    }
-                ),
-            text = "Terms and Condition",
-            color = Black,
-            fontSize = 16.sp
-        )
     }
 }
 

@@ -78,6 +78,11 @@ dependencies {
     implementation(libs.playLocation)
     implementation(libs.adIdentifier)
     implementation(libs.glideCore) // required by MoEngage to display InApp
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.credentials.play.services.auth)
+    implementation(libs.credentials.play.services.auth)
+    implementation(libs.googleid)
 
     ksp(libs.androidx.room.compiler)
     ksp(libs.hilt.compiler)
