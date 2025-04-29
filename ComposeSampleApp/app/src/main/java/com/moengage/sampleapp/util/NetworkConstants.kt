@@ -9,3 +9,5 @@ internal const val API_KEY_QUERY_PARAM = "apiKey"
 internal const val API_PAGE_NUMBER_QUERY_PARAM = "page"
 internal const val API_ARTICLE_PER_PAGE_QUERY_PARAM = "pageSize"
 internal const val API_ARTICLE_PER_PAGE_QUERY_PARAM_VALUE = "10"
+
+internal const val GOOGLE_SIGNING_WEB_CLIENT_ID = "GOOGLE_SIGNING_WEB_CLIENT_ID"

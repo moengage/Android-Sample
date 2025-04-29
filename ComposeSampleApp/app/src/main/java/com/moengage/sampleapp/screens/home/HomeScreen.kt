@@ -1,5 +1,6 @@
 package com.moengage.sampleapp.screens.home
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import com.moengage.sampleapp.libaries.moengage.MoEngageHelper
 import com.moengage.sampleapp.screens.article.ArticleScreen
 import com.moengage.sampleapp.screens.bookmark.BookmarkScreen
+import com.moengage.sampleapp.screens.common.Toolbar
 import com.moengage.sampleapp.screens.setting.SettingScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,26 +44,31 @@ fun MainScreen() {
             }
         },
     ) { innerPadding ->
-        ContentScreen(modifier = Modifier.padding(innerPadding), selectedIndex)
+        Column(
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            Toolbar()
+            ContentScreen(selectedIndex = selectedIndex)
+        }
     }
 }
 
 @Composable
-fun ContentScreen(modifier: Modifier = Modifier, selectedIndex: Int) {
+fun ContentScreen(selectedIndex: Int) {
     when (selectedIndex) {
         0 -> {
             MoEngageHelper.onScreenChange("ArticleScreen")
-            ArticleScreen(modifier)
+            ArticleScreen()
         }
 
         1 -> {
             MoEngageHelper.onScreenChange("BookmarkScreen")
-            BookmarkScreen(modifier)
+            BookmarkScreen()
         }
 
         2 -> {
             MoEngageHelper.onScreenChange("SettingScreen")
-            SettingScreen(modifier)
+            SettingScreen()
         }
     }
 }

@@ -5,7 +5,7 @@ import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
-import com.moengage.sampleapp.util.WEB_CLIENT_ID
+import com.moengage.sampleapp.util.GOOGLE_SIGNING_WEB_CLIENT_ID
 import jakarta.inject.Inject
 import java.security.MessageDigest
 import java.util.UUID
@@ -24,7 +24,7 @@ class GoogleSigning @Inject constructor(private val application: Application) {
     }
 
     private fun getSignInWithGoogleOption(): GetSignInWithGoogleOption {
-        return GetSignInWithGoogleOption.Builder(WEB_CLIENT_ID)
+        return GetSignInWithGoogleOption.Builder(GOOGLE_SIGNING_WEB_CLIENT_ID)
             .setNonce(
                 MessageDigest.getInstance("SHA-256")
                     .digest(UUID.randomUUID().toString().toByteArray()).fold("") { str, it ->

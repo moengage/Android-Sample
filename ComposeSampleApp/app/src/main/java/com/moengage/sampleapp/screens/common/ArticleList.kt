@@ -17,12 +17,11 @@ import com.moengage.sampleapp.viewmodel.MainViewModel
 
 @Composable
 fun ArticleList(
-    modifier: Modifier = Modifier,
     articles: State<List<Article>>,
     mainViewModel: MainViewModel
 ) {
     LazyColumn(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp)
     ) {
@@ -34,12 +33,11 @@ fun ArticleList(
 
 @Composable
 fun ArticleList(
-    modifier: Modifier = Modifier,
     articles: LazyPagingItems<Article>,
     viewModel: MainViewModel
 ) {
     LazyColumn(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp)
     ) {

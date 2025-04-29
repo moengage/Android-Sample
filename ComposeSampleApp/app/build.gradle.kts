@@ -24,7 +24,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
@@ -87,13 +88,12 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     ksp(libs.hilt.compiler)
 
-    debugImplementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.ui.tooling.preview)
     debugImplementation(libs.androidx.ui.tooling)
 
     // MoEngage Dependencies
     implementation(moengage.core)
     implementation(moengage.geofence)
-    implementation(moengage.pushKit)
     implementation(moengage.richNotification)
     implementation(moengage.deviceTrigger)
     implementation(moengage.pushAmp)
