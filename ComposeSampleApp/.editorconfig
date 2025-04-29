@@ -1,0 +1,9 @@
+[*.{kt,kts}]
+insert_final_newline = false
+indent_size = 4
+ktlint_function_naming_ignore_when_annotated_with=Composable
+
+[*.java]
+indent_style = tab
+tab_width = 2
+indent_size = 2
