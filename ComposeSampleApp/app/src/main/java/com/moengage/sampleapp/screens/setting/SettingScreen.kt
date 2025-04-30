@@ -13,18 +13,17 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.moengage.sampleapp.state.UiState
+import com.moengage.sampleapp.state.UserState
 import com.moengage.sampleapp.ui.theme.MoEngageSampleAppTheme
 import com.moengage.sampleapp.viewmodel.GoogleSigningViewModel
-
 
 @Composable
 fun SettingScreen(
     modifier: Modifier = Modifier,
     signingViewModel: GoogleSigningViewModel = hiltViewModel()
 ) {
-    when (signingViewModel.loginState.value) {
-        is UiState.Loading -> {
+    when (signingViewModel.userState.value) {
+        is UserState.Loading -> {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -35,18 +34,21 @@ fun SettingScreen(
             }
         }
 
-        is UiState.Failure -> {
-            Toast.makeText(LocalContext.current, "Failed Signing, Try Again", Toast.LENGTH_SHORT)
-                .show()
+        is UserState.Anonymous -> {
             GoogleSigningScreen()
         }
 
-        is UiState.Success -> {
+        is UserState.LoginFailed -> {
+            Toast.makeText(
+                LocalContext.current,
+                "Failed Loading User, Try Again!",
+                Toast.LENGTH_SHORT
+            ).show()
+            GoogleSigningScreen()
+        }
+
+        is UserState.LoggedIn -> {
             ProfileScreen(modifier)
-        }
-
-        else -> {
-            GoogleSigningScreen()
         }
     }
 }
