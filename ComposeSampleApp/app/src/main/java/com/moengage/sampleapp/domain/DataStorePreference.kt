@@ -31,4 +31,6 @@ interface DataStorePreference {
     suspend fun saveGaidStatus(optedIn: Boolean)
 
     fun getGaidStatus(): Flow<Boolean>
+
+    suspend fun clearUserData()
 }

@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import com.moengage.sampleapp.data.repository.GoogleSigning
 import com.moengage.sampleapp.state.UserState
 import com.moengage.sampleapp.viewmodel.GoogleSigningViewModel
@@ -28,7 +29,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun GoogleSigningScreen(viewModel: GoogleSigningViewModel = hiltViewModel()) {
 
-    val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
 
     Box(
@@ -41,7 +41,7 @@ fun GoogleSigningScreen(viewModel: GoogleSigningViewModel = hiltViewModel()) {
                 .height(50.dp),
             border = BorderStroke(4.dp, MaterialTheme.colorScheme.primary),
             onClick = {
-                coroutineScope.launch {
+                viewModel.viewModelScope.launch {
                     viewModel.userState.value = UserState.Loading()
                     GoogleSigning(context).login { viewModel.handleSignIn(it) }
                 }

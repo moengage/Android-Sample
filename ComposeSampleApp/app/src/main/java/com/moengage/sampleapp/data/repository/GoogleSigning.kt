@@ -1,6 +1,7 @@
 package com.moengage.sampleapp.data.repository
 
 import android.content.Context
+import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
@@ -30,6 +31,17 @@ class GoogleSigning(private val context: Context) {
         } catch (t: Throwable) {
             log(tag, LogLevel.ERROR, t) { "login(): " }
             onLogin(null)
+        }
+    }
+
+    suspend fun logout(onLogout: () -> Unit) {
+        try {
+            log(tag) { "logout(): Started" }
+            CredentialManager.create(context).clearCredentialState(ClearCredentialStateRequest())
+            onLogout()
+            log(tag) { "logout(): Completed" }
+        } catch (t: Throwable) {
+            log(tag, LogLevel.ERROR, t) { "logout(): " }
         }
     }
 

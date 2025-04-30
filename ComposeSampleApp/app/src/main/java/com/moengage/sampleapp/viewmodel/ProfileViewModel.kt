@@ -78,4 +78,11 @@ class ProfileViewModel @Inject constructor(
             MoEngageHelper.changeGaidStatus(application, optedIn)
         }
     }
+
+    fun onLogout() {
+        viewModelScope.launch {
+            repository.clearUserData()
+            MoEngageHelper.logout(application)
+        }
+    }
 }

@@ -107,6 +107,15 @@ class DataStorePreferenceImpl @Inject constructor(
             preference[GAID_STATUS] == true
         }
     }
+
+    override suspend fun clearUserData() {
+        context.dataStore.edit { settings ->
+            settings.remove(USER_ID)
+            settings.remove(EMAIL)
+            settings.remove(FIRST_NAME)
+            settings.remove(LAST_NAME)
+        }
+    }
 }
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = DATA_STORE_NAME)

@@ -1,6 +1,7 @@
 package com.moengage.sampleapp.libaries.moengage
 
 import android.content.Context
+import com.moengage.core.MoECoreHelper
 import com.moengage.core.Properties
 import com.moengage.core.analytics.MoEAnalyticsHelper
 import com.moengage.core.disableAdIdTracking
@@ -57,5 +58,9 @@ object MoEngageHelper {
 
     fun onScreenChange(screenName: String) {
         MoEInAppHelper.getInstance().setInAppContext(setOf(screenName))
+    }
+
+    fun logout(context: Context) {
+        MoECoreHelper.logoutUser(context)
     }
 }
