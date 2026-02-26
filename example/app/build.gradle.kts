@@ -42,9 +42,7 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
 
-    implementation(platform(libs.moengage.bom)) {
-        exclude(group="com.moengage", module = "sdk-debugger")
-    }
+    implementation(platform(libs.moengage.bom))
     implementation(libs.moengage.inapp)
     implementation(libs.moengage.pushKit)
     implementation(libs.moengage.pushAmp)
