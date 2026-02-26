@@ -6,4 +6,4 @@ moengage-pushAmp = { module = "com.moengage:push-amp" }
 moengage-geofence = { module = "com.moengage:geofence" }
 moengage-inboxCore = { module = "com.moengage:inbox-core" }
 # external libraries
-logcat = { module = "com.squareup.logcat:logcat", version = "0.4" }
+logcat = { module = "com.squareup.logcat:logcat", version = "0.1" }
