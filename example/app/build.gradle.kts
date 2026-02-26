@@ -38,14 +38,16 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
 
-    implementation(moengage.core)
-    implementation(moengage.inapp)
-    implementation(moengage.pushKit)
-    implementation(moengage.pushAmp)
-    implementation(moengage.geofence)
-    implementation(moengage.inboxCore)
+    implementation(platform(libs.moengage.bom)) {
+        exclude(group="com.moengage", module = "sdk-debugger")
+    }
+    implementation(libs.moengage.inapp)
+    implementation(libs.moengage.pushKit)
+    implementation(libs.moengage.pushAmp)
+    implementation(libs.moengage.geofence)
+    implementation(libs.moengage.inboxCore)
     // logging library used only for demonstration, not required by the SDK.
-    implementation("com.squareup.logcat:logcat:0.1")
+    implementation(libs.logcat)
 
     implementation(moengage.androidXCore)
     implementation(moengage.androidXCompact)

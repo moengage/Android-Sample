@@ -1,0 +1,9 @@
+[libraries]
+moengage-bom = { module = "com.moengage:android-bom", version = "1.5.1" }
+moengage-inapp = { module = "com.moengage:inapp" }
+moengage-pushKit = { module = "com.moengage:hms-pushkit" }
+moengage-pushAmp = { module = "com.moengage:push-amp" }
+moengage-geofence = { module = "com.moengage:geofence" }
+moengage-inboxCore = { module = "com.moengage:inbox-core" }
+# external libraries
+logcat = { module = "com.squareup.logcat:logcat", version = "0.4" }
