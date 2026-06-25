@@ -52,10 +52,10 @@ class MoEngageDemoApplication : Application() {
         setupInAppCallbacks()
 
         // Register Geofence Hit Listener
-        MoEGeofenceHelper.getInstance().addListener(GeofenceHitListener())
+//        MoEGeofenceHelper.getInstance().addListener(GeofenceHitListener())
 
         // Enables geofence monitoring, required Only for Location-Triggered campaigns
-        MoEGeofenceHelper.getInstance().startGeofenceMonitoring(this)
+//        MoEGeofenceHelper.getInstance().startGeofenceMonitoring(this)
     }
 
     private fun setupPushCallbacks() {
