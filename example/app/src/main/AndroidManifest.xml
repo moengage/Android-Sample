@@ -41,10 +41,10 @@
     </service>
 
     <receiver
-        android:name=".ordertracking.OrderNotificationDismissReceiver"
+        android:name=".ordertracking.notification.OrderNotificationDismissReceiver"
         android:exported="false" />
     <receiver
-        android:name=".ordertracking.OrderNotificationClickReceiver"
+        android:name=".ordertracking.notification.OrderNotificationClickReceiver"
         android:exported="false" />
   </application>
 

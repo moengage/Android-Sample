@@ -1,12 +1,10 @@
-package com.moengage.example.ordertracking
-
-/** Maps dashboard icon keys (e.g. `"scooter"`) to vector drawables bundled in the sample app. */
+package com.moengage.example.ordertracking.render
 
 import android.content.Context
 import androidx.core.graphics.drawable.IconCompat
 import com.moengage.example.R
 
-/** Returns the notification icon for a payload key such as [OrderTrackingPayload.trackerIcon]. */
+/** Maps dashboard icon keys (e.g. `"scooter"`) to vector drawables bundled in the sample app. */
 internal fun notificationIcon(context: Context, key: String): IconCompat {
     val resId =
         when (key) {

@@ -5,6 +5,8 @@ Paste each **Value** below as a single line (remove line breaks if you copy the 
 
 Use the same `order_id` in every stage.
 
+**Countdown stages (2–5):** Prefer adding `"eta_epoch_ms": <unix_ms>` (time when the chip should reach zero, e.g. now + 32 minutes for stage 2). The sample falls back to `"N min"` in `chip_text` if `eta_epoch_ms` is omitted.
+
 ---
 
 ## Stage 1 — Order placed

@@ -1,8 +1,4 @@
-package com.moengage.example.ordertracking
-
-/**
- * API 34–35 fallback: [NotificationCompat.BigPictureStyle] with a client-drawn coloured progress strip.
- */
+package com.moengage.example.ordertracking.render
 
 import android.Manifest
 import android.content.Context
@@ -11,7 +7,11 @@ import androidx.annotation.RequiresPermission
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.moengage.example.R
+import com.moengage.example.ordertracking.CHANNEL_ID
+import com.moengage.example.ordertracking.NOTIFICATION_ID
+import com.moengage.example.ordertracking.model.OrderTrackingPayload
 
+/** API 34–35 fallback: [NotificationCompat.BigPictureStyle] with a client-drawn coloured progress strip. */
 @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
 internal fun renderBigPictureFallbackNotification(
     context: Context,

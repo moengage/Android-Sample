@@ -1,4 +1,9 @@
-package com.moengage.example.ordertracking
+package com.moengage.example.ordertracking.live
+
+import com.moengage.example.ordertracking.CHIP_MINUTE_ROUND_UP_MS
+import com.moengage.example.ordertracking.MS_PER_MINUTE
+import com.moengage.example.ordertracking.model.OrderTrackingPayload
+import com.moengage.example.ordertracking.model.orderStage
 
 /** Chip and tracker values to apply when re-posting the notification. */
 internal data class LiveUpdateDisplayState(
@@ -16,16 +21,21 @@ private fun defaultTrackerEnd(payload: OrderTrackingPayload): Int {
 }
 
 /**
- * When the countdown should hit zero: explicit [OrderTrackingPayload.etaEpochMs], or
- * push time plus minutes parsed from chip text (e.g. "12 min").
+ * When the countdown should hit zero: prefer [OrderTrackingPayload.etaEpochMs]; otherwise
+ * [OrderTrackingPayload.chipText] only when it matches `"N min"` (food-delivery convenience).
+ * Non-minute chips (e.g. ride-hailing OTP `"4421"`, status `"Placing"`) do not start a countdown.
  */
 private fun effectiveEtaMs(payload: OrderTrackingPayload, receivedAtMs: Long): Long? {
     payload.etaEpochMs?.let { return it }
-    val minutes = payload.chipText.filter { it.isDigit() }.toIntOrNull()
-    if (minutes != null && minutes > 0) {
-        return receivedAtMs + minutes * MS_PER_MINUTE
-    }
-    return null
+    val minutes = minutesFromMinuteChip(payload.chipText) ?: return null
+    return receivedAtMs + minutes * MS_PER_MINUTE
+}
+
+private val minuteChipPattern = Regex("""^(\d+)\s*min$""", RegexOption.IGNORE_CASE)
+
+private fun minutesFromMinuteChip(chipText: String): Int? {
+    val minutes = minuteChipPattern.matchEntire(chipText.trim())?.groupValues?.get(1)?.toIntOrNull()
+    return minutes?.takeIf { it > 0 }
 }
 
 /** True when background ticks should continue (countdown stage, not terminal, not stale). */

@@ -25,7 +25,7 @@ Food-delivery **Progress Centric Template** demo using MoEngage **self-handled**
 
 * **Customer guide:** [docs/pct/ORDER_TRACKING_CUSTOMER_GUIDE.md](docs/pct/ORDER_TRACKING_CUSTOMER_GUIDE.md)
 * **Stage payloads:** [docs/pct/templates/food-delivery-stage-payloads.md](docs/pct/templates/food-delivery-stage-payloads.md)
-* **Code:** `example/app/.../ordertracking/`
+* **Code:** `example/app/.../ordertracking/` (`model/`, `data/`, `render/`, `live/`, `notification/` — top-level render functions, not a single `PctRenderer` class)
 * Configure your MoEngage App ID, environment, data center, and `google-services.json` (plus uncomment the plugin in `build.gradle.kts`) before push testing.
 
 ### ComposeSampleApp Usage

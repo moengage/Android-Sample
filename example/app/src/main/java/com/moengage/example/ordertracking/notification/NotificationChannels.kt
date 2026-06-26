@@ -1,4 +1,4 @@
-package com.moengage.example.ordertracking
+package com.moengage.example.ordertracking.notification
 
 import android.app.NotificationChannel
 import android.app.NotificationManager

@@ -1,24 +1,25 @@
-package com.moengage.example.ordertracking
-
-/**
- * API 31–33 fallback: [NotificationCompat.BigTextStyle] with emoji segment indicators in the body.
- */
+package com.moengage.example.ordertracking.render
 
 import android.Manifest
 import android.content.Context
 import androidx.annotation.RequiresPermission
-import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.moengage.example.R
+import com.moengage.example.ordertracking.CHANNEL_ID
+import com.moengage.example.ordertracking.NOTIFICATION_ID
+import com.moengage.example.ordertracking.model.OrderTrackingPayload
 
+/**
+ * API ≤30 fallback: standard collapsed notification (title + one-line step/chip summary).
+ * No expandable style — matches product guidance for legacy devices.
+ */
 @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
-internal fun renderBigTextFallbackNotification(
+internal fun renderStandardFallbackNotification(
     context: Context,
     payload: OrderTrackingPayload,
     chipText: String,
 ) {
-    val emojiLine = emojiProgressLine(payload.stage, payload.segments.size)
-    val body = "$emojiLine\n${fallbackStepSummary(payload, chipText)}"
+    val collapsed = fallbackStepSummary(payload, chipText, includeMessage = false)
     val notification =
         orderNotificationBuilder(
                 context,
@@ -27,8 +28,7 @@ internal fun renderBigTextFallbackNotification(
                 payload,
             )
             .setContentTitle(payload.title)
-            .setContentText(body)
-            .setStyle(NotificationCompat.BigTextStyle().bigText(body))
+            .setContentText(collapsed)
             .build()
 
     NotificationManagerCompat.from(context)

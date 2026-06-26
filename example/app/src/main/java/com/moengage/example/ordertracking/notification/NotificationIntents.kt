@@ -1,14 +1,10 @@
-package com.moengage.example.ordertracking
-
-/**
- * Pending intents wired into notifications: tap → [OrderNotificationClickReceiver],
- * swipe dismiss → [OrderNotificationDismissReceiver].
- */
+package com.moengage.example.ordertracking.notification
 
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import com.moengage.example.ordertracking.EXTRA_ORDER_ID
 
 /** Fired when the user taps the notification body. */
 internal fun orderNotificationContentIntent(context: Context, orderId: String): PendingIntent =

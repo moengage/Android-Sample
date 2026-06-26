@@ -1,10 +1,4 @@
-package com.moengage.example.ordertracking
-
-/**
- * Draws a coloured progress strip bitmap for API 34–35 [NotificationCompat.BigPictureStyle] fallback.
- * Uses the same [OrderTrackingPayload.segments], [OrderTrackingPayload.points], and tracker position
- * as [NotificationCompat.ProgressStyle] on API 36+.
- */
+package com.moengage.example.ordertracking.render
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -13,6 +7,8 @@ import android.graphics.Paint
 import android.graphics.RectF
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.toColorInt
+import com.moengage.example.ordertracking.STRIP_TRACKER_DOT_COLOR_HEX
+import com.moengage.example.ordertracking.model.OrderTrackingPayload
 
 private const val STRIP_WIDTH_PX = 960
 private const val STRIP_HEIGHT_PX = 200
@@ -22,7 +18,7 @@ private const val BAR_CORNER_RADIUS_PX = 14f
 private const val TRACKER_RADIUS_PX = 16f
 private const val POINT_RADIUS_PX = 8f
 
-/** Renders the progress strip as a bitmap suitable for [NotificationCompat.BigPictureStyle.bigPicture]. */
+/** Renders the progress strip as a bitmap for API 34–35 [NotificationCompat.BigPictureStyle]. */
 internal fun createProgressStripBitmap(
     payload: OrderTrackingPayload,
     trackerPosition: Int,

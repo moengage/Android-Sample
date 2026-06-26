@@ -1,10 +1,6 @@
-package com.moengage.example.ordertracking
+package com.moengage.example.ordertracking.model
 
-/**
- * Kotlin models for the MoEngage dashboard `pct_payload` JSON: one payload per stage push,
- * including progress bar segments, tracker position, chip text, and optional local-update fields.
- */
-
+import com.moengage.example.ordertracking.DEFAULT_STALE_CHIP_TEXT
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

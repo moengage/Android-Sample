@@ -1,8 +1,10 @@
 package com.moengage.example.push
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import androidx.annotation.RequiresPermission
 import com.moengage.example.ordertracking.handleOrderTrackingPush
 import com.moengage.pushbase.push.PushMessageListener
 import logcat.logcat
@@ -22,6 +24,7 @@ class CustomPushMessageListener: PushMessageListener() {
      * Called for MoEngage Background Update (self-handled) pushes.
      * Forwards to [handleOrderTrackingPush] when the dashboard sends key `pct_payload`.
      */
+    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     override fun onSelfHandledNotificationReceived(context: Context, payload: Bundle) {
         super.onSelfHandledNotificationReceived(context, payload)
         handleOrderTrackingPush(context, payload)

@@ -1,4 +1,6 @@
-package com.moengage.example.ordertracking
+package com.moengage.example.ordertracking.model
+
+import com.moengage.example.ordertracking.PROGRESS_BAR_MAX
 
 /**
  * Food-delivery order stages mapped from dashboard JSON field `"stage": 1..6`.

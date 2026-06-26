@@ -1,4 +1,25 @@
-package com.moengage.example.ordertracking
+package com.moengage.example.ordertracking.render
+
+import android.Manifest
+import android.content.Context
+import android.os.Build
+import android.os.Handler
+import android.os.Looper
+import androidx.annotation.RequiresPermission
+import androidx.core.app.NotificationManagerCompat
+import com.moengage.example.ordertracking.BIG_PICTURE_MAX_SDK
+import com.moengage.example.ordertracking.BIG_PICTURE_MIN_SDK
+import com.moengage.example.ordertracking.BIG_TEXT_MIN_SDK
+import com.moengage.example.ordertracking.NOTIFICATION_ID
+import com.moengage.example.ordertracking.PROGRESS_STYLE_MIN_SDK
+import com.moengage.example.ordertracking.TERMINAL_DISMISS_DELAY_MS
+import com.moengage.example.ordertracking.data.orderSessionRepository
+import com.moengage.example.ordertracking.live.cancelLiveUpdateWork
+import com.moengage.example.ordertracking.live.orderTrackingScope
+import com.moengage.example.ordertracking.model.OrderTrackingPayload
+import kotlinx.coroutines.launch
+
+private val terminalDismissHandler = Handler(Looper.getMainLooper())
 
 /**
  * Routes each stage to the correct notification UI by API level:
@@ -9,19 +30,6 @@ package com.moengage.example.ordertracking
  *
  * Reuses the same notification tag ([OrderTrackingPayload.orderId]) for in-place updates.
  */
-
-import android.Manifest
-import android.content.Context
-import android.os.Build
-import android.os.Handler
-import android.os.Looper
-import androidx.annotation.RequiresPermission
-import androidx.core.app.NotificationManagerCompat
-import kotlinx.coroutines.launch
-
-private val terminalDismissHandler = Handler(Looper.getMainLooper())
-
-/** Chooses notification UI by API level and posts to the same slot for each [OrderTrackingPayload.orderId]. */
 @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
 internal fun routeOrderNotification(
     context: Context,
@@ -48,7 +56,7 @@ internal fun routeOrderNotification(
                 .cancel(orderId, NOTIFICATION_ID)
             cancelLiveUpdateWork(appContext, orderId)
             orderTrackingScope.launch {
-                OrderSessionRepository(appContext).clearSession(orderId)
+                orderSessionRepository(appContext).clearSession(orderId)
             }
         }, TERMINAL_DISMISS_DELAY_MS)
     }

@@ -1,9 +1,4 @@
-package com.moengage.example.ordertracking
-
-/**
- * WorkManager integration for local notification updates every [LIVE_UPDATE_INTERVAL_SEC] seconds
- * (chip countdown and tracker motion) until the next MoEngage stage push or stale freeze.
- */
+package com.moengage.example.ordertracking.live
 
 import android.Manifest
 import android.content.Context
@@ -13,12 +8,19 @@ import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.moengage.example.ordertracking.EXTRA_ORDER_ID
+import com.moengage.example.ordertracking.LIVE_UPDATE_INTERVAL_SEC
+import com.moengage.example.ordertracking.LOG_TAG
+import com.moengage.example.ordertracking.WORK_TAG_PREFIX
+import com.moengage.example.ordertracking.data.orderSessionRepository
+import com.moengage.example.ordertracking.render.routeOrderNotification
 import java.util.concurrent.TimeUnit
 
+/** Runs one local notification tick (chip countdown and tracker motion). */
 @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
 internal suspend fun tickLiveUpdate(context: Context, orderId: String): Boolean {
     val appContext = context.applicationContext
-    val sessionRepository = OrderSessionRepository(appContext)
+    val sessionRepository = orderSessionRepository(appContext)
     if (sessionRepository.isDismissed(orderId)) return false
 
     val payload = sessionRepository.getPayload(orderId) ?: return false
@@ -36,7 +38,7 @@ internal suspend fun tickLiveUpdate(context: Context, orderId: String): Boolean 
     return shouldScheduleLiveUpdate(payload, display.stale, receivedAtMs)
 }
 
-internal fun scheduleNextLiveUpdate(context: Context, orderId: String) {
+internal fun scheduleNextLiveUpdate(context: Context, orderId: String, replaceExisting: Boolean = true) {
     val request =
         OneTimeWorkRequestBuilder<LiveUpdateWorker>()
             .setInitialDelay(LIVE_UPDATE_INTERVAL_SEC, TimeUnit.SECONDS)
@@ -44,8 +46,9 @@ internal fun scheduleNextLiveUpdate(context: Context, orderId: String) {
             .addTag(liveUpdateWorkTag(orderId))
             .build()
 
+    val policy = if (replaceExisting) ExistingWorkPolicy.REPLACE else ExistingWorkPolicy.APPEND
     WorkManager.getInstance(context.applicationContext)
-        .enqueueUniqueWork(liveUpdateUniqueWorkName(orderId), ExistingWorkPolicy.REPLACE, request)
+        .enqueueUniqueWork(liveUpdateUniqueWorkName(orderId), policy, request)
 }
 
 internal fun cancelLiveUpdateWork(context: Context, orderId: String) {

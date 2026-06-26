@@ -4,6 +4,8 @@ Sample reference for **food delivery order tracking** using MoEngage **self-hand
 
 **Sample code:** `Android-Sample/example/` → package `com.moengage.example.ordertracking`
 
+The sample is organized into sub-packages under that root: `model/` (JSON types), `data/` (session + decode), `render/` (API-level notification UIs), `live/` (WorkManager countdown ticks), and `notification/` (channels, intents, receivers). Shared constants and the push entry point stay at the package root.
+
 ---
 
 ## 1. Overview
@@ -93,7 +95,7 @@ Dashboard key: **`pct_payload`**. Value: JSON string (Android stringifies all KV
 | `chip_text` | Yes | Short status / ETA (status-bar chip on API 36; in body on fallbacks). |
 | `tracker_position` | Yes | Tracker position on progress scale (food sample total = 3000). |
 | `tracker_position_end` | No | Max tracker position until next push (for local motion between stages). |
-| `eta_epoch_ms` | No | Unix ms when countdown reaches zero; enables local chip ticks in the sample. |
+| `eta_epoch_ms` | No | **Preferred** for local countdown ticks — Unix ms when chip hits zero. |
 | `stale_chip_text` | No | Chip text if ETA passes without next push (default `"Soon"`). |
 | `respect_user_dismiss` | No | If `true`, do not re-show after user dismisses until terminal stage. Sample default: `false`. |
 | `styled_by_progress` | No | Dim segments ahead/behind tracker on API 36 (default `true`). |
@@ -104,7 +106,11 @@ Dashboard key: **`pct_payload`**. Value: JSON string (Android stringifies all KV
 | `start_icon` | Yes | Start of bar icon key (`restaurant`, etc.). |
 | `end_icon` | Yes | End of bar icon key (`home`, etc.). |
 
-**Analytics:** Impression is logged by the SDK when `onSelfHandledNotificationReceived()` fires. For notification taps, call `MoEPushHelper.logNotificationClick()` with the original MoEngage `Bundle`.
+**Analytics:** Impression is logged by the SDK when `onSelfHandledNotificationReceived()` fires. For notification taps, call `MoEPushHelper.logNotificationClick()` with the **original full MoEngage push `Bundle`** (the sample persists push keys in `{orderId}.session.json` and rebuilds the `Bundle` only on tap).
+
+**Session on disk:** `{orderId}.session.json` holds all string push keys; `{orderId}.meta` holds receive time and dismiss flag. Local ticks read `pct_payload` from the JSON file into `OrderTrackingPayload` — no `Bundle` on the re-render path.
+
+**Local countdown:** Prefer `eta_epoch_ms` on countdown stages. The sample also accepts `chip_text` in `"N min"` form (e.g. `"12 min"`) as a food-delivery fallback; other chip formats (OTP codes, `"Placing"`) do not start background ticks.
 
 ---
 
@@ -126,7 +132,7 @@ This sample implements **one PCT use case** (food delivery, 6 stages). The same 
 - Define your own `template` id, stages, segments, and icons.
 - Reuse the **fallback idea**: full `ProgressStyle` on API 36+, simpler UI on older Android.
 
-See the sample `ordertracking/` package for routing, fallbacks, and local countdown between milestone pushes.
+See the sample `ordertracking/` package (`model/`, `data/`, `render/`, `live/`, `notification/`) for routing, fallbacks, and local countdown between milestone pushes.
 
 ---
 
