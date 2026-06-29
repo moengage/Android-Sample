@@ -8,6 +8,8 @@
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
   <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
   <uses-permission android:name="android.permission.POST_PROMOTED_NOTIFICATIONS" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
 
   <application
       android:name=".MoEngageDemoApplication"
@@ -33,7 +35,7 @@
     </activity>
 
     <service
-        android:name="com.moengage.firebase.MoEFireBaseMessagingService"
+        android:name=".push.OrderTrackingFcmService"
         android:exported="false">
       <intent-filter>
         <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -46,6 +48,15 @@
     <receiver
         android:name=".ordertracking.notification.OrderNotificationClickReceiver"
         android:exported="false" />
+
+    <service
+        android:name=".ordertracking.live.OrderTrackingForegroundService"
+        android:exported="false"
+        android:foregroundServiceType="specialUse">
+      <property
+          android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+          android:value="Order tracking live notification updates" />
+    </service>
   </application>
 
 </manifest>

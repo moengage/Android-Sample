@@ -54,7 +54,6 @@ dependencies {
 
     implementation(moengage.androidXCore)
     implementation("androidx.core:core:1.17.0")
-    implementation("androidx.work:work-runtime-ktx:2.10.5")
     implementation(moengage.androidXCompact)
     implementation(moengage.androidXLifecycle)
     implementation(moengage.gmsPlayLocation)

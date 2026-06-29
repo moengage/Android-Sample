@@ -4,13 +4,13 @@ Sample reference for **food delivery order tracking** using MoEngage **self-hand
 
 **Sample code:** `Android-Sample/example/` → package `com.moengage.example.ordertracking`
 
-The sample is organized into sub-packages under that root: `model/` (JSON types), `data/` (session + decode), `render/` (API-level notification UIs), `live/` (WorkManager countdown ticks), and `notification/` (channels, intents, receivers). Shared constants and the push entry point stay at the package root.
+The sample is organized into sub-packages under that root: `model/` (JSON types), `data/` (payload decode), `render/` (API-level notification UIs), `live/` (foreground-service countdown ticks), and `notification/` (channels, intents, receivers). Push entry: `push/OrderTrackingFcmService`.
 
 ---
 
 ## 1. Overview
 
-MoEngage sends a silent Background Update push with a JSON payload. Your app receives it in `onSelfHandledNotificationReceived()`, parses the JSON, and shows **one updating notification** per `order_id` (stages 1→6).
+MoEngage sends a silent Background Update push with a JSON payload. The sample receives it in **`OrderTrackingFcmService`**, parses `pct_payload`, and shows **one updating notification** per `order_id` (stages 1→6).
 
 This sample shows how self-handled push can power **Progress Centric Template (PCT)** on Android 16+ and **fallback UIs** on older versions — same payload, different rendering per OS.
 
@@ -22,7 +22,7 @@ This sample shows how self-handled push can power **Progress Centric Template (P
 |-------------|--------|
 | **Android SDK** | **14.06.00+** (self-handled callback). |
 | **Android BOM** | **1.5.0+**. |
-| **Self-handled integration** | Register `PushMessageListener` and implement `onSelfHandledNotificationReceived()`. See [Callbacks & Customisation — Self-handled notification received](https://www.moengage.com/docs/developer-guide/android-sdk/push/advanced/callbacks-and-customisation#self-handled-notification-received-callback). |
+| **Self-handled integration** | Custom FCM service — `push/OrderTrackingFcmService` ([Background Update — Manual Approach](https://www.moengage.com/docs/developer-guide/android-sdk/push/advanced/push-display-handled-by-application#background-update-template-manual-approach)). |
 | **Background Update template** | [Push Templates — Background Update](https://www.moengage.com/docs/user-guide/campaigns-and-channels/mobile-push/create/push-templates#background-update). |
 | **Android 16 full PCT** | `compileSdk 36`, `androidx.core` 1.17+, `POST_PROMOTED_NOTIFICATIONS` for Live Updates chip. |
 | **Push permission** | `POST_NOTIFICATIONS` on Android 13+. |
@@ -106,9 +106,9 @@ Dashboard key: **`pct_payload`**. Value: JSON string (Android stringifies all KV
 | `start_icon` | Yes | Start of bar icon key (`restaurant`, etc.). |
 | `end_icon` | Yes | End of bar icon key (`home`, etc.). |
 
-**Analytics:** Impression is logged by the SDK when `onSelfHandledNotificationReceived()` fires. For notification taps, call `MoEPushHelper.logNotificationClick()` with the **original full MoEngage push `Bundle`** (the sample persists push keys in `{orderId}.session.json` and rebuilds the `Bundle` only on tap).
+**Analytics:** Call `MoEPushHelper.logNotificationReceived()` in `OrderTrackingFcmService`, then `MoEPushHelper.logNotificationClick()` on tap with the **original full MoEngage push `Bundle`** (extras on the notification `contentIntent`; no disk read).
 
-**Session on disk:** `{orderId}.session.json` holds all string push keys; `{orderId}.meta` holds receive time and dismiss flag. Local ticks read `pct_payload` from the JSON file into `OrderTrackingPayload` — no `Bundle` on the re-render path.
+**In-memory session:** `OrderTrackingForegroundService` holds the latest push `Bundle` for local chip/tracker ticks (~60s) between stage pushes.
 
 **Local countdown:** Prefer `eta_epoch_ms` on countdown stages. The sample also accepts `chip_text` in `"N min"` form (e.g. `"12 min"`) as a food-delivery fallback; other chip formats (OTP codes, `"Placing"`) do not start background ticks.
 
@@ -145,7 +145,7 @@ See the sample `ordertracking/` package (`model/`, `data/`, `render/`, `live/`, 
 5. Register the test user in MoEngage (match the unique id your test campaign targets).
 6. Send Background Update test pushes with Key `pct_payload` and stage JSON from §6.
 
-**Reference implementation:** `CustomPushMessageListener` → `handleOrderTrackingPush()` in `ordertracking/`.
+**Reference implementation:** `push/OrderTrackingFcmService` → `ordertracking/` (`OrderTrackingForegroundService`, renderers, etc.).
 
 **Logcat:** filter `tag:OrderTracking`
 

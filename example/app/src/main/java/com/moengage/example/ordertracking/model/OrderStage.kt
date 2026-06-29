@@ -1,7 +1,5 @@
 package com.moengage.example.ordertracking.model
 
-import com.moengage.example.ordertracking.PROGRESS_BAR_MAX
-
 /**
  * Food-delivery order stages mapped from dashboard JSON field `"stage": 1..6`.
  * JSON keeps [id] as int; app logic uses [defaultTrackerEnd] when JSON omits `tracker_position_end`.
@@ -15,7 +13,7 @@ internal enum class OrderStage(
     RIDER_ASSIGNED(3, 1600),
     PICKED_UP(4, 2750),
     APPROACHING(5, 2950),
-    DELIVERED(6, PROGRESS_BAR_MAX),
+    DELIVERED(6, 3000),
     ;
 
     companion object {

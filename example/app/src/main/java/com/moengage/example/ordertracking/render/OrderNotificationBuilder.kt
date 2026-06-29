@@ -1,6 +1,9 @@
 package com.moengage.example.ordertracking.render
 
 import android.content.Context
+import android.os.Build
+import android.os.Bundle
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.moengage.example.R
 import com.moengage.example.ordertracking.ORDER_STAGE_COUNT
@@ -10,20 +13,23 @@ import com.moengage.example.ordertracking.notification.orderNotificationContentI
 import com.moengage.example.ordertracking.notification.orderNotificationDeleteIntent
 
 /** Shared [NotificationCompat.Builder] fields for all order-tracking renderers. */
+@RequiresApi(Build.VERSION_CODES.N)
 internal fun orderNotificationBuilder(
     context: Context,
     channelId: String,
     channelNameResId: Int,
+    channelImportance: Int,
     payload: OrderTrackingPayload,
+    moeBundle: Bundle,
 ): NotificationCompat.Builder {
-    ensureNotificationChannel(context, channelId, context.getString(channelNameResId))
+    ensureNotificationChannel(context, channelId, context.getString(channelNameResId), channelImportance)
     return NotificationCompat.Builder(context, channelId)
         .setSmallIcon(R.drawable.small_icon)
         .setColor(context.getColor(R.color.notification_color))
         .setOnlyAlertOnce(true)
         .setOngoing(!payload.terminal)
         .setAutoCancel(payload.terminal)
-        .setContentIntent(orderNotificationContentIntent(context, payload.orderId))
+        .setContentIntent(orderNotificationContentIntent(context, payload.orderId, moeBundle))
         .setDeleteIntent(orderNotificationDeleteIntent(context, payload.orderId))
 }
 

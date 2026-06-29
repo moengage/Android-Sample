@@ -20,12 +20,11 @@ internal const val TERMINAL_DISMISS_DELAY_MS = 3_000L
 
 internal const val LOG_TAG = "OrderTracking"
 
-// — Session & WorkManager —
+// — Foreground service & local ticks —
 
-internal const val SESSIONS_DIR_NAME = "order_tracking_sessions"
+internal const val ACTION_STOP_ORDER_TRACKING = "com.moengage.example.ordertracking.STOP"
 internal const val EXTRA_ORDER_ID = "order_id"
-internal const val WORK_TAG_PREFIX = "ORDER_TRACKING_LIVE_UPDATE_"
-internal const val LIVE_UPDATE_INTERVAL_SEC = 60L
+internal const val LIVE_UPDATE_INTERVAL_MS = 60_000L
 
 // — API-level routing —
 
@@ -40,9 +39,6 @@ internal const val BIG_PICTURE_MAX_SDK = 35
 internal const val BIG_TEXT_MIN_SDK = 31
 
 // — Progress bar & countdown math —
-
-/** Total progress units on the notification progress bar (food-delivery sample). */
-internal const val PROGRESS_BAR_MAX = 3000
 
 /** Number of stages in the food-delivery order journey. */
 internal const val ORDER_STAGE_COUNT = 6
