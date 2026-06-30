@@ -1,14 +1,11 @@
 package com.moengage.example.ordertracking.render
 
 import android.app.Notification
-import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-import com.moengage.example.R
-import com.moengage.example.ordertracking.CHANNEL_ID
 import com.moengage.example.ordertracking.model.OrderTrackingPayload
 
 /** API 34–35 fallback: [NotificationCompat.BigPictureStyle] with a client-drawn coloured progress strip. */
@@ -33,14 +30,7 @@ internal fun buildBigPictureFallbackNotification(
                 }
             }
 
-    return orderNotificationBuilder(
-            context,
-            CHANNEL_ID,
-            R.string.order_tracking_channel_name,
-            NotificationManager.IMPORTANCE_DEFAULT,
-            payload,
-            moeBundle,
-        )
+    return orderNotificationBuilder(context, payload, moeBundle)
         .setContentTitle(payload.title)
         .setContentText(summary)
         .setStyle(style)

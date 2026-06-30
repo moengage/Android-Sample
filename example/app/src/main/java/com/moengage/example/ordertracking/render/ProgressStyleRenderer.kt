@@ -1,15 +1,12 @@
 package com.moengage.example.ordertracking.render
 
 import android.app.Notification
-import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.graphics.toColorInt
-import com.moengage.example.R
-import com.moengage.example.ordertracking.LIVE_CHANNEL_ID
 import com.moengage.example.ordertracking.PROGRESS_STYLE_MIN_SDK
 import com.moengage.example.ordertracking.model.OrderTrackingPayload
 
@@ -24,6 +21,8 @@ internal fun buildProgressStyleNotification(
     payload: OrderTrackingPayload,
     chipText: String,
     trackerPosition: Int,
+    receivedAtMs: Long,
+    nowMs: Long,
 ): Notification {
     val segments =
         payload.segments.map { segment ->
@@ -46,17 +45,10 @@ internal fun buildProgressStyleNotification(
             .setProgressStartIcon(notificationIcon(context, payload.startIcon))
             .setProgressEndIcon(notificationIcon(context, payload.endIcon))
 
-    return orderNotificationBuilder(
-            context,
-            LIVE_CHANNEL_ID,
-            R.string.order_tracking_live_channel_name,
-            NotificationManager.IMPORTANCE_HIGH,
-            payload,
-            moeBundle,
-        )
+    return orderNotificationBuilder(context, payload, moeBundle)
         .setContentTitle(payload.title)
         .setContentText(payload.message)
-        .setShortCriticalText(chipText)
+        .applyLiveUpdateChip(payload, chipText, receivedAtMs, nowMs)
         .setStyle(style)
         .setRequestPromotedOngoing(true)
         .build()

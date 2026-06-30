@@ -21,11 +21,11 @@ private fun defaultTrackerEnd(payload: OrderTrackingPayload): Int {
 }
 
 /**
- * When the countdown should hit zero: prefer [OrderTrackingPayload.etaEpochMs]; otherwise
- * [OrderTrackingPayload.chipText] only when it matches `"N min"` (food-delivery convenience).
- * Non-minute chips (e.g. ride-hailing OTP `"4421"`, status `"Placing"`) do not start a countdown.
+ * When the countdown should hit zero: prefer [OrderTrackingPayload.etaEpochMs] (recommended).
+ * Falls back to [OrderTrackingPayload.chipText] only when it matches `"N min"` and `eta_epoch_ms` is absent.
+ * Static labels (`"Placing"`, `"Done ✓"`) and [OrderTrackingPayload.staleChipText] do not use this path.
  */
-private fun effectiveEtaMs(payload: OrderTrackingPayload, receivedAtMs: Long): Long? {
+internal fun effectiveEtaMs(payload: OrderTrackingPayload, receivedAtMs: Long): Long? {
     payload.etaEpochMs?.let { return it }
     val minutes = minutesFromMinuteChip(payload.chipText) ?: return null
     return receivedAtMs + minutes * MS_PER_MINUTE

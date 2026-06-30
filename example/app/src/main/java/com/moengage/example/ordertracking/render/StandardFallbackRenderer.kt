@@ -1,13 +1,10 @@
 package com.moengage.example.ordertracking.render
 
 import android.app.Notification
-import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
-import com.moengage.example.R
-import com.moengage.example.ordertracking.CHANNEL_ID
 import com.moengage.example.ordertracking.model.OrderTrackingPayload
 
 /**
@@ -22,14 +19,7 @@ internal fun buildStandardFallbackNotification(
     chipText: String,
 ): Notification {
     val collapsed = fallbackStepSummary(payload, chipText, includeMessage = false)
-    return orderNotificationBuilder(
-            context,
-            CHANNEL_ID,
-            R.string.order_tracking_channel_name,
-            NotificationManager.IMPORTANCE_DEFAULT,
-            payload,
-            moeBundle,
-        )
+    return orderNotificationBuilder(context, payload, moeBundle)
         .setContentTitle(payload.title)
         .setContentText(collapsed)
         .build()

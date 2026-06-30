@@ -13,13 +13,8 @@ private val payloadJson =
         explicitNulls = false
     }
 
-internal fun moePushBundleFrom(data: Map<String, String>): Bundle =
-    Bundle(data.size).apply {
-        data.forEach { (key, value) -> putString(key, value) }
-    }
-
-internal fun hasPctPayload(data: Map<String, String>): Boolean =
-    !data[PAYLOAD_KEY].isNullOrBlank()
+internal fun hasPctPayload(moeBundle: Bundle): Boolean =
+    !moeBundle.getString(PAYLOAD_KEY).isNullOrBlank()
 
 internal fun pctPayloadJson(moeBundle: Bundle): String? =
     moeBundle.getString(PAYLOAD_KEY)?.takeIf { it.isNotBlank() }

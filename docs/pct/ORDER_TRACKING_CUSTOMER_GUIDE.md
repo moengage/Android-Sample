@@ -1,58 +1,83 @@
-# Order Tracking — Progress Centric Template (Customer Guide)
+# Order Tracking — Customer Guide
 
-Sample reference for **food delivery order tracking** using MoEngage **self-handled** Background Update pushes. The app renders the notification UI; MoEngage delivers the payload.
+Food delivery **Progress Centric Template (PCT)** sample using MoEngage **self-handled** Background Update pushes.
 
-**Sample code:** `Android-Sample/example/` → package `com.moengage.example.ordertracking`
+**Code:** `Android-Sample/example/` → `com.moengage.example.ordertracking`  
+**Entry point:** `CustomPushMessageListener.onSelfHandledNotificationReceived()`
 
-The sample is organized into sub-packages under that root: `model/` (JSON types), `data/` (payload decode), `render/` (API-level notification UIs), `live/` (foreground-service countdown ticks), and `notification/` (channels, intents, receivers). Push entry: `push/OrderTrackingFcmService`.
+Package layout: `model/` (JSON types), `data/` (decode), `render/` (API-level UIs), `live/` (FGS + countdown logic), `notification/` (channel, intents, receivers).
 
 ---
 
-## 1. Overview
+## 1. Flow
 
-MoEngage sends a silent Background Update push with a JSON payload. The sample receives it in **`OrderTrackingFcmService`**, parses `pct_payload`, and shows **one updating notification** per `order_id` (stages 1→6).
+```
+MoEFireBaseMessagingService → SDK (parse + impression) → onSelfHandledNotificationReceived()
+  → OrderTrackingForegroundService → notification (UI by API level)
+```
 
-This sample shows how self-handled push can power **Progress Centric Template (PCT)** on Android 16+ and **fallback UIs** on older versions — same payload, different rendering per OS.
+- App does **not** handle FCM directly — SDK only.
+- Impression: automatic in callback. Clicks: `MoEPushHelper.logNotificationClick()` with original `Bundle`.
+- **Foreground required** for first notification (user placing order). No background FGS fallback in this sample.
+- **Channel:** `order_tracking` (`IMPORTANCE_DEFAULT`) on all APIs. UI differs by API; Live Update comes from notification style, not a separate channel.
+- **State:** In-memory in FGS between stage pushes (no WorkManager, no disk session in this sample).
 
 ---
 
 ## 2. Prerequisites
 
-| Requirement | Detail |
-|-------------|--------|
-| **Android SDK** | **14.06.00+** (self-handled callback). |
-| **Android BOM** | **1.5.0+**. |
-| **Self-handled integration** | Custom FCM service — `push/OrderTrackingFcmService` ([Background Update — Manual Approach](https://www.moengage.com/docs/developer-guide/android-sdk/push/advanced/push-display-handled-by-application#background-update-template-manual-approach)). |
-| **Background Update template** | [Push Templates — Background Update](https://www.moengage.com/docs/user-guide/campaigns-and-channels/mobile-push/create/push-templates#background-update). |
-| **Android 16 full PCT** | `compileSdk 36`, `androidx.core` 1.17+, `POST_PROMOTED_NOTIFICATIONS` for Live Updates chip. |
-| **Push permission** | `POST_NOTIFICATIONS` on Android 13+. |
+| Item | Detail |
+|------|--------|
+| MoEngage Android SDK | 14.06.00+, BOM 1.5.0+ |
+| FCM | `MoEFireBaseMessagingService` in manifest |
+| Callback | `onSelfHandledNotificationReceived()` — [docs](https://www.moengage.com/docs/developer-guide/android-sdk/push/advanced/callbacks-and-customisation#self-handled-notification-received-callback) |
+| Campaign | [Background Update](https://www.moengage.com/docs/user-guide/campaigns-and-channels/mobile-push/create/push-templates#background-update) template |
+| Android 16 PCT | `compileSdk 36`, `androidx.core` 1.17+, `POST_PROMOTED_NOTIFICATIONS` |
+| Permission | `POST_NOTIFICATIONS` (Android 13+) |
 
 ---
 
-## 3. What users see (by Android version)
+## 3. UI by Android version
 
-Same `pct_payload` JSON for every device. The sample app picks the UI by API level.
+Same `pct_payload` everywhere.
 
-| Android | API | User experience |
-|---------|-----|-----------------|
-| **16+** | 36+ | Full progress bar, tracker icon, status-bar chip (Live Update). |
-| **14–15** | 34–35 | Big picture notification with coloured progress strip (collapsed thumbnail + expanded image). |
-| **12–13** | 31–33 | Big text + emoji segment line + countdown in body. |
-| **≤11** | ≤30 | Standard notification — title + short step/chip line. |
+| API | Experience |
+|-----|------------|
+| 36+ | ProgressStyle, status-bar chip, Live Update. Chip countdown from `eta_epoch_ms` via `setWhen` (system rounded minutes; OEM-specific text). |
+| 34–35 | BigPicture + progress strip |
+| 31–33 | BigText + emoji line + countdown in body |
+| ≤30 | Standard title + step line |
+
+FGS updates tracker every ~2 min between stage pushes.
 
 ---
 
 ## 4. Dashboard setup
 
-1. Create a push campaign → select **Background Update** template ([docs](https://www.moengage.com/docs/user-guide/campaigns-and-channels/mobile-push/create/push-templates#background-update)).
-2. MoEngage delivers a **self-handled** push — the SDK does **not** show a notification; your app must ([Push display handled by application](https://www.moengage.com/docs/developer-guide/android-sdk/push/advanced/push-display-handled-by-application)).
-3. Add one custom key-value pair:
+1. Background Update campaign → custom key **`pct_payload`** = stage JSON ([templates](./templates/food-delivery-stage-payloads.md)).
+2. Same **`order_id`** for all stages (one notification slot).
 
-| Key | Value |
-|-----|-------|
-| `pct_payload` | Stage JSON from [templates/food-delivery-stage-payloads.md](./templates/food-delivery-stage-payloads.md) |
+### ETA & chip fields
 
-Use the **same `order_id`** in every stage so Android replaces one notification slot.
+| Field | When |
+|-------|------|
+| **`eta_epoch_ms`** | **Required** for countdown stages (2–5). Set **fresh on every push** from backend (Unix ms delivery instant). |
+| **`chip_text`** | Optional on countdown. Use for static labels: `"Placing"` (stage 1), `"Done ✓"` (stage 6). |
+| **`stale_chip_text`** | After ETA passes without next push (default `"Soon"`). |
+
+If `eta_epoch_ms` is missing, sample falls back to `"N min"` in `chip_text` (not recommended).
+
+### Status-bar chip (API 36+)
+
+Countdown stages use **`setWhen(eta_epoch_ms)`** — the system shows rounded minutes and decrements automatically.
+
+| Topic | Detail |
+|-------|--------|
+| **Payload field** | `eta_epoch_ms` — recompute on every push |
+| **App code** | `LiveUpdateChip.kt` → `setWhen(etaMs)` for countdown; `setShortCriticalText` for static/stale |
+| **Do not use** | `setShowWhen(false)` — can hide chip text (icon-only chip) on some devices |
+| **OEM wording** | Same ETA, different labels: Pixel 8a `39m`, Nothing Phone 3 `in 39m` (tested) |
+| **FGS role** | 2 min ticks move the tracker only; chip is system-driven on API 36+ |
 
 ---
 
@@ -67,14 +92,14 @@ Dashboard key: **`pct_payload`**. Value: JSON string (Android stringifies all KV
   "stage": 1,
   "title": "string",
   "message": "string",
-  "chip_text": "string",
   "tracker_position": 0,
   "tracker_position_end": 2750,
   "eta_epoch_ms": 1718707200000,
+  "chip_text": "Placing",
   "stale_chip_text": "Soon",
-  "respect_user_dismiss": false,
-  "styled_by_progress": true,
   "terminal": false,
+  "styled_by_progress": true,
+  "respect_user_dismiss": false,
   "segments": [{ "color": "#hex", "size": 100 }],
   "points": [{ "color": "#hex", "position": 100 }],
   "tracker_icon": "scooter",
@@ -92,10 +117,10 @@ Dashboard key: **`pct_payload`**. Value: JSON string (Android stringifies all KV
 | `stage` | Yes | Journey step (1–6 for food delivery). |
 | `title` | Yes | Notification title. |
 | `message` | Yes | Body text (API 36 uses this as content text). |
-| `chip_text` | Yes | Short status / ETA (status-bar chip on API 36; in body on fallbacks). |
+| `chip_text` | Static stages | Short label for non-countdown stages (`"Placing"`, `"Done ✓"`). Optional on countdown when using `eta_epoch_ms`. |
 | `tracker_position` | Yes | Tracker position on progress scale (food sample total = 3000). |
-| `tracker_position_end` | No | Max tracker position until next push (for local motion between stages). |
-| `eta_epoch_ms` | No | **Preferred** for local countdown ticks — Unix ms when chip hits zero. |
+| `tracker_position_end` | No | Max tracker position until next push (for FGS motion between stages). |
+| `eta_epoch_ms` | Countdown (2–5) | **Recommended** — Unix ms when delivery is expected; drives API 36+ chip via `setWhen` and FGS tracker interpolation. Recompute on every push. |
 | `stale_chip_text` | No | Chip text if ETA passes without next push (default `"Soon"`). |
 | `respect_user_dismiss` | No | If `true`, do not re-show after user dismisses until terminal stage. Sample default: `false`. |
 | `styled_by_progress` | No | Dim segments ahead/behind tracker on API 36 (default `true`). |
@@ -106,11 +131,9 @@ Dashboard key: **`pct_payload`**. Value: JSON string (Android stringifies all KV
 | `start_icon` | Yes | Start of bar icon key (`restaurant`, etc.). |
 | `end_icon` | Yes | End of bar icon key (`home`, etc.). |
 
-**Analytics:** Call `MoEPushHelper.logNotificationReceived()` in `OrderTrackingFcmService`, then `MoEPushHelper.logNotificationClick()` on tap with the **original full MoEngage push `Bundle`** (extras on the notification `contentIntent`; no disk read).
+**Analytics:** Impression is logged by the SDK when `onSelfHandledNotificationReceived()` fires. For notification taps, `OrderNotificationClickReceiver` calls `MoEPushHelper.logNotificationClick()` with the **original full MoEngage push `Bundle`** passed through notification intent extras.
 
-**In-memory session:** `OrderTrackingForegroundService` holds the latest push `Bundle` for local chip/tracker ticks (~60s) between stage pushes.
-
-**Local countdown:** Prefer `eta_epoch_ms` on countdown stages. The sample also accepts `chip_text` in `"N min"` form (e.g. `"12 min"`) as a food-delivery fallback; other chip formats (OTP codes, `"Placing"`) do not start background ticks.
+**Local countdown:** Prefer `eta_epoch_ms` on countdown stages. Fallback: `chip_text` in `"N min"` form (e.g. `"18 min"`) derives ETA from push receive time — not recommended for production.
 
 ---
 
@@ -120,40 +143,40 @@ Copy-paste JSON for each stage:
 
 **[templates/food-delivery-stage-payloads.md](./templates/food-delivery-stage-payloads.md)**
 
-Keep `order_id` identical across stages 1–6.
+Keep `order_id` identical across stages 1–6. Replace sample `eta_epoch_ms` placeholders with a fresh timestamp each time you send.
 
 ---
 
 ## 7. Beyond food delivery
 
-This sample implements **one PCT use case** (food delivery, 6 stages). The same pattern applies to other product verticals (e.g. quick commerce, ride hailing):
+This sample implements **one PCT use case** (food delivery, 6 stages). The same pattern applies to other verticals (e.g. quick commerce, ride hailing):
 
-- Same **self-handled** Background Update + `pct_payload` (or your own key).
+- Same **self-handled** Background Update + `pct_payload` (or your own custom key).
 - Define your own `template` id, stages, segments, and icons.
 - Reuse the **fallback idea**: full `ProgressStyle` on API 36+, simpler UI on older Android.
 
-See the sample `ordertracking/` package (`model/`, `data/`, `render/`, `live/`, `notification/`) for routing, fallbacks, and local countdown between milestone pushes.
+See `ordertracking/` (`model/`, `data/`, `render/`, `live/`, `notification/`) for routing, fallbacks, and FGS ticks between milestone pushes.
 
 ---
 
 ## 8. Running the sample app
 
 1. Open `example/` in Android Studio.
-2. Set your **MoEngage App ID**, **environment** (TEST / LIVE), and **data center** in `MoEngageDemoApplication`.
+2. Set your **MoEngage App ID** and **data center** in `MoEngageDemoApplication`.
 3. Add **`app/google-services.json`** for FCM and uncomment `apply(plugin = "com.google.gms.google-services")` in `app/build.gradle.kts` (see comment in that file).
-4. Build and install on a test device (notification permission granted on Android 13+).
+4. Build and install on a test device (grant notification permission on Android 13+).
 5. Register the test user in MoEngage (match the unique id your test campaign targets).
-6. Send Background Update test pushes with Key `pct_payload` and stage JSON from §6.
+6. With **app in foreground**, send Background Update test pushes with Key `pct_payload` and stage JSON from §6.
 
-**Reference implementation:** `push/OrderTrackingFcmService` → `ordertracking/` (`OrderTrackingForegroundService`, renderers, etc.).
+**Reference implementation:** `CustomPushMessageListener.onSelfHandledNotificationReceived()` → `OrderTrackingForegroundService`.
 
-**Logcat:** filter `tag:OrderTracking`
+**Logcat:** `tag:OrderTracking`
 
 ---
 
 ## References
 
-- [Self-handled notification received callback](https://www.moengage.com/docs/developer-guide/android-sdk/push/advanced/callbacks-and-customisation#self-handled-notification-received-callback)
+- [Self-handled callback](https://www.moengage.com/docs/developer-guide/android-sdk/push/advanced/callbacks-and-customisation#self-handled-notification-received-callback)
 - [Push display handled by application](https://www.moengage.com/docs/developer-guide/android-sdk/push/advanced/push-display-handled-by-application)
-- [Background Update template (campaign)](https://www.moengage.com/docs/user-guide/campaigns-and-channels/mobile-push/create/push-templates#background-update)
-- [Android Progress-centric notifications (API 36)](https://developer.android.com/about/versions/16/features/progress-centric-notifications)
+- [Background Update template](https://www.moengage.com/docs/user-guide/campaigns-and-channels/mobile-push/create/push-templates#background-update)
+- [Android Live Updates](https://developer.android.com/develop/ui/views/notifications/live-update)

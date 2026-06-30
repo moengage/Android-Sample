@@ -35,7 +35,7 @@
     </activity>
 
     <service
-        android:name=".push.OrderTrackingFcmService"
+        android:name="com.moengage.firebase.MoEFireBaseMessagingService"
         android:exported="false">
       <intent-filter>
         <action android:name="com.google.firebase.MESSAGING_EVENT" />

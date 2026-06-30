@@ -29,7 +29,7 @@ internal data class OrderTrackingPayload(
     @SerialName("stage") val stage: Int,
     @SerialName("title") val title: String,
     @SerialName("message") val message: String,
-    @SerialName("chip_text") val chipText: String,
+    @SerialName("chip_text") val chipText: String = "",
     @SerialName("tracker_position") val trackerPosition: Int,
     @SerialName("tracker_position_end") val trackerPositionEnd: Int? = null,
     @SerialName("eta_epoch_ms") val etaEpochMs: Long? = null,

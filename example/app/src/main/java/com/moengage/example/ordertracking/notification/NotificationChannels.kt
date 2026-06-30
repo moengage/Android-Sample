@@ -5,17 +5,20 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.moengage.example.R
+import com.moengage.example.ordertracking.CHANNEL_ID
 
-/** Creates [channelId] if it does not exist yet. */
+/** Creates the `order_tracking` channel once at app startup (no-op below API 26). */
 @RequiresApi(Build.VERSION_CODES.N)
-internal fun ensureNotificationChannel(
-    context: Context,
-    channelId: String,
-    name: String,
-    importance: Int = NotificationManager.IMPORTANCE_DEFAULT,
-) {
+internal fun ensureOrderTrackingNotificationChannels(context: Context) {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
     val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-    if (manager.getNotificationChannel(channelId) != null) return
-    manager.createNotificationChannel(NotificationChannel(channelId, name, importance))
+    if (manager.getNotificationChannel(CHANNEL_ID) != null) return
+    manager.createNotificationChannel(
+        NotificationChannel(
+            CHANNEL_ID,
+            context.getString(R.string.order_tracking_channel_name),
+            NotificationManager.IMPORTANCE_DEFAULT,
+        ),
+    )
 }

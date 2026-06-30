@@ -25,10 +25,20 @@ internal fun buildOrderTrackingNotification(
     payload: OrderTrackingPayload,
     chipText: String = payload.chipText,
     trackerPosition: Int = payload.trackerPosition,
+    receivedAtMs: Long = System.currentTimeMillis(),
+    nowMs: Long = receivedAtMs,
 ): Notification =
     when {
         Build.VERSION.SDK_INT >= PROGRESS_STYLE_MIN_SDK ->
-            buildProgressStyleNotification(context, moeBundle, payload, chipText, trackerPosition)
+            buildProgressStyleNotification(
+                context,
+                moeBundle,
+                payload,
+                chipText,
+                trackerPosition,
+                receivedAtMs,
+                nowMs,
+            )
         Build.VERSION.SDK_INT in BIG_PICTURE_MIN_SDK..BIG_PICTURE_MAX_SDK ->
             buildBigPictureFallbackNotification(context, moeBundle, payload, chipText, trackerPosition)
         Build.VERSION.SDK_INT >= BIG_TEXT_MIN_SDK ->

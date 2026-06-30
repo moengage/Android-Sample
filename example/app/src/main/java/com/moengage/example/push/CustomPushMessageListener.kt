@@ -2,7 +2,10 @@ package com.moengage.example.push
 
 import android.app.Activity
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import com.moengage.example.ordertracking.data.hasPctPayload
+import com.moengage.example.ordertracking.live.OrderTrackingForegroundService
 import com.moengage.pushbase.push.PushMessageListener
 import logcat.logcat
 
@@ -31,5 +34,16 @@ class CustomPushMessageListener: PushMessageListener() {
     override fun handleCustomAction(context: Context, payload: String) {
         super.handleCustomAction(context, payload)
         logcat { " handleCustomAction() Callback for custom action." }
+    }
+
+    override fun onSelfHandledNotificationReceived(context: Context, payload: Bundle) {
+        super.onSelfHandledNotificationReceived(context, payload)
+        if (!hasPctPayload(payload)) {
+            return
+        }
+        logcat { " onSelfHandledNotificationReceived() order-tracking push" }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            OrderTrackingForegroundService.startOrUpdate(context, payload)
+        }
     }
 }

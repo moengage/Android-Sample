@@ -14,7 +14,6 @@ internal const val DEFAULT_STALE_CHIP_TEXT = "Soon"
 // — Notification —
 
 internal const val CHANNEL_ID = "order_tracking"
-internal const val LIVE_CHANNEL_ID = "order_tracking_live"
 internal const val NOTIFICATION_ID = 9001
 internal const val TERMINAL_DISMISS_DELAY_MS = 3_000L
 
@@ -24,7 +23,8 @@ internal const val LOG_TAG = "OrderTracking"
 
 internal const val ACTION_STOP_ORDER_TRACKING = "com.moengage.example.ordertracking.STOP"
 internal const val EXTRA_ORDER_ID = "order_id"
-internal const val LIVE_UPDATE_INTERVAL_MS = 60_000L
+/** Interval between FGS ticks for tracker motion and fallback UI updates. */
+internal const val LIVE_UPDATE_INTERVAL_MS = 120_000L
 
 // — API-level routing —
 

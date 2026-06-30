@@ -90,6 +90,8 @@ internal class OrderTrackingForegroundService : Service() {
                 payload = payload,
                 chipText = display.chipText,
                 trackerPosition = display.trackerPosition,
+                receivedAtMs = receivedAtMs,
+                nowMs = receivedAtMs,
             )
         promoteToForeground(notification)
         Log.d(LOG_TAG, "FGS stage ${payload.stage}, orderId=${payload.orderId}, chip=${display.chipText}")
@@ -159,6 +161,8 @@ internal class OrderTrackingForegroundService : Service() {
                             payload = payload,
                             chipText = display.chipText,
                             trackerPosition = display.trackerPosition,
+                            receivedAtMs = receivedAtMs,
+                            nowMs = System.currentTimeMillis(),
                         )
                     promoteToForeground(notification)
                     Log.d(LOG_TAG, "FGS tick stage ${payload.stage}, chip=${display.chipText}")
