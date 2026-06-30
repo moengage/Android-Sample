@@ -20,9 +20,8 @@ internal const val TERMINAL_DISMISS_DELAY_MS = 3_000L
 
 internal const val LOG_TAG = "OrderTracking"
 
-// — Foreground service & local ticks —
+// — Local ticks —
 
-internal const val ACTION_STOP_ORDER_TRACKING = "com.moengage.example.ordertracking.STOP"
 internal const val EXTRA_ORDER_ID = "order_id"
 internal const val LIVE_UPDATE_INTERVAL_MS = 60_000L
 

@@ -1,7 +1,6 @@
 package com.moengage.example.push
 
 import android.Manifest
-import android.app.ForegroundServiceStartNotAllowedException
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -12,7 +11,7 @@ import com.moengage.core.MoECoreHelper
 import com.moengage.example.ordertracking.LOG_TAG
 import com.moengage.example.ordertracking.data.hasPctPayload
 import com.moengage.example.ordertracking.data.moePushBundleFrom
-import com.moengage.example.ordertracking.live.OrderTrackingForegroundService
+import com.moengage.example.ordertracking.live.OrderTrackingLiveUpdater
 import com.moengage.firebase.MoEFireBaseHelper
 import com.moengage.pushbase.MoEPushHelper
 
@@ -33,11 +32,7 @@ class OrderTrackingFcmService : FirebaseMessagingService() {
 
         if (MoEPushHelper.getInstance().isSelfHandledNotification(data) && hasPctPayload(data)) {
             Log.d(LOG_TAG, "FCM order-tracking push (priority=${remoteMessage.priority})")
-            try {
-                OrderTrackingForegroundService.startOrUpdate(this, moePushBundleFrom(data))
-            } catch (error: ForegroundServiceStartNotAllowedException) {
-                Log.w(LOG_TAG, "FGS blocked in background — skip display")
-            }
+            OrderTrackingLiveUpdater.startOrUpdate(this, moePushBundleFrom(data))
             MoECoreHelper.setupSdkForBackgroundMode(this)
             Log.d(LOG_TAG, "Logging notification received")
             MoEPushHelper.getInstance().logNotificationReceived(applicationContext, data)
