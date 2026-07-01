@@ -1,6 +1,8 @@
 package com.moengage.example
 
 import android.app.Application
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.moengage.core.DataCenter
 import com.moengage.core.MoECoreHelper
 import com.moengage.core.MoEngage
@@ -10,6 +12,7 @@ import com.moengage.example.callbacks.LogoutCompleteListener
 import com.moengage.example.inapp.ClickActionCallback
 import com.moengage.example.inapp.InAppLifecycleCallbacks
 import com.moengage.example.inapp.SelfHandledCallback
+import com.moengage.example.ordertracking.notification.ensureOrderTrackingNotificationChannels
 import com.moengage.example.push.CustomPushMessageListener
 import com.moengage.example.push.GeofenceHitListener
 import com.moengage.firebase.MoEFireBaseHelper
@@ -26,8 +29,10 @@ class MoEngageDemoApplication : Application() {
 
     private val tag = "MoEngageDemoApplication"
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate() {
         super.onCreate()
+        ensureOrderTrackingNotificationChannels(this)
         val moEngage =
             MoEngage.Builder(this, "YOUR_APP_ID", DataCenter.DATA_CENTER_1)
                 .configureNotificationMetaData(
@@ -52,10 +57,10 @@ class MoEngageDemoApplication : Application() {
         setupInAppCallbacks()
 
         // Register Geofence Hit Listener
-        MoEGeofenceHelper.getInstance().addListener(GeofenceHitListener())
+//        MoEGeofenceHelper.getInstance().addListener(GeofenceHitListener())
 
         // Enables geofence monitoring, required Only for Location-Triggered campaigns
-        MoEGeofenceHelper.getInstance().startGeofenceMonitoring(this)
+//        MoEGeofenceHelper.getInstance().startGeofenceMonitoring(this)
     }
 
     private fun setupPushCallbacks() {

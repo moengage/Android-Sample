@@ -16,8 +16,17 @@ This repository contains the sample integrating for [MoEngage](https://www.moeng
 ### Example App Usage
 
 * Add your APP-ID in the Application class
-* Replace the dummy `google-services.json` file with your actual file.
+* For FCM push testing: add `example/app/google-services.json` and uncomment the Google Services plugin in `example/app/build.gradle.kts` (see comment at bottom of file)
 * Add the `agconnect-services.json` to the project for using HMS Push Kit.
+
+### Order Tracking (PCT) sample
+
+Food-delivery **Progress Centric Template** demo using MoEngage **self-handled** Background Update pushes.
+
+* **Customer guide:** [docs/pct/ORDER_TRACKING_CUSTOMER_GUIDE.md](docs/pct/ORDER_TRACKING_CUSTOMER_GUIDE.md)
+* **Stage payloads:** [docs/pct/templates/food-delivery-stage-payloads.md](docs/pct/templates/food-delivery-stage-payloads.md)
+* **Code:** `example/app/.../ordertracking/` (`model/`, `data/`, `render/`, `live/`, `notification/` — top-level render functions, not a single `PctRenderer` class)
+* Configure your MoEngage App ID, environment, data center, and `google-services.json` (plus uncomment the plugin in `build.gradle.kts`) before push testing.
 
 ### ComposeSampleApp Usage
 

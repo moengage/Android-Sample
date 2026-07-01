@@ -3,16 +3,17 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     id("com.android.application")
     id("kotlin-android")
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.23"
 }
 
 android {
-    compileSdk = 35
+    compileSdk = 36
     namespace = "com.moengage.example"
 
     defaultConfig {
         applicationId = "com.moengage.example"
         minSdk = 23
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -52,11 +53,14 @@ dependencies {
     implementation(libs.logcat)
 
     implementation(moengage.androidXCore)
+    implementation("androidx.core:core:1.17.0")
     implementation(moengage.androidXCompact)
     implementation(moengage.androidXLifecycle)
     implementation(moengage.gmsPlayLocation)
     implementation(moengage.firebaseMessaging)
     implementation(moengage.glide)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
 
@@ -65,4 +69,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 }
 
-apply(plugin = "com.google.gms.google-services")
+// To test push on a device:
+//   1. Add app/google-services.json for package com.moengage.example
+//   2. Uncomment the line below
+// apply(plugin = "com.google.gms.google-services")
