@@ -18,7 +18,7 @@ MoEFireBaseMessagingService → SDK (parse + impression) → onSelfHandledNotifi
 
 - App does **not** handle FCM directly — SDK only.
 - Impression: automatic in callback. Clicks: `MoEPushHelper.logNotificationClick()` with original `Bundle`.
-- **Foreground required** for first notification (user placing order). No background FGS fallback in this sample.
+- **Background start:** `startOrUpdate()` tries `startForegroundService()`. On Android 12+ this only succeeds from the background with an exemption (high-priority FCM delivery, unrestricted App Standby bucket). If it's blocked, the sample **falls back to `NotificationManagerCompat.notify()`** — with promoted-ongoing the live notification still renders; only the between-push tracker animation is lost. See §9.
 - **Channel:** `order_tracking` (`IMPORTANCE_DEFAULT`) on all APIs. UI differs by API; Live Update comes from notification style, not a separate channel.
 - **State:** In-memory in FGS between stage pushes (no WorkManager, no disk session in this sample).
 
@@ -171,6 +171,30 @@ See `ordertracking/` (`model/`, `data/`, `render/`, `live/`, `notification/`) fo
 **Reference implementation:** `CustomPushMessageListener.onSelfHandledNotificationReceived()` → `OrderTrackingForegroundService`.
 
 **Logcat:** `tag:OrderTracking`
+
+---
+
+## 9. Production notes & limitations
+
+This sample drives the live notification from a **foreground service** (`OrderTrackingForegroundService`) so the tracker icon can animate between stage pushes. Before shipping this pattern, read the following — they are real constraints, not sample shortcuts.
+
+### 9.1 `specialUse` foreground-service type requires a Play declaration
+
+The service is declared `android:foregroundServiceType="specialUse"` with `FOREGROUND_SERVICE_SPECIAL_USE` (Android 14+). On Google Play this requires a **Console declaration and Google review** of your justification. `specialUse` is the "last resort" type and draws scrutiny — a plain notification updater is often challenged or rejected, since it isn't a canonical long-running foreground task.
+
+> **If you don't need between-push icon animation, you don't need the FGS at all.** The persistent chip comes from `setRequestPromotedOngoing(true)` + an ongoing notification, and the countdown is system-driven via `setWhen(eta_epoch_ms)` — neither needs a foreground service. Posting directly with `NotificationManagerCompat.notify()` (the fallback in §1) avoids `specialUse` review and the background-start restriction entirely.
+
+### 9.2 Background FGS start needs high-priority delivery
+
+Order-tracking pushes usually arrive while the app is backgrounded. On Android 12+ starting an FGS from the background throws `ForegroundServiceStartNotAllowedException` unless an exemption applies. The relevant one is **high-priority FCM**, which grants a short FGS-start window. So configure your Background Update campaign for **high-priority delivery**; otherwise every start hits the `notify()` fallback (still visible, no tracker animation). A restricted App Standby bucket also blocks the start.
+
+### 9.3 One active order at a time
+
+The service tracks a **single** `order_id`/payload in memory. A second concurrent order's push overwrites the first — the first order's tick loop restarts against the new order and its notification stops updating. Food delivery is normally single-order, but quick-commerce/ride overlap is realistic. For concurrent orders, key the state (and notification tag) per `order_id`.
+
+### 9.4 Notification permission
+
+`startOrUpdate()` skips entirely when `POST_NOTIFICATIONS` (Android 13+) is not granted — without it the notification is hidden and only a stray invisible FGS would remain. Request the permission before your first order-tracking push (step 4 in §8).
 
 ---
 
