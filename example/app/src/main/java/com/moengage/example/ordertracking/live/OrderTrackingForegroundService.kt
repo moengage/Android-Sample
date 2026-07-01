@@ -173,7 +173,7 @@ internal class OrderTrackingForegroundService : Service() {
             serviceScope.launch {
                 delay(TERMINAL_DISMISS_DELAY_MS)
                 NotificationManagerCompat.from(this@OrderTrackingForegroundService)
-                    .cancel(orderId, NOTIFICATION_ID)
+                    .cancel(NOTIFICATION_ID)
                 OrderTrackingDismissPrefs.clearDismissed(this@OrderTrackingForegroundService, orderId)
                 ServiceCompat.stopForeground(this@OrderTrackingForegroundService, ServiceCompat.STOP_FOREGROUND_REMOVE)
                 stopSelf()
@@ -299,7 +299,7 @@ internal class OrderTrackingForegroundService : Service() {
                 Log.w(LOG_TAG, "Notification permission missing, cannot post the notification")
                     return
             }
-            NotificationManagerCompat.from(context).notify(payload.orderId, NOTIFICATION_ID, notification)
+            NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, notification)
         }
 
         fun stop(context: Context, orderId: String) {
