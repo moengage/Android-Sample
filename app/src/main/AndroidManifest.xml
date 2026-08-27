@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Android 13+ runtime notification permission (screen 3). -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Order tracking: Android 16 Live Updates + the specialUse FGS that ticks between stage pushes. -->
+    <uses-permission android:name="android.permission.POST_PROMOTED_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+
+    <!--
+      Geofence campaigns. Coarse/fine are requested at runtime together; background location must
+      be a separate, later request (Android 10+) and is what lets a geofence fire when the app is
+      not open.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <application
+        android:name=".BrewBarApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.BrewBar">
+
+        <activity
+            android:name=".BrewActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.BrewBar"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- Deep links used by push campaigns: brewbar://status/BB-4821 etc. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="brewbar" />
+            </intent-filter>
+        </activity>
+
+        <!-- Provided by MoEngage push-fcm; declared explicitly so the intent filter is obvious. -->
+        <service
+            android:name="com.moengage.firebase.MoEFireBaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- Order tracking: notification tap (deep-links to Order status) and swipe-dismiss. -->
+        <receiver
+            android:name=".ordertracking.notification.OrderNotificationClickReceiver"
+            android:exported="false" />
+        <receiver
+            android:name=".ordertracking.notification.OrderNotificationDismissReceiver"
+            android:exported="false" />
+
+        <!--
+          Drives chip countdown and tracker motion between stage pushes. specialUse because the work
+          is "keep a user-visible live notification current", which no typed FGS category covers.
+        -->
+        <service
+            android:name=".ordertracking.live.OrderTrackingForegroundService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Order tracking live notification updates" />
+        </service>
+    </application>
+</manifest>

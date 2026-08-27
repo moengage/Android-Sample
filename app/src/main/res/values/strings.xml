@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Brew Bar</string>
+    <string name="order_tracking_channel_name">Order tracking</string>
+</resources>

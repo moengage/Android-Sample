@@ -2,7 +2,7 @@
 
 Food delivery **Progress Centric Template (PCT)** sample using MoEngage **self-handled** Background Update pushes.
 
-**Code:** `Android-Sample/example/` → `com.moengage.example.ordertracking`  
+**Code:** `Android-Sample/example/` → `com.moengage.example.ordertracking`
 **Entry point:** `CustomPushMessageListener.onSelfHandledNotificationReceived()`
 
 Package layout: `model/` (JSON types), `data/` (decode), `render/` (API-level UIs), `live/` (FGS + countdown logic), `notification/` (channel, intents, receivers).
@@ -26,14 +26,14 @@ MoEFireBaseMessagingService → SDK (parse + impression) → onSelfHandledNotifi
 
 ## 2. Prerequisites
 
-| Item | Detail |
-|------|--------|
-| MoEngage Android SDK | 14.06.00+, BOM 1.5.0+ |
-| FCM | `MoEFireBaseMessagingService` in manifest |
-| Callback | `onSelfHandledNotificationReceived()` — [docs](https://www.moengage.com/docs/developer-guide/android-sdk/push/advanced/callbacks-and-customisation#self-handled-notification-received-callback) |
-| Campaign | [Background Update](https://www.moengage.com/docs/user-guide/campaigns-and-channels/mobile-push/create/push-templates#background-update) template |
-| Android 16 PCT | `compileSdk 36`, `androidx.core` 1.17+, `POST_PROMOTED_NOTIFICATIONS` |
-| Permission | `POST_NOTIFICATIONS` (Android 13+) |
+| Item                 | Detail                                                                                                                                                                                          |
+|----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| MoEngage Android SDK | 14.06.00+, BOM 1.5.0+                                                                                                                                                                           |
+| FCM                  | `MoEFireBaseMessagingService` in manifest                                                                                                                                                       |
+| Callback             | `onSelfHandledNotificationReceived()` — [docs](https://www.moengage.com/docs/developer-guide/android-sdk/push/advanced/callbacks-and-customisation#self-handled-notification-received-callback) |
+| Campaign             | [Background Update](https://www.moengage.com/docs/user-guide/campaigns-and-channels/mobile-push/create/push-templates#background-update) template                                               |
+| Android 16 PCT       | `compileSdk 36`, `androidx.core` 1.17+, `POST_PROMOTED_NOTIFICATIONS`                                                                                                                           |
+| Permission           | `POST_NOTIFICATIONS` (Android 13+)                                                                                                                                                              |
 
 ---
 
@@ -41,12 +41,12 @@ MoEFireBaseMessagingService → SDK (parse + impression) → onSelfHandledNotifi
 
 Same `pct_payload` everywhere.
 
-| API | Experience |
-|-----|------------|
-| 36+ | ProgressStyle, status-bar chip, Live Update. Chip countdown from `eta_epoch_ms` via `setWhen` (system rounded minutes; OEM-specific text). |
-| 34–35 | BigPicture + progress strip |
-| 31–33 | BigText + emoji line + countdown in body |
-| ≤30 | Standard title + step line |
+| API   | Experience                                                                                                                                 |
+|-------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| 36+   | ProgressStyle, status-bar chip, Live Update. Chip countdown from `eta_epoch_ms` via `setWhen` (system rounded minutes; OEM-specific text). |
+| 34–35 | BigPicture + progress strip                                                                                                                |
+| 31–33 | BigText + emoji line + countdown in body                                                                                                   |
+| ≤30   | Standard title + step line                                                                                                                 |
 
 FGS updates tracker every ~2 min between stage pushes.
 
@@ -59,11 +59,11 @@ FGS updates tracker every ~2 min between stage pushes.
 
 ### ETA & chip fields
 
-| Field | When |
-|-------|------|
-| **`eta_epoch_ms`** | **Required** for countdown stages (2–5). Set **fresh on every push** from backend (Unix ms delivery instant). |
-| **`chip_text`** | Optional on countdown. Use for static labels: `"Placing"` (stage 1), `"Done ✓"` (stage 6). |
-| **`stale_chip_text`** | After ETA passes without next push (default `"Soon"`). |
+| Field                 | When                                                                                                          |
+|-----------------------|---------------------------------------------------------------------------------------------------------------|
+| **`eta_epoch_ms`**    | **Required** for countdown stages (2–5). Set **fresh on every push** from backend (Unix ms delivery instant). |
+| **`chip_text`**       | Optional on countdown. Use for static labels: `"Placing"` (stage 1), `"Done ✓"` (stage 6).                    |
+| **`stale_chip_text`** | After ETA passes without next push (default `"Soon"`).                                                        |
 
 If `eta_epoch_ms` is missing, sample falls back to `"N min"` in `chip_text` (not recommended).
 
@@ -71,13 +71,13 @@ If `eta_epoch_ms` is missing, sample falls back to `"N min"` in `chip_text` (not
 
 Countdown stages use **`setWhen(eta_epoch_ms)`** — the system shows rounded minutes and decrements automatically.
 
-| Topic | Detail |
-|-------|--------|
-| **Payload field** | `eta_epoch_ms` — recompute on every push |
-| **App code** | `LiveUpdateChip.kt` → `setWhen(etaMs)` for countdown; `setShortCriticalText` for static/stale |
-| **Do not use** | `setShowWhen(false)` — can hide chip text (icon-only chip) on some devices |
-| **OEM wording** | Same ETA, different labels: Pixel 8a `39m`, Nothing Phone 3 `in 39m` (tested) |
-| **FGS role** | 2 min ticks move the tracker only; chip is system-driven on API 36+ |
+| Topic             | Detail                                                                                        |
+|-------------------|-----------------------------------------------------------------------------------------------|
+| **Payload field** | `eta_epoch_ms` — recompute on every push                                                      |
+| **App code**      | `LiveUpdateChip.kt` → `setWhen(etaMs)` for countdown; `setShortCriticalText` for static/stale |
+| **Do not use**    | `setShowWhen(false)` — can hide chip text (icon-only chip) on some devices                    |
+| **OEM wording**   | Same ETA, different labels: Pixel 8a `39m`, Nothing Phone 3 `in 39m` (tested)                 |
+| **FGS role**      | 2 min ticks move the tracker only; chip is system-driven on API 36+                           |
 
 ---
 
@@ -110,26 +110,26 @@ Dashboard key: **`pct_payload`**. Value: JSON string (Android stringifies all KV
 
 ### Field reference
 
-| Field | Required | Meaning |
-|-------|----------|---------|
-| `template` | Yes | Vertical id (`pct_food_delivery` for this sample). |
-| `order_id` | Yes | Notification tag — **same value for all stages** of one order. |
-| `stage` | Yes | Journey step (1–6 for food delivery). |
-| `title` | Yes | Notification title. |
-| `message` | Yes | Body text (API 36 uses this as content text). |
-| `chip_text` | Static stages | Short label for non-countdown stages (`"Placing"`, `"Done ✓"`). Optional on countdown when using `eta_epoch_ms`. |
-| `tracker_position` | Yes | Tracker position on progress scale (food sample total = 3000). |
-| `tracker_position_end` | No | Max tracker position until next push (for FGS motion between stages). |
-| `eta_epoch_ms` | Countdown (2–5) | **Recommended** — Unix ms when delivery is expected; drives API 36+ chip via `setWhen` and FGS tracker interpolation. Recompute on every push. |
-| `stale_chip_text` | No | Chip text if ETA passes without next push (default `"Soon"`). |
-| `respect_user_dismiss` | No | If `true`, do not re-show after user dismisses until terminal stage. Sample default: `false`. |
-| `styled_by_progress` | No | Dim segments ahead/behind tracker on API 36 (default `true`). |
-| `terminal` | No | `true` on final stage — sample auto-dismisses after ~3s. |
-| `segments` | Yes | Coloured bar sections: `color` (hex), `size` (relative length). Send full layout every stage. |
-| `points` | Yes | Milestone dots: `color`, `position` on same scale as tracker. |
-| `tracker_icon` | Yes | Moving icon key — app maps to drawable (`receipt`, `chef`, `helmet`, `scooter`, `plate`). |
-| `start_icon` | Yes | Start of bar icon key (`restaurant`, etc.). |
-| `end_icon` | Yes | End of bar icon key (`home`, etc.). |
+| Field                  | Required        | Meaning                                                                                                                                        |
+|------------------------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| `template`             | Yes             | Vertical id (`pct_food_delivery` for this sample).                                                                                             |
+| `order_id`             | Yes             | Notification tag — **same value for all stages** of one order.                                                                                 |
+| `stage`                | Yes             | Journey step (1–6 for food delivery).                                                                                                          |
+| `title`                | Yes             | Notification title.                                                                                                                            |
+| `message`              | Yes             | Body text (API 36 uses this as content text).                                                                                                  |
+| `chip_text`            | Static stages   | Short label for non-countdown stages (`"Placing"`, `"Done ✓"`). Optional on countdown when using `eta_epoch_ms`.                               |
+| `tracker_position`     | Yes             | Tracker position on progress scale (food sample total = 3000).                                                                                 |
+| `tracker_position_end` | No              | Max tracker position until next push (for FGS motion between stages).                                                                          |
+| `eta_epoch_ms`         | Countdown (2–5) | **Recommended** — Unix ms when delivery is expected; drives API 36+ chip via `setWhen` and FGS tracker interpolation. Recompute on every push. |
+| `stale_chip_text`      | No              | Chip text if ETA passes without next push (default `"Soon"`).                                                                                  |
+| `respect_user_dismiss` | No              | If `true`, do not re-show after user dismisses until terminal stage. Sample default: `false`.                                                  |
+| `styled_by_progress`   | No              | Dim segments ahead/behind tracker on API 36 (default `true`).                                                                                  |
+| `terminal`             | No              | `true` on final stage — sample auto-dismisses after ~3s.                                                                                       |
+| `segments`             | Yes             | Coloured bar sections: `color` (hex), `size` (relative length). Send full layout every stage.                                                  |
+| `points`               | Yes             | Milestone dots: `color`, `position` on same scale as tracker.                                                                                  |
+| `tracker_icon`         | Yes             | Moving icon key — app maps to drawable (`receipt`, `chef`, `helmet`, `scooter`, `plate`).                                                      |
+| `start_icon`           | Yes             | Start of bar icon key (`restaurant`, etc.).                                                                                                    |
+| `end_icon`             | Yes             | End of bar icon key (`home`, etc.).                                                                                                            |
 
 **Analytics:** Impression is logged by the SDK when `onSelfHandledNotificationReceived()` fires. For notification taps, `OrderNotificationClickReceiver` calls `MoEPushHelper.logNotificationClick()` with the **original full MoEngage push `Bundle`** passed through notification intent extras.
 

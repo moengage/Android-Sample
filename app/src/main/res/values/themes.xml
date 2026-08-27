@@ -1,0 +1,7 @@
+<resources>
+    <style name="Theme.BrewBar" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/page_background</item>
+        <item name="android:navigationBarColor">@color/page_background</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>

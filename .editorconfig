@@ -1,0 +1,25 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{kt,kts}]
+indent_style = space
+indent_size = 4
+max_line_length = 120
+
+# ktlint_official adds multiline-expression-wrapping and forced function-signature wrapping, which
+# break Compose modifier chains onto their own line and don't converge on this codebase.
+# intellij_idea matches what Android Studio produces, which is how these files were written.
+ktlint_code_style = intellij_idea
+
+# Compose composables are PascalCase by convention, which ktlint's function-naming rule
+# otherwise reports on every screen and component.
+ktlint_function_naming_ignore_when_annotated_with = Composable
+
+[*.{xml,json,yml,yaml}]
+indent_style = space
+indent_size = 4

@@ -1,0 +1,6 @@
+<resources>
+    <!-- Mirrors ui/theme/Color.kt#Primary. Used by the MoEngage notification config. -->
+    <color name="brand_primary">#06A6B7</color>
+    <color name="brand_primary_dark">#06333A</color>
+    <color name="page_background">#F8F6F3</color>
+</resources>

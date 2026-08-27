@@ -1,6 +1,6 @@
 # Food delivery — stage payloads
 
-Dashboard **Key:** `pct_payload`  
+Dashboard **Key:** `pct_payload`
 Paste each **Value** below as a single line (remove line breaks if you copy the formatted block).
 
 Use the same `order_id` in every stage.
@@ -20,11 +20,11 @@ Use the same `order_id` in every stage.
 
 ### `chip_text` (optional)
 
-| Stage type | `chip_text` | Notes |
-|------------|-------------|--------|
-| **Countdown (2–5)** | **Optional** | Primary source is `eta_epoch_ms`. Omit `chip_text` when using `eta_epoch_ms`. |
-| **Static (1, 6)** | **Use for fixed labels** | e.g. `"Placing"`, `"Done ✓"` — shown via `setShortCriticalText` on API 36+ |
-| **Stale (ETA passed)** | **Use `stale_chip_text`** | Default `"Soon"` — not `chip_text` |
+| Stage type             | `chip_text`               | Notes                                                                         |
+|------------------------|---------------------------|-------------------------------------------------------------------------------|
+| **Countdown (2–5)**    | **Optional**              | Primary source is `eta_epoch_ms`. Omit `chip_text` when using `eta_epoch_ms`. |
+| **Static (1, 6)**      | **Use for fixed labels**  | e.g. `"Placing"`, `"Done ✓"` — shown via `setShortCriticalText` on API 36+    |
+| **Stale (ETA passed)** | **Use `stale_chip_text`** | Default `"Soon"` — not `chip_text`                                            |
 
 **Fallback only:** If `eta_epoch_ms` is missing on a countdown stage, the sample parses `chip_text` in `"N min"` form (e.g. `"18 min"`) and derives ETA from push receive time. This is **not** the recommended integration path.
 

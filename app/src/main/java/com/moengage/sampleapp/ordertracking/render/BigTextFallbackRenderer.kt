@@ -1,0 +1,23 @@
+package com.moengage.sampleapp.ordertracking.render
+
+import android.app.Notification
+import android.content.Context
+import android.os.Bundle
+import androidx.core.app.NotificationCompat
+import com.moengage.sampleapp.ordertracking.model.OrderTrackingPayload
+
+/** API 31–33 fallback: [NotificationCompat.BigTextStyle] with emoji segment indicators in the body. */
+internal fun buildBigTextFallbackNotification(
+    context: Context,
+    moeBundle: Bundle,
+    payload: OrderTrackingPayload,
+    chipText: String,
+): Notification {
+    val emojiLine = emojiProgressLine(payload.stage, payload.segments.size)
+    val body = "$emojiLine\n${fallbackStepSummary(payload, chipText)}"
+    return orderNotificationBuilder(context, payload, moeBundle)
+        .setContentTitle(payload.title)
+        .setContentText(body)
+        .setStyle(NotificationCompat.BigTextStyle().bigText(body))
+        .build()
+}
