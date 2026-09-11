@@ -4,7 +4,7 @@
 
 This repository contains a sample integration for [MoEngage](https://www.moengage.com).
 
-![MavenBadge](https://img.shields.io/maven-central/v/com.moengage/moe-android-sdk)
+![MavenBadge](https://img.shields.io/maven-central/v/com.moengage/android-bom)
 
 ---
 
