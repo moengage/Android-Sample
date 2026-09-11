@@ -46,6 +46,8 @@ import com.moengage.sampleapp.ui.order.PaymentScreen
 import com.moengage.sampleapp.ui.orders.OrdersScreen
 import com.moengage.sampleapp.ui.permission.PermissionDialogOverlay
 import com.moengage.sampleapp.ui.permission.PushOptInScreen
+import com.moengage.sampleapp.ui.personalize.PersonalizeScreen
+import com.moengage.sampleapp.ui.personalize.PersonalizeViewModel
 import com.moengage.sampleapp.ui.profile.ProfileScreen
 import com.moengage.sampleapp.ui.selfhandledcards.SelfHandledCardsScreen
 import com.moengage.sampleapp.ui.selfhandledcards.SelfHandledCardsViewModel
@@ -428,6 +430,27 @@ fun BrewBarNavGraph(
                             }
                         },
                         onDemoTools = { session.setDemoToolsVisible(true) },
+                        onPersonalize = { navController.navigate(Routes.PERSONALIZE) },
+                    )
+                }
+
+                composable(Routes.PERSONALIZE) {
+                    val personalize: PersonalizeViewModel = viewModel()
+                    val personalizeState by personalize.state.collectAsStateWithLifecycle()
+                    LaunchedEffect(Unit) { personalize.onScreenEntered() }
+                    PersonalizeScreen(
+                        demoState = personalizeState.demoState,
+                        offers = personalizeState.offers,
+                        fallbackCopy = personalizeState.fallbackCopy,
+                        loading = personalizeState.loading,
+                        fetched = personalizeState.fetched,
+                        onBack = { navController.popBackStack() },
+                        onDemoStateChanged = personalize::onDemoStateChanged,
+                        onOfferClick = { offer ->
+                            personalize.onOfferClicked(offer)
+                                ?.let { Routes.fromDeeplink(it) }
+                                ?.let(navController::navigate)
+                        },
                     )
                 }
             }

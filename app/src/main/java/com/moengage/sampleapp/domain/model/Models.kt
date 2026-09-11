@@ -139,6 +139,32 @@ data class PromoPayload(val title: String, val subtitle: String, val deeplink: S
     }
 }
 
+/**
+ * One personalized offer on the Personalize screen.
+ *
+ * App-specific by design, the same pattern as [PromoPayload]: a MoEngage Personalize experience's
+ * payload is author-defined JSON, and `OfferMapping.kt` maps that onto this shape. Brew Bar's
+ * contract is `{"offerings": [{"offering_key": …, "title": …, "subtitle": …, "image_url": …,
+ * "cta_label": …, "deeplink": …, "offering_context": {…}}]}` — an absent, blank, or empty-array
+ * payload is exactly what "without offerings" means, and the screen falls back to its default
+ * panel rather than a blank one.
+ *
+ * `offering_context` is not Brew Bar's own field: the SDK requires it, with all five of
+ * `moe_offering_id`/`moe_offering_name`/`moe_offering_type`/`moe_decision_policy_id`/
+ * `moe_decision_policy_name`, before it will accept an offering-level impression or click — a
+ * live Decisioning-backed offer already carries it, so this only matters for a hand-authored one.
+ * `OfferMapping.kt` passes the whole offering object through untouched as the SDK-facing payload,
+ * and `MoEngagePersonalize` skips (not crashes on) offering-level tracking when it's missing.
+ */
+data class PersonalizedOffer(
+    val offeringKey: String,
+    val title: String,
+    val subtitle: String,
+    val imageUrl: String?,
+    val ctaLabel: String,
+    val deeplink: String?,
+)
+
 /** UI shape for an inbox row; hydrated either from the MoEngage inbox API or the seed. */
 data class InboxMessageUi(
     val id: String,

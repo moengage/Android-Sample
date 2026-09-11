@@ -2,6 +2,9 @@ package com.moengage.sampleapp.sdkhelper
 
 import android.app.Application
 import android.content.Context
+import com.moengage.campaigns.personalize.model.ExperienceCampaign
+import com.moengage.campaigns.personalize.model.ExperienceCampaignsMetadata
+import com.moengage.campaigns.personalize.model.ExperienceCampaignsResult
 import com.moengage.cards.core.model.Card
 import com.moengage.inapp.model.SelfHandledCampaignData
 import com.moengage.inbox.core.model.InboxMessage
@@ -28,6 +31,7 @@ import com.moengage.sampleapp.domain.model.Order
  * - [MoEngageInbox] — the notification inbox
  * - [MoEngageGeofence] — location-triggered campaigns
  * - [MoEngageCards] — the cards feed behind Self-handled cards
+ * - [MoEngagePersonalize] — the with/without-offerings demo behind the Personalize screen
  * - [guarded] — the shared "never crash the sample app" wrapper every call goes through
  */
 object MoEngageSDKHelper {
@@ -194,4 +198,38 @@ object MoEngageSDKHelper {
 
     /** Stops geofence monitoring. */
     fun stopGeofenceMonitoring(context: Context) = MoEngageGeofence.stopMonitoring(context)
+
+    // ── Personalize ─────────────────────────────────────────────────────────────────
+
+    /**
+     * Syncs valid experience keys for this workspace. Call before [fetchPersonalizeExperience] —
+     * a key that's genuinely configured on the dashboard still comes back rejected as unknown on
+     * a device that has never synced this.
+     */
+    fun fetchPersonalizeExperiencesMeta(context: Context, onResult: (ExperienceCampaignsMetadata?) -> Unit) =
+        MoEngagePersonalize.fetchExperiencesMeta(context, onResult)
+
+    /** The Personalize screen's with/without-offerings demo. `attributes` is session-scoped only. */
+    fun fetchPersonalizeExperience(
+        context: Context,
+        experienceKey: String,
+        attributes: Map<String, String>,
+        onResult: (ExperienceCampaignsResult) -> Unit,
+    ) = MoEngagePersonalize.fetchExperience(context, experienceKey, attributes, onResult)
+
+    /** Impression on the experience campaign as a whole. Report once per successful render. */
+    fun personalizeExperienceShown(context: Context, campaign: ExperienceCampaign) =
+        MoEngagePersonalize.experienceShown(context, campaign)
+
+    /** Click on the experience campaign as a whole. */
+    fun personalizeExperienceClicked(context: Context, campaign: ExperienceCampaign) =
+        MoEngagePersonalize.experienceClicked(context, campaign)
+
+    /** Impression on one offering, reported per offering actually rendered. */
+    fun personalizeOfferingShown(context: Context, offeringPayload: Map<String, Any>) =
+        MoEngagePersonalize.offeringShown(context, offeringPayload)
+
+    /** Click on one offering, attributed to both the offering and its parent campaign. */
+    fun personalizeOfferingClicked(context: Context, campaign: ExperienceCampaign, offeringPayload: Map<String, Any>) =
+        MoEngagePersonalize.offeringClicked(context, campaign, offeringPayload)
 }

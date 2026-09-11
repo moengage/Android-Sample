@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.moengage.sampleapp.ui.theme.BrewBarTheme
@@ -45,6 +46,8 @@ fun TabPill(label: String, selected: Boolean, onClick: () -> Unit, modifier: Mod
             label,
             style = BrewType.captionMedium,
             color = if (selected) BrewColors.OnDarkPrimary else BrewColors.TextSecondary,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
         )
     }
 }

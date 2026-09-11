@@ -95,11 +95,12 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.messaging)
 
-    // MoEngage: core (+ pushbase + FCM), in-app, inbox, cards, rich push, geofence, RTT.
+    // MoEngage: core (+ pushbase + FCM), in-app, inbox, cards, personalize, rich push, geofence, RTT.
     implementation(platform(libs.moengage.android.bom))
     implementation(libs.inapp)
     implementation(libs.inbox.core)
     implementation(libs.cards.core)
+    implementation(libs.personalization.core)
     implementation(libs.geofence)
     implementation(libs.realtime.trigger)
     implementation(libs.rich.notification)

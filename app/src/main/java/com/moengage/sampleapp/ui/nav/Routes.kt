@@ -1,6 +1,6 @@
 package com.moengage.sampleapp.ui.nav
 
-/** The 13 destinations of the nav graph, plus the deep-link mapping used by push campaigns. */
+/** The 14 destinations of the nav graph, plus the deep-link mapping used by push campaigns. */
 object Routes {
     const val SPLASH = "splash"
     const val LOGIN = "login"
@@ -21,6 +21,7 @@ object Routes {
      */
     const val REWARDS = "rewards"
     const val ORDERS = "orders"
+    const val PERSONALIZE = "personalize"
 
     fun category(categoryId: String) = "category/$categoryId"
     fun item(itemId: String) = "item/$itemId"
@@ -43,6 +44,7 @@ object Routes {
             "item" -> segments.getOrNull(1)?.let { item(it) }
             "rewards" -> REWARDS
             "orders" -> ORDERS
+            "personalize" -> PERSONALIZE
             "inbox" -> INBOX
             "profile" -> PROFILE
             "cart" -> CART

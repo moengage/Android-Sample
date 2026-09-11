@@ -109,6 +109,7 @@ package imports `com.moengage.*`**.
 | Geofence campaigns | `MoEGeofenceHelper` | `MoEngageGeofence` | app open, Profile location card |
 | Real-time triggers | `RttConfig(isBackgroundSyncEnabled = true)` | `MoEngageInitialiser` | evaluated on-device |
 | Rich push / order tracking | `pct_payload` on a MoEngage push | `ordertracking/` | Order status |
+| Personalize (with/without offerings) | `MoEPersonalizeHelper` | `MoEngagePersonalize` | Profile → Personalize |
 
 Every SDK call goes through a shared `guarded { }` wrapper (`sdkhelper/MoEngageGuard.kt`), so an
 unconfigured workspace ID leaves the app fully clickable instead of crashing on

@@ -56,6 +56,7 @@ fun ProfileScreen(
     onOpenAppSettings: () -> Unit,
     onLogout: () -> Unit,
     onDemoTools: () -> Unit,
+    onPersonalize: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier.fillMaxSize().background(BrewColors.PageBackground)) {
@@ -86,7 +87,24 @@ fun ProfileScreen(
                 onRequestLocation = onRequestLocation,
                 onOpenAppSettings = onOpenAppSettings,
             )
+            PersonalizeCard(onPersonalize)
             SecondaryButton("Log out", onLogout)
+        }
+    }
+}
+
+/** Entry point into the Personalize screen — the SDK's with/without-offerings demo. */
+@Composable
+private fun PersonalizeCard(onClick: () -> Unit) {
+    Column(verticalArrangement = Arrangement.spacedBy(Space.x10)) {
+        Text("Personalize", style = BrewType.cardTitle, color = BrewColors.TextPrimary)
+        BrewCard(onClick = onClick) {
+            DetailRow(
+                label = "Personalized offers",
+                value = "View",
+                valueColor = BrewColors.Link,
+                modifier = Modifier.padding(horizontal = Space.x16, vertical = Space.x14),
+            )
         }
     }
 }
@@ -337,6 +355,7 @@ private fun ProfilePreview() {
             onOpenAppSettings = {},
             onLogout = {},
             onDemoTools = {},
+            onPersonalize = {},
         )
     }
 }
@@ -362,6 +381,7 @@ private fun ProfileBlockedPreview() {
             onOpenAppSettings = {},
             onLogout = {},
             onDemoTools = {},
+            onPersonalize = {},
         )
     }
 }
