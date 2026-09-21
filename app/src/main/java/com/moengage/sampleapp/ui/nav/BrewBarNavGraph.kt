@@ -49,6 +49,7 @@ import com.moengage.sampleapp.ui.permission.PushOptInScreen
 import com.moengage.sampleapp.ui.personalize.PersonalizeScreen
 import com.moengage.sampleapp.ui.personalize.PersonalizeViewModel
 import com.moengage.sampleapp.ui.profile.ProfileScreen
+import com.moengage.sampleapp.ui.recommendations.RecommendationsViewModel
 import com.moengage.sampleapp.ui.selfhandledcards.SelfHandledCardsScreen
 import com.moengage.sampleapp.ui.selfhandledcards.SelfHandledCardsViewModel
 import com.moengage.sampleapp.ui.splash.SplashScreen
@@ -202,16 +203,22 @@ fun BrewBarNavGraph(
                 }
 
                 composable(Routes.MENU) {
+                    // Scoped to the Menu destination, so the row survives tab switches.
+                    val recommendations: RecommendationsViewModel = viewModel()
+                    val recommendationsState by recommendations.state.collectAsStateWithLifecycle()
                     LaunchedEffect(Unit) {
                         session.onMenuViewed()
                         session.refreshSelfHandledCampaign()
                         session.refreshUnreadCount()
                         session.maybeShowNativeInApp()
+                        recommendations.onScreenEntered()
                     }
                     MenuHomeScreen(
                         category = state.category,
                         unreadCount = state.unreadCount,
                         promo = state.promo,
+                        recommendations = recommendationsState.products,
+                        recommendationsFetched = recommendationsState.fetched,
                         onCategorySelected = session::selectCategory,
                         onItemClick = { navController.navigate(Routes.item(it.id)) },
                         onFullMenu = { navController.navigate(Routes.category(state.category.id)) },
@@ -223,6 +230,11 @@ fun BrewBarNavGraph(
                             navController.navigate(Routes.CART)
                         },
                         onInboxClick = { navController.navigate(Routes.INBOX) },
+                        // Only fires for products with a resolved catalogue ID; see
+                        // RecommendationsRow for the unresolvable case.
+                        onRecommendationClick = { product ->
+                            navController.navigate(Routes.item(product.itemId))
+                        },
                         onPromoClick = {
                             session.onPromoClicked()
                                 ?.let { Routes.fromDeeplink(it) }

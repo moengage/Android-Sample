@@ -110,6 +110,7 @@ package imports `com.moengage.*`**.
 | Real-time triggers | `RttConfig(isBackgroundSyncEnabled = true)` | `MoEngageInitialiser` | evaluated on-device |
 | Rich push / order tracking | `pct_payload` on a MoEngage push | `ordertracking/` | Order status |
 | Personalize (with/without offerings) | `MoEPersonalizeHelper` | `MoEngagePersonalize` | Profile → Personalize |
+| Recommendations | `MoERecommendationsHelper` *(pending release)* | `MoEngageRecommendations` | Menu home, above the tabs |
 
 Every SDK call goes through a shared `guarded { }` wrapper (`sdkhelper/MoEngageGuard.kt`), so an
 unconfigured workspace ID leaves the app fully clickable instead of crashing on

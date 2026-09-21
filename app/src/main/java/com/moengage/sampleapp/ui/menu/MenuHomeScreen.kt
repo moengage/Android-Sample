@@ -23,12 +23,14 @@ import com.moengage.sampleapp.data.MenuRepository
 import com.moengage.sampleapp.domain.model.MenuCategory
 import com.moengage.sampleapp.domain.model.MenuItem
 import com.moengage.sampleapp.domain.model.PromoPayload
+import com.moengage.sampleapp.domain.model.RecommendedProduct
 import com.moengage.sampleapp.ui.components.BrewCard
 import com.moengage.sampleapp.ui.components.FeaturedCard
 import com.moengage.sampleapp.ui.components.IconTile
 import com.moengage.sampleapp.ui.components.SectionHeader
 import com.moengage.sampleapp.ui.inapp.SelfHandledPromoCard
 import com.moengage.sampleapp.ui.nav.PromoState
+import com.moengage.sampleapp.ui.recommendations.PREVIEW_RECOMMENDATIONS
 import com.moengage.sampleapp.ui.theme.BrewBarTheme
 import com.moengage.sampleapp.ui.theme.BrewColors
 import com.moengage.sampleapp.ui.theme.BrewType
@@ -48,11 +50,14 @@ fun MenuHomeScreen(
     category: MenuCategory,
     unreadCount: Int,
     promo: PromoState?,
+    recommendations: List<RecommendedProduct>,
+    recommendationsFetched: Boolean,
     onCategorySelected: (MenuCategory) -> Unit,
     onItemClick: (MenuItem) -> Unit,
     onFullMenu: () -> Unit,
     onReorderUsual: () -> Unit,
     onInboxClick: () -> Unit,
+    onRecommendationClick: (RecommendedProduct) -> Unit,
     onPromoClick: () -> Unit,
     onPromoDismiss: () -> Unit,
     onDemoTools: () -> Unit,
@@ -66,8 +71,11 @@ fun MenuHomeScreen(
         MenuHeader(
             category = category,
             unreadCount = unreadCount,
+            recommendations = recommendations,
+            recommendationsFetched = recommendationsFetched,
             onCategorySelected = onCategorySelected,
             onInboxClick = onInboxClick,
+            onRecommendationClick = onRecommendationClick,
             onGreetingLongPress = onDemoTools,
         )
         LazyVerticalGrid(
@@ -151,11 +159,14 @@ private fun MenuHomePreview() {
             category = MenuCategory.Coffee,
             unreadCount = 3,
             promo = PromoState(PromoPayload.FALLBACK, null),
+            recommendations = PREVIEW_RECOMMENDATIONS,
+            recommendationsFetched = true,
             onCategorySelected = {},
             onItemClick = {},
             onFullMenu = {},
             onReorderUsual = {},
             onInboxClick = {},
+            onRecommendationClick = {},
             onPromoClick = {},
             onPromoDismiss = {},
             onDemoTools = {},

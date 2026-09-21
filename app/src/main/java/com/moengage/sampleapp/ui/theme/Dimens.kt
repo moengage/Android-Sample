@@ -38,6 +38,8 @@ object Sizes {
     val listRowImageWidth = 100.dp
 
     val featuredImageHeight = 104.dp
+    val recommendationCardWidth = 148.dp
+    val recommendationImageHeight = 84.dp
     val heroImageHeight = 220.dp
     val permissionImageHeight = 290.dp
 
