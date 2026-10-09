@@ -1,13 +1,12 @@
 package com.moengage.sampleapp.sdkhelper
 
 import android.content.Context
+import com.moengage.core.model.MoERequestFailureReason
+import com.moengage.recommendations.MoERecommendationsHelper
+import com.moengage.recommendations.model.RecommendationsFailureReason
 import timber.log.Timber
 
-/**
- * Recommendations — the Menu-home row. Reached through [MoEngageSDKHelper].
- *
- * The module is unreleased, so this is a stub; see the TODO for what to swap in.
- */
+/** Recommendations — the Menu-home row. Reached through [MoEngageSDKHelper]. */
 internal object MoEngageRecommendations {
 
     /**
@@ -22,15 +21,26 @@ internal object MoEngageRecommendations {
         onResult: (List<Map<String, Any>>) -> Unit,
     ) {
         try {
-            // TODO: MOEN-46606 — once com.moengage:recommendations ships, replace with:
-            //   MoERecommendationsHelper.fetchRecommendations(context, recommendationId,
-            //       includedFields = includedFields)
-            //       .onSuccess { onResult(it.items) }
-            //       .onFailure { Timber.w("recommendations failed: ${it.reason}"); onResult(emptyList()) }
-            // Keep this try/catch: fetchRecommendations throws SdkNotInitializedException
-            // synchronously when the integration validator is enabled.
-            onResult(emptyList())
+            MoERecommendationsHelper.fetchRecommendations(
+                context = context,
+                recommendationId = recommendationId,
+                includedFields = includedFields,
+            )
+                .onSuccess { recommendedItems -> onResult(recommendedItems.items) }
+                .onFailure { failure ->
+                    when (failure.reason) {
+                        // Recommendations-specific reason.
+                        RecommendationsFailureReason.RATE_LIMIT_EXCEEDED ->
+                            Timber.w("MoEngage Recommendations rate limited, retry later")
+                        // Reason shared across MoEngage modules.
+                        MoERequestFailureReason.NetworkError ->
+                            Timber.w("MoEngage Recommendations failed, device is offline")
+                        else -> Timber.w("MoEngage Recommendations failed: ${failure.reason} — ${failure.message}")
+                    }
+                    onResult(emptyList())
+                }
         } catch (throwable: Throwable) {
+            // Thrown synchronously (SdkNotInitializedException) when the integration validator is on.
             Timber.w(throwable, "MoEngage call skipped")
             onResult(emptyList())
         }

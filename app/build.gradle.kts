@@ -101,6 +101,7 @@ dependencies {
     implementation(libs.inbox.core)
     implementation(libs.cards.core)
     implementation(libs.personalization.core)
+    implementation(libs.recommendations)
     implementation(libs.geofence)
     implementation(libs.realtime.trigger)
     implementation(libs.rich.notification)

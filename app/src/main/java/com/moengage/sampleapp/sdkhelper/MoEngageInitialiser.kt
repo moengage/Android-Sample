@@ -6,6 +6,7 @@ import com.moengage.core.MoEngage
 import com.moengage.core.config.FcmConfig
 import com.moengage.core.config.LogConfig
 import com.moengage.core.config.NotificationConfig
+import com.moengage.core.config.RecommendationConfig
 import com.moengage.core.config.RttConfig
 import com.moengage.sampleapp.BuildConfig
 import com.moengage.sampleapp.R
@@ -47,9 +48,7 @@ internal object MoEngageInitialiser {
             // conditions fresh, so a trigger can fire without the app having been opened first —
             // and means the app never has to pull them itself.
             .configureRealTimeTrigger(RttConfig(isBackgroundSyncEnabled = true))
-            // MOEN-46606: uncomment with the recommendations release. Needs the
-            // com.moengage.core.config.RecommendationConfig import; 24h cache is the default.
-            // .configureRecommendations(RecommendationConfig.defaultConfig())
+            .configureRecommendations(RecommendationConfig.defaultConfig())
             .configureLogs(LogConfig(LogLevel.VERBOSE, isEnabledForReleaseBuild = false))
             .build()
 

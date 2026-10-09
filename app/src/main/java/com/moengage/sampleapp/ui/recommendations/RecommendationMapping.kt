@@ -7,15 +7,16 @@ import com.moengage.sampleapp.domain.model.MenuItem
 import com.moengage.sampleapp.domain.model.RecommendedProduct
 import kotlin.math.roundToInt
 
-/** Dashboard linkage for the recommendations row. Placeholders until the campaign is authored. */
+/** Dashboard linkage for the recommendations row: the recommendation and its catalog attributes. */
 internal object RecommendationsContract {
 
-    const val RECOMMENDATION_ID = "brewbar_home_recommendations"
+    /** Replace with your recommendation's ID from the MoEngage dashboard. */
+    const val RECOMMENDATION_ID = "YOUR_RECOMMENDATION_ID"
 
     /** A matching [DemoCatalogue] ID lets the product borrow that item's artwork and detail screen. */
-    const val KEY_ITEM_ID = "item_id"
+    const val KEY_ITEM_ID = "product_id"
 
-    const val KEY_NAME = "name"
+    const val KEY_NAME = "title"
     const val KEY_DESCRIPTION = "description"
     const val KEY_PRICE = "price"
 

@@ -167,7 +167,7 @@ data class PersonalizedOffer(
 
 /**
  * One product in the "Recommendations for you" row, mapped from the SDK payload by
- * `RecommendationMapping.kt`. [image] is a local drawable — the payload carries no image URL.
+ * `RecommendationMapping.kt`. [image] is a local drawable from the app's own artwork.
  */
 data class RecommendedProduct(
     val itemId: String,

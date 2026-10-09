@@ -29,8 +29,7 @@ import com.moengage.sampleapp.ui.util.rupees
  * "Recommendations for you" — the strip between the search field and the category tabs.
  *
  * `horizontalScroll` not `LazyRow`: this app reserves `Lazy*` for lists that can grow. Emits
- * nothing until a fetch answers, so it appears late and pushes the tabs down — revisit once a
- * real network call is behind it.
+ * nothing until a fetch answers, so it appears late and pushes the tabs down.
  */
 @Composable
 fun RecommendationsRow(

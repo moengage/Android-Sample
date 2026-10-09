@@ -55,6 +55,10 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <!-- Required from moe-push-firebase 9.3.0 (BOM 4.5.0) -->
+        <meta-data
+            android:name="firebase_messaging_installation_id_enabled"
+            android:value="true" />
         <!-- Order tracking: notification tap (deep-links to Order status) and swipe-dismiss. -->
         <receiver
             android:name=".ordertracking.notification.OrderNotificationClickReceiver"
