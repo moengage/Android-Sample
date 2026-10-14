@@ -32,6 +32,7 @@ import com.moengage.sampleapp.domain.model.Order
  * - [MoEngageGeofence] — location-triggered campaigns
  * - [MoEngageCards] — the cards feed behind Self-handled cards
  * - [MoEngagePersonalize] — the with/without-offerings demo behind the Personalize screen
+ * - [MoEngageRecommendations] — the "Recommendations for you" row on Menu home
  * - [guarded] — the shared "never crash the sample app" wrapper every call goes through
  */
 object MoEngageSDKHelper {
@@ -232,4 +233,12 @@ object MoEngageSDKHelper {
     /** Click on one offering, attributed to both the offering and its parent campaign. */
     fun personalizeOfferingClicked(context: Context, campaign: ExperienceCampaign, offeringPayload: Map<String, Any>) =
         MoEngagePersonalize.offeringClicked(context, campaign, offeringPayload)
+
+    /** The Menu-home recommendations row. Empty list for both "nothing found" and any failure. */
+    fun fetchRecommendations(
+        context: Context,
+        recommendationId: String,
+        includedFields: Set<String>,
+        onResult: (List<Map<String, Any>>) -> Unit,
+    ) = MoEngageRecommendations.fetchRecommendations(context, recommendationId, includedFields, onResult)
 }

@@ -165,6 +165,18 @@ data class PersonalizedOffer(
     val deeplink: String?,
 )
 
+/**
+ * One product in the "Recommendations for you" row, mapped from the SDK payload by
+ * `RecommendationMapping.kt`. [image] is a local drawable from the app's own artwork.
+ */
+data class RecommendedProduct(
+    val itemId: String,
+    val name: String,
+    val description: String,
+    val price: Int,
+    @param:DrawableRes val image: Int,
+)
+
 /** UI shape for an inbox row; hydrated either from the MoEngage inbox API or the seed. */
 data class InboxMessageUi(
     val id: String,

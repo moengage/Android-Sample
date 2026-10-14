@@ -1,6 +1,6 @@
 [versions]
 agp = "9.1.1"
-moengageAndroidBom = "4.3.0"
+moengageAndroidBom = "4.6.0"
 glide = "5.0.9"
 kotlin = "2.3.20"
 googleServices = "4.4.4"
@@ -24,6 +24,7 @@ inapp = { module = "com.moengage:inapp" }
 inbox-core = { module = "com.moengage:inbox-core" }
 cards-core = { module = "com.moengage:cards-core" }
 personalization-core = { module = "com.moengage:personalization-core" }
+recommendations = { module = "com.moengage:recommendations" }
 geofence = { module = "com.moengage:geofence" }
 realtime-trigger = { module = "com.moengage:realtime-trigger" }
 moengage-android-bom = { module = "com.moengage:android-bom", version.ref = "moengageAndroidBom" }

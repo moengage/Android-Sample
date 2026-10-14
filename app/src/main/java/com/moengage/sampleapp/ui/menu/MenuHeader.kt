@@ -29,8 +29,11 @@ import androidx.compose.ui.unit.dp
 import com.moengage.sampleapp.data.DemoUser
 import com.moengage.sampleapp.data.Store
 import com.moengage.sampleapp.domain.model.MenuCategory
+import com.moengage.sampleapp.domain.model.RecommendedProduct
 import com.moengage.sampleapp.ui.components.TabPill
 import com.moengage.sampleapp.ui.components.ThinDivider
+import com.moengage.sampleapp.ui.recommendations.PREVIEW_RECOMMENDATIONS
+import com.moengage.sampleapp.ui.recommendations.RecommendationsRow
 import com.moengage.sampleapp.ui.theme.BrewBarTheme
 import com.moengage.sampleapp.ui.theme.BrewColors
 import com.moengage.sampleapp.ui.theme.BrewShapes
@@ -43,8 +46,11 @@ import com.moengage.sampleapp.ui.theme.Space
 fun MenuHeader(
     category: MenuCategory,
     unreadCount: Int,
+    recommendations: List<RecommendedProduct>,
+    recommendationsFetched: Boolean,
     onCategorySelected: (MenuCategory) -> Unit,
     onInboxClick: () -> Unit,
+    onRecommendationClick: (RecommendedProduct) -> Unit,
     onGreetingLongPress: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -65,6 +71,11 @@ fun MenuHeader(
             GreetingRow(unreadCount, onInboxClick, onGreetingLongPress)
             StoreStrip()
             SearchField(category)
+            RecommendationsRow(
+                products = recommendations,
+                fetched = recommendationsFetched,
+                onProductClick = onRecommendationClick,
+            )
             Row(horizontalArrangement = Arrangement.spacedBy(Space.x8)) {
                 MenuCategory.entries.forEach { entry ->
                     TabPill(
@@ -202,8 +213,11 @@ private fun MenuHeaderPreview() {
         MenuHeader(
             category = MenuCategory.Coffee,
             unreadCount = 3,
+            recommendations = PREVIEW_RECOMMENDATIONS,
+            recommendationsFetched = true,
             onCategorySelected = {},
             onInboxClick = {},
+            onRecommendationClick = {},
             onGreetingLongPress = {},
         )
     }
